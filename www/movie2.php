@@ -385,7 +385,7 @@ if (!$conn) {
                     }
                     ?>
                 </div>
-                <a href='todas.php?id=" . $movieId . "'><p>Ver todas las Reviews</p></a>
+                <a href='todas.php?id=" . $movieId . "'><p>Reparto completo</p></a>
             </div>
         </div>
     </div>

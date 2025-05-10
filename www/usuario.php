@@ -131,8 +131,8 @@ if (isset($_POST['cerrar'])) {
                 </div>
                 <div class="barra2"></div>
                 <div class="navegador">
-                    <button type="submit" class="WatchList"><a href="historial.php" class="link">Peliculas</a></button>
-                    <button type="submit" class="WatchList"><a href="watchlist.php" class="link">WatchList</a></button>
+                    <a href="historial.php" class="WatchList"><p>Peliculas</p></a>
+                    <a href="watchlist.php" class="WatchList"><p>WatchList</p></a>
                 </div>
                 <div class="ultima5">
                     <p><b>Actividad reciente</b></p>
@@ -264,7 +264,7 @@ if (isset($_POST['cerrar'])) {
                         }
                     }
                     ?>
-                    <button type="submit" class="WatchList"><a href="/historial/Reviews.php" class="link">Ver mas reviews</a></button>
+                    <a href="/historial/Reviews.php?id=<?php echo "$idusuario";?>"  class="WatchList"><p>Ver mas reviews</p></a>
                 </div>
             </div>
         </div>

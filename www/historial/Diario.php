@@ -1,9 +1,10 @@
 <?php
+session_start();
 require __DIR__.'/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__. '/../'); 
 $dotenv->load();
 
-session_start();
+
 $idusuario = $_SESSION['idusuario'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];

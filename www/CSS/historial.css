@@ -85,8 +85,26 @@ body {
     margin: auto auto 15px auto;
 }
 .navegador{
+    display: flex;
+    flex-direction: row;
     margin-left: 60px;
     margin-bottom: 10px;
+}
+.navegador img{
+    width: 70px;
+    height: 70px;
+    margin-right: 2rem;
+    border-radius: 50%;   
+}
+.navegador p{
+    display: flex;
+    font-family: 'Codec Pro';
+    align-items: center;
+    font-size: 30px;
+    margin-right: 15px;
+}
+.navegador a{
+    color:#d46a00;
 }
 .navegador button{
     background: none;
@@ -101,6 +119,9 @@ body {
     border-radius: 5px;
     text-align: center;
     font-size: 19px;
+}
+.WatchList a{
+    color:black ;
 }
 .WatchList a:hover{
     color:#d46a00;

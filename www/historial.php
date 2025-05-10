@@ -69,8 +69,17 @@ if (!$conn) {
 
     <div class='body'>
         <div class="navegador">
+            <?php
+            $sql = "SELECT u.usuario ,u.fto_perfil FROM review r,pelicula p,usuario u WHERE r.id_usuario = $idusuario AND r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+            $consult = mysqli_query($conn, $sql);
+            $solu = mysqli_fetch_assoc($consult);
+            $usuario = $solu['usuario'];
+            $fto_perfil = $solu['fto_perfil'];
+            echo "<img src='$fto_perfil' alt='' />";
+            echo "<p>Visto por <a href='usuario.php?id=".$idusuario."'>$usuario</a></p>";
+            ?>
             <button type="submit" class="WatchList"><a href="historial.php" class="link">Peliculas</a></button>
-            <button type="submit" class="WatchList"><a href="/historial/Reviews.php" class="link">Reviews</a></button>
+            <button type="submit" class="WatchList"><a href="/historial/Reviews.php?id=<?php echo $idusuario;?>" class="link">Reviews</a></button>
             <button type="submit" class="WatchList"><a href="/historial/Diario.php" class="link">Diario</a></button>
         </div>
         <div class="barra2"></div>

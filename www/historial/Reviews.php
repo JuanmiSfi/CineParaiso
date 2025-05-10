@@ -1,16 +1,19 @@
 <?php
-require __DIR__.'/../vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__. '/../'); 
+session_start();
+require __DIR__ . '/../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-session_start();
+
 $idusuario = $_SESSION['idusuario'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
     header("Location: consulta.php");
     exit();
 }
-$busqueda = $_SESSION['busqueda'];
+
+$idusuario = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
+$idusuario2 = $_GET['id'];
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -68,6 +71,15 @@ if (!$conn) {
 
     <div class='body'>
         <div class="navegador">
+            <?php
+            $sql = "SELECT u.usuario ,u.fto_perfil FROM review r,pelicula p,usuario u WHERE r.id_usuario = $idusuario AND r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+            $consult = mysqli_query($conn, $sql);
+            $solu = mysqli_fetch_assoc($consult);
+            $usuario = $solu['usuario'];
+            $fto_perfil = $solu['fto_perfil'];
+            echo "<img src='$fto' alt='' />";
+            echo "<p>Reviews de $usuario</p>";
+            ?>
             <button type="submit" class="WatchList"><a href="/historial.php" class="link">Peliculas</a></button>
             <button type="submit" class="WatchList"><a href="/historial/Reviews.php" class="link">Reviews</a></button>
             <button type="submit" class="WatchList"><a href="/historial/Diario.php" class="link">Diario</a></button>
@@ -75,7 +87,7 @@ if (!$conn) {
         <div class="barra2"></div>
         <div class='poster'>
             <?php
-            $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = {$_SESSION["idusuario"]}  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+            $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha,u.usuario FROM review r,pelicula p,usuario u WHERE r.id_usuario = $idusuario AND r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
             $consult = mysqli_query($conn, $sql);
             $numerofilas = mysqli_num_rows($consult);
             for ($i = 0; $i < $numerofilas; $i++) {
@@ -88,11 +100,11 @@ if (!$conn) {
                 $fecha = $fila['fecha'];
                 if (!empty($review)) {
                     echo "<div class='review'>";
-                        echo "<a href='/movie2.php?id=" . $movieId . "'>";
-                        echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                        echo "</a>";
+                    echo "<a href='/movie2.php?id=" . $movieId . "'>";
+                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                    echo "</a>";
                     echo "<div class='contenido'>";
-                        echo "<h2>$titulo</h2>";
+                    echo "<h2>$titulo</h2>";
                     echo "<div class='estrellas'>";
                     for ($j = 1; $j <= 5; $j++) {
                         if ($nota >= $j) {
@@ -100,10 +112,12 @@ if (!$conn) {
                         }
                     }
                     echo "<div class='fecha'>";
-                    if(!empty($fecha)){echo "Visto el $fecha";}
+                    if (!empty($fecha)) {
+                        echo "Visto el $fecha";
+                    }
                     echo "</div>"; // Cierra fecha
                     echo "</div>"; // Cierra estrllas
-                        echo "<p>$review</p>";
+                    echo "<p>$review</p>";
                     echo "</div>"; // Cierra contenido
                     echo "</div>"; //Cierra review
                 }

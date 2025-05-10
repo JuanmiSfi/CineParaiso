@@ -36,7 +36,7 @@ a{
 }
 
 .logo {
-    width: 15%;
+    width: 250px;
 }
 
 .logo img {
@@ -110,16 +110,21 @@ a{
         margin-right: 15px; 
 }
 
-.WatchList{
+.WatchList button{
+    background: none;
+    border: none;
     display: flex;
-    padding: 1px 15px;
-    border-radius: 5px;
-    border: 2px solid #000000;
-    background-color: #f39a3f;
-    color: #f7e5c6;
-    text-align: center;
-    font-size: 19px;
-    margin-right: 15px; 
+    justify-content: flex-end;
+}
+
+.WatchList p{
+    font-family: 'Codec Pro';
+    font-size: 20px;
+    margin-left: 15px;
+    color: #000000;
+}
+.WatchList p:hover{
+    color:#f39a3f;
 }
 
 .info {
@@ -321,10 +326,23 @@ a{
 }
 
 .review p{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Codec Pro';
     color: #000000;
     font-size: 15px;
     margin-top: 15px;
     word-break: break-all;
     overflow-wrap: break-word;
+}
+
+.opion .WatchList p{
+    display: flex;
+    justify-content: flex-end;
+    font-family: 'Codec Pro';
+    font-size: 20px;
+    margin-left: 15px;
+    margin-top: 0px;
+    color: #1a1a1a;
+}
+.opion .WatchList p:hover{
+    color:#f39a3f;
 }

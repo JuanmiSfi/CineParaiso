@@ -79,15 +79,15 @@ body {
     margin-right: 2rem;
 }
 
-/* Cuerpo */
 .contenedor {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     max-width: 100%;
     padding: 20px;
 }
 .review{
+    display: flex;
+    flex-direction: row;
     margin-left: 15px;
 }
 
@@ -139,7 +139,14 @@ body {
     margin-left: 10px;
 }
 
-/* Poster de la película */
+.opinion-amigos{
+
+}
+.opinion-amigos .barra2{
+        width: 99%;
+    height: 3px;
+    background-color: #474240;
+}
 .poster img {
     width: 250px;
     border-radius: 8px;

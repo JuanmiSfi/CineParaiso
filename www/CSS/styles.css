@@ -1,0 +1,177 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('/fonts/CodecPro.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('/fonts/BukhariScript.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f7e5c6;
+    background-image: url("/src/linias.png");
+    background-attachment: fixed;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+}
+
+.logo {
+    width: 15%;
+}
+
+.logo img {
+    width: 100%;
+    filter: drop-shadow(4px 5px 1px black);
+    margin-left: 2rem;
+
+}
+
+.buscador input[type="text"] {
+    padding: 1px 15px;
+    border-radius: 51px;
+    border: 2px solid #8b4a28;
+    background-color: #f7e5c6;
+    text-align: start;
+    font-size: 19px;
+    width: 60rem;
+    height: 40px;
+
+}
+
+::placeholder {
+    color: #8b4a28;
+    opacity: 1;
+    font-size: 22.3px;
+    font-weight: bold;
+}
+
+.barra {
+    width: 100%;
+    height: 3px;
+    background-color: #8b4a28;
+    margin-bottom: 15px;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    margin-left: 85px;
+}
+
+.contenedor p {
+    font-family: 'Codec Pro', sans-serif;
+    font-size: 30px;
+    text-align: start;
+    color: #8b4a28;
+    margin-bottom: 5px;
+
+}
+
+.Poster a {
+
+    grid-column: auto;
+}
+
+.Poster img {
+
+    justify-content: flex-start;
+    width: 178px;
+    height: 256px;
+    margin-left: 150px;
+    margin-top: 20px;
+    border: 3px solid #e7eee7;
+    border-radius: 14px;
+}
+.Poster img:hover{
+    border: none;
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
+}
+
+.bloque {
+    align-items: center;
+    width: 1704px;
+    height: 310px;
+    background-color: #f39a3f;
+    border: 5px solid black;
+    border-radius: 39px;
+    filter: drop-shadow(8px 8px 0px #8b4a28);
+
+}
+
+.Numeros {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1400px;
+    align-content: flex-end;
+    margin-top: -220px;
+    margin-left: 50px;
+}
+
+.Numeros h2 {
+    font-family: 'Bukhari Script';
+    font-size: 200px;
+    color: #f7e5c6;
+    text-shadow: 5px 5px 0 #8b4a28,
+        10px 5px 0 #8b4b28a1;
+
+
+}
+
+.usuario img {
+    width: 70px;
+    height: 70px;
+    margin-right: 2rem;
+    border-radius: 50%;
+}
+
+.peliculas {
+
+    flex-direction: column;
+    margin-top: 25px;
+    margin-left: 90px;
+}
+
+.peliculas p {
+    font-family: 'Codec Pro', sans-serif;
+    font-size: 30px;
+    text-align: start;
+    color: #8b4a28;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    stroke-width: 2px solid black;
+
+
+}
+
+.peliculas img {
+    margin-top: 25px;
+    margin-left: 20px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 220px;
+    height: 317px;
+    border: 3px solid #e7eee7;
+    border-radius: 14px;
+}
+.peliculas img:hover{
+    border: none;
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
+}

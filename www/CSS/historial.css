@@ -1,0 +1,142 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('/fonts/CodecPro.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('/fonts/BukhariScript.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color: #000000;
+}
+
+body {
+    background-color: #f7e5c6;
+    background-image: url("/src/linias.png");
+    background-attachment: fixed;
+}
+.body{
+    margin-left: 25px;
+    margin-right: 100px;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+}
+
+.logo {
+    width: 15%;
+}
+
+.logo img {
+    width: 100%;
+    filter: drop-shadow(4px 5px 1px black);
+    margin-left: 2rem;
+
+}
+
+.buscador input[type="text"] {
+    padding: 1px 15px;
+    border-radius: 51px;
+    border: 2px solid #8b4a28;
+    background-color: #f7e5c6;
+    text-align: start;
+    font-size: 19px;
+    width: 60rem;
+    height: 40px;
+
+}
+
+::placeholder {
+    color: #8b4a28;
+    opacity: 1;
+    font-size: 22.3px;
+    font-weight: bold;
+}
+
+.barra {
+    width: 100%;
+    height: 3px;
+    background-color: #8b4a28;
+    margin-bottom: 15px;
+}
+.barra2 {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 93%;
+    height: 3px;
+    background-color: #474240;
+    margin: auto auto 15px auto;
+}
+.navegador{
+    margin-left: 60px;
+    margin-bottom: 10px;
+}
+.navegador button{
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer; 
+    margin-right: 10px;
+}
+
+.WatchList{
+    padding: 1px 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 19px;
+}
+.WatchList a:hover{
+    color:#d46a00;
+}
+.usuario img {
+    width: 70px;
+    height: 70px;
+    margin-right: 2rem;
+}
+
+.poster{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 5px;
+    margin-left: 60px;
+}
+
+.poster img {
+    width: 220px;
+    height: 317px;
+    border: 4px solid #e7eee7;
+    filter: drop-shadow(4px 2px 2px black);
+    border-radius: 14px;
+    margin-right: 25px;
+}
+.poster img:hover{
+    border: 4px solid #313131;
+}
+#estrellas {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #2f3336;
+    font-size: 1.2em;
+}
+#rw{
+    color: #2e2e2e;
+    margin-left: 10px;
+    filter: none;
+}

@@ -1,0 +1,330 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('/fonts/CodecPro.ttf');
+}
+
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('/fonts/BukhariScript.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f7e5c6;
+    background-image: url("/src/linias.png");
+    background-attachment: fixed;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: center;
+    height: 5rem;
+    margin-top: 2rem;
+}
+
+a{
+    text-decoration: none;
+    color: #000000;
+}
+
+.logo {
+    width: 15%;
+}
+
+.logo img {
+    width: 100%;
+    filter: drop-shadow(4px 5px 1px black);
+    margin-left: 2rem;
+
+}
+
+.barra {
+    width: 100%;
+    height: 3px;
+    background-color: #8b4a28;
+    margin-bottom: 15px;
+}
+
+.buscador input[type="text"] {
+    padding: 1px 15px;
+    border-radius: 51px;
+    border: 2px solid #8b4a28;
+    background-color: #f7e5c6;
+    text-align: start;
+    font-size: 19px;
+    width: 60rem;
+    height: 40px;
+    margin-right: 2rem;
+
+}
+
+::placeholder {
+    color: #8b4a28;
+    opacity: 1;
+    font-size: 22.3px;
+    font-weight: bold;
+}
+
+.usuario img {
+    width: 70px;
+    height: 70px;
+    margin-right: 2rem;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: row;
+    margin-right: 550px;
+}
+
+.boton button {
+    display: flex;
+    padding: 1px 15px;
+    border-radius: 5px;
+    border: 2px solid #000000;
+    background-color: #962508;
+    color: #f7e5c6;
+    text-align: center;
+    font-size: 19px;
+    margin-right: 15px;
+}
+.modifi{
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: -5px;
+        padding-bottom: -5px;
+        border-radius: 5px;
+        border: 2px solid #000000;
+        background-color: #f39a3f;
+        color: #f7e5c6;
+        text-align: center;
+        font-size: 19px;
+        margin-right: 15px; 
+}
+
+.WatchList{
+    display: flex;
+    padding: 1px 15px;
+    border-radius: 5px;
+    border: 2px solid #000000;
+    background-color: #f39a3f;
+    color: #f7e5c6;
+    text-align: center;
+    font-size: 19px;
+    margin-right: 15px; 
+}
+
+.info {
+    margin-left: 85px;
+}
+
+.info h3 {
+    margin-top: 25px;
+    font-family: 'Codec Pro';
+    font-size: 40px;
+    color: #8b4a28;
+}
+
+.info p {
+    margin-top: 25px;
+    font-family: 'Codec Pro';
+    font-size: 25px;
+    color: #8b4a28;
+}
+
+.info img {
+    display: block;
+    align-content: center;
+    border-radius: 50%;
+}
+#fto{
+    width: 270px;
+}
+
+.usuario {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.bio {
+    font-style: italic;
+    padding-right: 35%;
+}
+.nav1{
+    display: flex;
+}
+.nav1 .n_seguidores{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.n_seguidores p{
+    font-family: 'Codec Pro', sans-serif;
+    font-size: 20px;
+}
+.n_seguidores h3{
+    font-family: 'Bukhari Script';
+    font-size: 40px;
+}
+
+.nav1 .n_pelis{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+}
+.n_pelis p{
+    font-family: 'Codec Pro', sans-serif;
+    font-size: 20px;
+}
+.n_pelis h3{
+    font-family: 'Bukhari Script';
+    font-size: 40px;
+}
+
+.nav1 .n_siguiendo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 15px;
+}
+.n_siguiendo p{
+    font-family: 'Codec Pro', sans-serif;
+    font-size: 20px;
+}
+.n_siguiendo h3{
+    font-family: 'Bukhari Script';
+    font-size: 40px;
+}
+
+.barra2 {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 100%;
+    height: 3px;
+    background-color: #474240;
+    margin: 10px auto 15px auto;
+}
+.navegador{
+    display: flex;
+    margin-bottom: 10px;
+}
+.ultima5 {
+    font-family: 'Codec Pro', sans-serif;
+    font-size: 30px;
+    text-align: start;
+    color: #8b4a28;
+    margin-bottom: 5px;
+
+}
+
+.bloque {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: auto;
+    padding: 20px;
+    background-color: #f39a3f;
+    border: 5px solid black;
+    border-radius: 39px;
+    filter: drop-shadow(8px 8px 0px #8b4a28);
+
+}
+
+.ultima5 p {
+    margin-bottom: 15px;
+}
+
+
+.Poster img {
+    width: 115px;
+    border: 3px solid #e7eee7;
+    border-radius: 8px;
+    margin-right: 14px;
+}
+
+.nota i{
+    font-size: 50%;
+    color: #1a1918;
+}
+
+.opion p {
+    font-family: 'Codec Pro', sans-serif;
+    font-size: 30px;
+    text-align: start;
+    color: #8b4a28;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+
+.mas{
+    font-size: 64px;
+    padding-top: -50px;
+    margin-right: 150px;
+    height: 50px;
+}
+
+.review {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 15px;
+
+    width: 800px;
+}
+
+.review img {
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+    margin-right: 16px;
+}
+
+.review img:hover{
+    box-shadow: 0 0 0 4px white;
+    filter: drop-shadow(rgba(255, 255, 255, 0.589) 0px 1px 20px );
+}
+
+.review a {
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+ .review h2{
+    font-family: 'Codec Pro';
+    margin-bottom: 5px;
+ }
+
+.estrellas{
+    display: flex;
+}
+.fecha{
+    margin-left: 15px;
+}
+
+.review-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.review p{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #000000;
+    font-size: 15px;
+    margin-top: 15px;
+    word-break: break-all;
+    overflow-wrap: break-word;
+}

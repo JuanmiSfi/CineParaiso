@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON CineParaiso.* to 'admin'@'%';
+FLUSH PRIVILEGES;

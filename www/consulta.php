@@ -1,0 +1,113 @@
+<?php
+session_start();
+require 'vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
+$dotenv->load();
+
+
+$idusuario = $_SESSION['idusuario'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $_SESSION['busqueda'] = $_POST['busqueda'];
+    header("Location: consulta.php");
+    exit();
+}
+$busqueda = $_SESSION['busqueda'];
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+$servername = $_ENV['DB_HOST'];
+$username = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASS'];
+$database = $_ENV['DB_NAME'];
+$API = $_ENV['API_KEY'];
+// Crear conexión
+$conn = mysqli_connect($servername, $username, $password, $database);
+// Verificar conexión
+if (!$conn) {
+    die("Conexión fallida: " . mysqli_connect_error());
+}
+require_once('vendor/autoload.php');
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cine Paraiso</title>
+    <link rel="stylesheet" href="/CSS/consulta.css" />
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo"><a href="index.php"><img src="/src/Logo.png" alt="logo"></a></div>
+            <div class="buscador">
+                <form action="consulta.php" method="POST">
+                    <input type="text" name="busqueda" placeholder="Buscar en Cine Paraiso"></input>
+                </form>
+            </div>
+            <div class="usuario"><a href="login.php">
+                    <?php
+                    if ($idusuario != 0) {
+                        $sql = "SELECT * FROM usuario WHERE id = '$idusuario'";
+                        $resul = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($resul) > 0) {
+                            $row = mysqli_fetch_assoc($resul);
+                            $fto = $row['fto_perfil'];
+                            echo "<img src='$fto' alt='' />";
+                        }
+                    } else {
+                        echo "<img src='/Perfil_usuario/Usuarios.png' alt='' />";
+                    }
+                    ?>
+                </a></div>
+        </div>
+        <div class="barra"></div>
+    </header>
+    <div class='contenedor'>
+        <div class='usuarios'>
+            <?php
+                $sql = "SELECT * FROM usuario WHERE usuario like '$busqueda'";
+                $resul = mysqli_query($conn, $sql);
+                if (mysqli_num_rows($resul) > 0) {
+                    $row = mysqli_fetch_assoc($resul);
+                    $fto = $row['fto_perfil'];
+                    $usuario = $row['usuario'];
+                    $id_usuario = $row['id'];
+                    echo "<a href='/usuario.php?id=" . $id_usuario . "'>";
+                    echo "<img src='$fto' alt='' />";
+                    echo "<p>$usuario</p>";
+                    echo "</a>";
+                }
+            ?>
+        </div>
+        <div class='peliculas'>
+            <?php
+            $client = new \GuzzleHttp\Client();
+
+            $response = $client->request('GET', 'https://api.themoviedb.org/3/search/movie?query=' . $busqueda . '&include_adult=false&language=es-ES&page=1', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $API . '',
+                    'accept' => 'application/json',
+                ],
+            ]);
+            $pelis = json_decode($response->getBody(), true);
+            foreach ($pelis['results'] as $movie) {
+                // Asignamos las propiedades de la película a variables
+                $movie_id = $movie['id'];
+                $movie_title = $movie['title'];
+                $movie_poster_path = $movie['poster_path'];
+                // Mostrar el póster y el nombre de la película
+                echo "<a href='movie2.php?id=" . $movie_id . "'>";
+                echo "<p>$movie_title</p>";
+                echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' alt='" . $movie_title . "' width='150'><br>";
+                echo "</a>";
+            } ?>
+        </div>
+    </div>
+</body>
+</body>
+
+</html>

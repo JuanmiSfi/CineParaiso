@@ -1,0 +1,117 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('/fonts/CodecPro.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('/fonts/BukhariScript.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f7e5c6;
+    background-image: url("/src/linias.png");
+    background-attachment: fixed;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+}
+
+.logo {
+    width: 15%;
+}
+
+.logo img {
+    width: 100%;
+    filter: drop-shadow(4px 5px 1px black);
+    margin-left: 2rem;
+
+}
+
+.usuario img {
+    width: 70px;
+    height: 70px;
+    margin-right: 2rem;
+}
+
+.buscador input[type="text"] {
+    padding: 1px 15px;
+    border-radius: 51px;
+    border: 2px solid #8b4a28;
+    background-color: #f7e5c6;
+    text-align: start;
+    font-size: 19px;
+    width: 60rem;
+    height: 40px;
+
+}
+
+::placeholder {
+    color: #8b4a28;
+    opacity: 1;
+    font-size: 22.3px;
+    font-weight: bold;
+}
+
+.barra {
+    width: 100%;
+    height: 3px;
+    background-color: #8b4a28;
+    margin-bottom: 15px;
+}
+
+.contenedor{
+    display: flex;
+    
+}
+
+.poster{
+    width: 220px;
+    height: 320px;
+}
+.info{
+    flex:1;
+}
+.plataforma{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.box1{
+    width: 550px;
+    height: 100px;
+    background-color: #f39a3f;
+    border: 5px solid black;
+    border-radius: 15px;
+    filter: drop-shadow(5px 5px 0px #8b4a28);
+
+}
+.box1 img{
+    margin-top: 7px;
+    margin-left: 8px;
+    width: 75px;
+}
+.box2{
+    width: 550px;
+    height: 100px;
+    background-color: #f39a3f;
+    border: 5px solid black;
+    border-radius: 15px;
+    filter: drop-shadow(5px 5px 0px #8b4a28);
+
+}

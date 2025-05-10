@@ -1,0 +1,48 @@
+version: '3.8' #docker version
+services:
+  web:
+    build: .
+    container_name: php-app
+    volumes:
+      - "./www:/var/www/html"
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - app_network
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 999999
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: AlumnadoIAW
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+
+    networks:
+      - app_network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_user: admin
+      PMA_PASSWORD: AlumnadoIAW
+      MYSQL_ROOT_PASSWORD: 999999
+      PMA_CHARSET: utf8mb4
+    ports:
+      - 8001:80
+    depends_on:
+      - db
+    networks:
+      - app_network
+volumes:
+  mysql_data:
+
+
+networks:
+  app_network:

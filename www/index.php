@@ -88,22 +88,19 @@ if (!$conn) {
                             $id_movie = $movie['id'];
                             $titulo = $movie['title'];
                             $poster = $movie['poster_path'];
-
+                            $numeros = $i+1;
+                            echo "<div class='numeros_poster'>";
+                            echo "<h2>$numeros</h2>";
+                            echo "</div>"; //cierra numeros_pos
+                            echo "<div class='Posters'>";
                             echo "<a href='movie2.php?id=" . $id_movie . "'/>";
                             echo '<img src=https://image.tmdb.org/t/p/w200' . $poster . 'alt="poster">';
                             echo "</a>";
+                            echo "</div>"; //cierra poster
                         }
                     }
                     ?>
                 </div>
-                <div class="Numeros">
-                    <h2>1</h2>
-                    <h2>2</h2>
-                    <h2>3</h2>
-                    <h2>4</h2>
-                    <h2>5</h2>
-                </div>
-
             </div>
         </div>
         <div class="ayuda">

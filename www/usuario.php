@@ -108,9 +108,9 @@ if (isset($_POST['cerrar'])) {
                         $sql = "SELECT COUNT(*) FROM siguen WHERE $idusuario=id_usuario AND $idusuario2=id_seguidor";
                         $resul = mysqli_query($conn, $sql);
                         if (mysqli_num_rows($resul) > 0) {
-                            echo "<button type='submit' class='follow'><a href='' class='link'>Seguir</a></button>";
+                            echo "<button type='submit' class='follow'><a href='siguiendo.php' class='link'>Seguir</a></button>";
                         } else {
-                            echo "<button type='submit' class='follow'><a href='' class='link'>Siguiendo</a></button>";
+                            echo "<button type='submit' class='follow'><a href='siguiendo.php' class='link'>Siguiendo</a></button>";
                         }
                     }
                     echo "<div class='n_pelis'>";
@@ -131,9 +131,10 @@ if (isset($_POST['cerrar'])) {
                 </div>
                 <div class="barra2"></div>
                 <div class="navegador">
-                    <a href="historial.php" class="WatchList"><p>Peliculas</p></a>
+                    <a href="historial.php" class="WatchList"><p>Peliculas vistas</p></a>
                     <a href="watchlist.php" class="WatchList"><p>WatchList</p></a>
                 </div>
+                <div class="barra2"></div>
                 <div class="ultima5">
                     <p><b>Actividad reciente</b></p>
                     <div class="bloque">

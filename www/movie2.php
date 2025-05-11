@@ -354,7 +354,9 @@ if (!$conn) {
                 </div>
             </div>
             <div class='actores'>
-                <h2>Quien actua?</h2>
+                <div class='reparto'>
+                    <h2>Reparto</h2>
+                </div>
                 <div class="barra2"></div>
                 <div class='actores-info'>
                     <?php

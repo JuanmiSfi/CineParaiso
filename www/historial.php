@@ -6,7 +6,6 @@ $dotenv->load();
 
 
 $idusuario = $_SESSION['idusuario'];
-$busqueda = $_SESSION['busqueda'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
     header("Location: consulta.php");
@@ -75,7 +74,9 @@ if (!$conn) {
             $solu = mysqli_fetch_assoc($consult);
             $usuario = $solu['usuario'];
             $fto_perfil = $solu['fto_perfil'];
+            echo "<a href='/usuario.php?id=".$idusuario."'>";
             echo "<img src='$fto_perfil' alt='' />";
+            echo "</a>";
             echo "<p>Visto por <a href='usuario.php?id=".$idusuario."'>$usuario</a></p>";
             ?>
             <button type="submit" class="WatchList"><a href="historial.php" class="link">Peliculas</a></button>
@@ -102,7 +103,7 @@ if (!$conn) {
                         echo "<i class='fas fa-star' id='estrellas'></i>";
                     }
                 }
-                if (empty($review)) {
+                if (!empty($review)) {
                     echo "<i class='fa-solid fa-align-left' id='rw'></i>";
                 }
                 echo "</div>";

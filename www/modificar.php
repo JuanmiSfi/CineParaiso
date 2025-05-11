@@ -33,6 +33,19 @@ if (mysqli_num_rows($result) > 0) {
     $fto = $row['fto_perfil'];
 }
 ?>
+        <?php
+        if (isset($_POST['modificar'])) {
+            $sql = "UPDATE usuario SET nombre = '$_POST[nombre]', apellidos = '$_POST[apellidos]', email = '$_POST[email]', bio = '$_POST[bio]' WHERE usuario = '$usuario'";
+            if (mysqli_query($conn, $sql)) {
+                echo "Los datos se han modificado correctamente";
+                header("Location: usuario.php?id=".$idusuario."");
+                exit();
+            } else {
+                echo "No se han modificado los datos dado que" . mysqli_error($conn);
+                mysqli_close($conn);
+            }
+        }
+        ?>
 <!DOCTYPE html>
 <html>
 
@@ -85,24 +98,10 @@ if (mysqli_num_rows($result) > 0) {
                         <input type="submit" name="modificar" value="Modificar" id="boton" /><br>
                     </form>
                     </div>
-                    <p><a href="usuario.php">click para salir sin hacer cambios.</a></p>
+                    <p><a href="usuario.php?id=<?php echo $idusuario?>">click para salir sin hacer cambios.</a></p>
                 </div>
             </div>
         </div>
-
-        <?php
-        if (isset($_POST['modificar'])) {
-            $sql = "UPDATE usuario SET nombre = '$_POST[nombre]', apellidos = '$_POST[apellidos]', email = '$_POST[email]', bio = '$_POST[bio]' WHERE usuario = '$usuario'";
-            if (mysqli_query($conn, $sql)) {
-                echo "Los datos se han modificado correctamente";
-                header("Location: usuario.php");
-                exit();
-            } else {
-                echo "No se han modificado los datos dado que" . mysqli_error($conn);
-                mysqli_close($conn);
-            }
-        }
-        ?>
     </body>
 </body>
 

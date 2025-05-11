@@ -165,6 +165,7 @@ a{
 }
 .nav1{
     display: flex;
+    flex-direction: row;
 }
 .nav1 .n_seguidores{
     display: flex;

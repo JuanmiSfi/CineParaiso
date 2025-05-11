@@ -77,11 +77,13 @@ if (!$conn) {
             $solu = mysqli_fetch_assoc($consult);
             $usuario = $solu['usuario'];
             $fto_perfil = $solu['fto_perfil'];
-            echo "<img src='$fto' alt='' />";
-            echo "<p>Reviews de $usuario</p>";
+            echo "<a href='/usuario.php?id=".$idusuario."'>";
+            echo "<img src='$fto_perfil' alt='' />";
+            echo "</a>";
+            echo "<p>Reviews de <a href='usuario.php?id=".$idusuario."'>$usuario</a></p>";
             ?>
             <button type="submit" class="WatchList"><a href="/historial.php" class="link">Peliculas</a></button>
-            <button type="submit" class="WatchList"><a href="/historial/Reviews.php" class="link">Reviews</a></button>
+            <button type="submit" class="WatchList"><a href="/historial/Reviews.php?id=<?php echo $idusuario;?>" class="link">Reviews</a></button>
             <button type="submit" class="WatchList"><a href="/historial/Diario.php" class="link">Diario</a></button>
         </div>
         <div class="barra2"></div>

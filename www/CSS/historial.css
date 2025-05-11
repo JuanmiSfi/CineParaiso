@@ -157,6 +157,7 @@ body {
     font-size: 1.2em;
 }
 #rw{
+    margin-top: 5px;
     color: #2e2e2e;
     margin-left: 10px;
     filter: none;

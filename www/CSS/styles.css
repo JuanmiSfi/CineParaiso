@@ -71,7 +71,7 @@ body {
 .contenedor {
     display: flex;
     flex-direction: column;
-    margin-left: 85px;
+    padding: 40px;
 }
 
 .contenedor p {
@@ -83,8 +83,41 @@ body {
 
 }
 
-.Poster a {
+.bloque {
+    align-items: center;
+    width: auto;
+    background-color: #f39a3f;
+    border: 5px solid black;
+    border-radius: 39px;
+    filter: drop-shadow(8px 8px 0px #8b4a28);
 
+}
+
+
+
+.Poster{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-left: 20px;
+    margin-left: 40px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    gap: 20px;
+}
+.numeros_poster h2{
+    display: flex;
+    align-items: end;
+    font-family: 'Bukhari Script';
+    font-size: 200px;
+    color: #f7e5c6;
+    text-shadow: 5px 5px 0 #8b4a28,
+        10px 5px 0 #8b4b28a1;
+    
+}
+.Poster a {
+    
     grid-column: auto;
 }
 
@@ -94,7 +127,6 @@ body {
     width: 178px;
     height: 256px;
     margin-left: 150px;
-    margin-top: 20px;
     border: 3px solid #e7eee7;
     border-radius: 14px;
 }
@@ -103,37 +135,13 @@ body {
     filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }
 
-.bloque {
-    align-items: center;
-    width: 1704px;
-    height: 310px;
-    background-color: #f39a3f;
-    border: 5px solid black;
-    border-radius: 39px;
-    filter: drop-shadow(8px 8px 0px #8b4a28);
-
-}
-
-.Numeros {
+.numeros-poster{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 1400px;
-    align-content: flex-end;
-    margin-top: -220px;
-    margin-left: 50px;
 }
-
-.Numeros h2 {
-    font-family: 'Bukhari Script';
-    font-size: 200px;
-    color: #f7e5c6;
-    text-shadow: 5px 5px 0 #8b4a28,
-        10px 5px 0 #8b4b28a1;
-
-
+.Posters{
+    margin-left: -150px;
 }
-
 .usuario img {
     width: 70px;
     height: 70px;
@@ -175,3 +183,4 @@ body {
     border: none;
     filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }
+

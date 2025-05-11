@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 
@@ -69,18 +69,27 @@ require_once('vendor/autoload.php');
     <div class='contenedor'>
         <div class='usuarios'>
             <?php
-                $sql = "SELECT * FROM usuario WHERE usuario like '$busqueda'";
-                $resul = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($resul) > 0) {
+            $sql = "SELECT * FROM usuario WHERE usuario like '%$busqueda%'";
+            $resul = mysqli_query($conn, $sql);
+            $numcolumnas = mysqli_num_rows($resul);
+            if (mysqli_num_rows($resul) > 0) {
+                echo "<p>Se han encontrado usuarios relacionados con esta busqueda:</p>";
+                echo "<div class='usuario-busqueda'>";
+                for ($i = 0; $i < $numcolumnas; $i++) {
                     $row = mysqli_fetch_assoc($resul);
                     $fto = $row['fto_perfil'];
                     $usuario = $row['usuario'];
                     $id_usuario = $row['id'];
+
+
                     echo "<a href='/usuario.php?id=" . $id_usuario . "'>";
                     echo "<img src='$fto' alt='' />";
                     echo "<p>$usuario</p>";
                     echo "</a>";
                 }
+                echo "</div>";
+                echo "<div class='barra2'></div>";
+            }
             ?>
         </div>
         <div class='peliculas'>

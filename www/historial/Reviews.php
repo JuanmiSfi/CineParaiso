@@ -12,9 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 
-$idusuario = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
-$idusuario2 = $_GET['id'];
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 $servername = $_ENV['DB_HOST'];
@@ -80,7 +77,7 @@ if (!$conn) {
             echo "<a href='/usuario.php?id=".$idusuario."'>";
             echo "<img src='$fto_perfil' alt='' />";
             echo "</a>";
-            echo "<p>Reviews de <a href='usuario.php?id=".$idusuario."'>$usuario</a></p>";
+            echo "<p>Reviews de <a href='usuario.php?id=".$idusuario."'> $usuario</a></p>";
             ?>
             <button type="submit" class="WatchList"><a href="/historial.php" class="link">Peliculas</a></button>
             <button type="submit" class="WatchList"><a href="/historial/Reviews.php?id=<?php echo $idusuario;?>" class="link">Reviews</a></button>

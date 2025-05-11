@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: consulta.php");
     exit();
 }
-$busqueda = $_SESSION['busqueda'];
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

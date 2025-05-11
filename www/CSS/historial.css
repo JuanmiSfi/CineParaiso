@@ -38,13 +38,8 @@ body {
     align-items: center;
     height: 5rem;
 }
-
-.logo {
-    width: 15%;
-}
-
 .logo img {
-    width: 100%;
+    width: 250px;
     filter: drop-shadow(4px 5px 1px black);
     margin-left: 2rem;
 

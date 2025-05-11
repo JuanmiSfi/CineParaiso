@@ -5,7 +5,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 
-$idusuario = $_SESSION['idusuario'];
+$idusuario = $_SESSION['idusuario']??0;
 $movieId = $_GET['id'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];

@@ -5,7 +5,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 
-$idusuario = $_SESSION['idusuario'];
+$idusuario = $_SESSION['idusuario']?? 0;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
     header("Location: consulta.php");
@@ -80,11 +80,11 @@ require_once('vendor/autoload.php');
                     $fto = $row['fto_perfil'];
                     $usuario = $row['usuario'];
                     $id_usuario = $row['id'];
-
-
+                    echo "<div class='foto'>";
                     echo "<a href='/usuario.php?id=" . $id_usuario . "'>";
                     echo "<img src='$fto' alt='' />";
                     echo "<p>$usuario</p>";
+                    echo "</div>";
                     echo "</a>";
                 }
                 echo "</div>";

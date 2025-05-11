@@ -168,7 +168,7 @@ if (!$conn) {
                 ?>
                 <?php
                     if ($info != 0) {
-                        
+
                         echo "<div class='plataformas'>";
 
                         if (!empty($streaming)) {
@@ -179,7 +179,7 @@ if (!$conn) {
                                 echo '<img src="https://image.tmdb.org/t/p/original' . $plataforma . '" />';
                             }
                             echo "</div>"; // Cerrar box1
-                        } else if(!empty($comprar)){
+                        } else if (!empty($comprar)) {
                             echo "<div class='box2'>";
                             echo "<ul>";
                             foreach ($region['buy'] as $proveedor) {
@@ -187,7 +187,7 @@ if (!$conn) {
                             }
                             echo "</ul>";
                             echo "</div>"; // Cerrar box2
-                        }else{
+                        } else {
                             echo "<p id='solocine'>Actualmente en el cine</p>";
                         }
 
@@ -273,6 +273,45 @@ if (!$conn) {
                     </div>
                 </div>
                 <div class="reviews">
+                    <?php
+                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.fto_perfil FROM review r,pelicula p, usuario u WHERE p.id = $movieId AND r.id_pelicula = p.id AND r.id_usuario = $idusuario AND $idusuario = u.id";
+                    $consult = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($consult) > 0) {
+                        $fila = mysqli_fetch_assoc($consult);
+                        $movieId = $fila['id'];
+                        $usuario = $fila['usuario'];
+                        $fto = $fila['fto_perfil'];
+                        $nota = $fila['nota'];
+                        $review = $fila['review'];
+                        $fecha = $fila['fecha'];
+                        if (!empty($review)) {
+                            echo "<h2>Tu review sobre esta pélicula</h2>";
+                            echo '<div class="barra2"></div>';
+                            echo "<div class='opinion'>";
+                            echo "<div class=info>";
+                            echo "<img src='$fto' alt='' />";
+                            echo "<div class='user'>";
+                            echo "<h2>$usuario</h2>";
+                            echo "<div class='estrellas'>";
+                            for ($j = 1; $j <= 5; $j++) {
+                                if ($nota >= $j) {
+                                    echo "<i class='fas fa-star' id='estrellas'></i>";
+                                }
+                            }
+                            echo "<div class='fecha'>";
+                            if (!empty($fecha)) {
+                                $fechaconformato = date("d-m-Y", strtotime($fecha));
+                                echo "Visto el $fechaconformato";
+                            }
+                            echo "</div>"; // cierra user
+                            echo "</div>"; // Cierra fecha
+                            echo "</div>"; // cierra info
+                            echo "</div>"; // Cierra estrllas
+                            echo "<p>$review</p>";
+                            echo "</div>"; // Cierra opinion
+                        }
+                    }
+                    ?>
                     <h2>Ultimas Reviews</h2>
                     <div class="barra2"></div>
                     <?php
@@ -372,22 +411,28 @@ if (!$conn) {
                     ]);
                     $info = json_decode($response->getBody(), true);
                     $actores = $info['cast'];
-                    for ($i = 0; $i < 4; $i++) {
-                        $id_actor = $actores[$i]['id'];
-                        $nombre = $actores[$i]['name'];
-                        $personaje = $actores[$i]['character'];
-                        $fto_actor = $actores[$i]['profile_path'];
-                        echo "<div class='info-actor'>";
-                        echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
-                        echo "<div class='nombre-personaje'>";
-                        echo "<p>$nombre</p>";
-                        echo "<p>$personaje</p>";
-                        echo "</div>";
-                        echo "</div>";
+                    if ($actores) {
+                        for ($i = 0; $i < 4; $i++) {
+                            $id_actor = $actores[$i]['id'];
+                            $nombre = $actores[$i]['name'];
+                            $personaje = $actores[$i]['character'];
+                            $fto_actor = $actores[$i]['profile_path'];
+                            echo "<div class='info-actor'>";
+                            echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
+                            echo "<div class='nombre-personaje'>";
+                            echo "<p>$nombre</p>";
+                            echo "<p>$personaje</p>";
+                            echo "</div>";
+                            echo "</div>";
+                        }
+                    } else {
+                        echo "<p>No se ha encontrado cast para esta pelicula</p>";
                     }
                     ?>
                 </div>
-                <a href='todas.php?id=" . $movieId . "'><p>Reparto completo</p></a>
+                <a href='cast.php?id=<?php echo $movieId;?>'>
+                    <p>Reparto completo</p>
+                </a>
             </div>
         </div>
     </div>

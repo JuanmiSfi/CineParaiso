@@ -141,7 +141,7 @@ if (isset($_POST['cerrar'])) {
 
                         <?php
                         //Hacemos una consulta para el poster de las 5 ultimas pelicula
-                        $sql = "SELECT p.poster, r.nota FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
+                        $sql = "SELECT p.poster, r.nota, r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
                         $consult = mysqli_query($conn, $sql);
                         $num_filas = mysqli_num_rows($consult);
                         if ($num_filas >= 5) {
@@ -150,6 +150,7 @@ if (isset($_POST['cerrar'])) {
                                 $fila = mysqli_fetch_assoc($consult);
                                 $nota = $fila['nota'];
                                 $poster = $fila['poster'];
+                                $opinion = $fila['review'];
                                 echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
                                 if (isset($nota)) {
                                     echo "<div class='nota'>";
@@ -157,6 +158,9 @@ if (isset($_POST['cerrar'])) {
                                         if ($nota >= $j) {
                                             echo "<i class='fas fa-star' id='estrellas'></i>";
                                         }
+                                    }
+                                    if(isset($opinion)){
+                                        echo "<i class='fa-solid fa-align-left' id='rw'></i>";
                                     }
                                     echo "</div>";
                                 }

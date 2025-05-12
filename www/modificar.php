@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 
@@ -33,19 +33,17 @@ if (mysqli_num_rows($result) > 0) {
     $fto = $row['fto_perfil'];
 }
 ?>
-        <?php
-        if (isset($_POST['modificar'])) {
-            $sql = "UPDATE usuario SET nombre = '$_POST[nombre]', apellidos = '$_POST[apellidos]', email = '$_POST[email]', bio = '$_POST[bio]' WHERE usuario = '$usuario'";
-            if (mysqli_query($conn, $sql)) {
-                echo "Los datos se han modificado correctamente";
-                header("Location: usuario.php?id=".$idusuario."");
-                exit();
-            } else {
-                echo "No se han modificado los datos dado que" . mysqli_error($conn);
-                mysqli_close($conn);
-            }
-        }
-        ?>
+<?php
+if (isset($_POST['modificar'])) {
+    $sql = "UPDATE usuario SET nombre = '$_POST[nombre]', apellidos = '$_POST[apellidos]', email = '$_POST[email]', bio = '$_POST[bio]' WHERE usuario = '$usuario'";
+    if (mysqli_query($conn, $sql)) {
+        header("Location: usuario.php?id=" . $idusuario . "");
+        exit();
+    } else {
+        mysqli_close($conn);
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -77,7 +75,7 @@ if (mysqli_num_rows($result) > 0) {
                         </label>
                     </form>
                 </div>
-                    <div class="formulario2">
+                <div class="formulario2">
                     <form action='' METHOD="POST" name="mod">
                         <label for="nombre">
                             <p>Nombre:</p>
@@ -97,10 +95,10 @@ if (mysqli_num_rows($result) > 0) {
                         <textarea name="bio" id="bio"><?php echo $bio; ?></textarea><br>
                         <input type="submit" name="modificar" value="Modificar" id="boton" /><br>
                     </form>
-                    </div>
-                    <p><a href="usuario.php?id=<?php echo $idusuario?>">click para salir sin hacer cambios.</a></p>
                 </div>
+                <p><a href="usuario.php?id=<?php echo $idusuario ?>">click para salir sin hacer cambios.</a></p>
             </div>
+        </div>
         </div>
     </body>
 </body>

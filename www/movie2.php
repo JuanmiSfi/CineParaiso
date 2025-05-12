@@ -418,7 +418,9 @@ if (!$conn) {
                             $personaje = $actores[$i]['character'];
                             $fto_actor = $actores[$i]['profile_path'];
                             echo "<div class='info-actor'>";
+                            echo "<a href='actor.php?id=".$id_actor."'>";
                             echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
+                            echo "</a>";
                             echo "<div class='nombre-personaje'>";
                             echo "<p>$nombre</p>";
                             echo "<p>$personaje</p>";

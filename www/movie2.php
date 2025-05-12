@@ -213,7 +213,7 @@ if (!$conn) {
                             if (isset($_POST['subir'])) {
                                 if (!empty($idusuario)) {
                                     $nota = isset($_POST['puntuacion']) ? $_POST['puntuacion'] : 'NULL';
-                                    $sql = "INSERT INTO review (review,nota,vermastarde,fecha,id_pelicula,id_usuario) values('$_POST[review]',$nota,0,CURRENT_TIMESTAMP,$movieId,$idusuario)";
+                                    $sql = "INSERT INTO review (review,nota,vermastarde,fecha,id_pelicula,id_usuario) values ('$_POST[review]',$nota,0,CURRENT_TIMESTAMP,$movieId,$idusuario)";
                                     $existe = mysqli_query($conn, $sql);
                                     if ($existe) {
                                         echo "<p>Has sido registrado correctamente</p>";

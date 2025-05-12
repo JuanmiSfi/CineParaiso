@@ -19,10 +19,12 @@ services:
       MYSQL_ROOT_PASSWORD: 999999
       MYSQL_USER: admin
       MYSQL_PASSWORD: AlumnadoIAW
+      LANG: es_ES.UTF-8
     volumes:
       - mysql_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
-
+      - ./mysql-conf.d/mysql-conf.cnd:/etc/mysql/conf.d/mysql-conf.cnd
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_spanish2_ci
     networks:
       - app_network
   phpmyadmin:

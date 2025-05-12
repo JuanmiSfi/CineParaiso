@@ -30,28 +30,27 @@ require_once('vendor/autoload.php');
 ?>
 <?php
 // Añadimos los datos a la tabla actuan
-                    $client = new \GuzzleHttp\Client();
+$client = new \GuzzleHttp\Client();
 
-                    $response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $idactor . '/movie_credits?language=es-ES', [
-                        'headers' => [
-                            'Authorization' => 'Bearer ' . $API . '',
-                            'accept' => 'application/json',
-                        ],
-                    ]);
+$response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '/movie_credits?language=es-ES', [
+    'headers' => [
+        'Authorization' => 'Bearer ' . $API . '',
+        'accept' => 'application/json',
+    ],
+]);
 
-                    $consulta = json_decode($response->getBody(), true);
-                    $pelis = $consulta['cast'];
-                    if ($pelis) {
-                        for ($i = 0; $i < count($pelis); $i++) {
-                            $movieId = $pelis[$i]['id'];
-                            $nombre_pelicula = $pelis[$i]['original_title'];
-                            $titulo_completo = $pelis[$i]['original_title'];
-                            $popularidad = $pelis[$i]['popularity'];
-                            $movie_poster_path = $pelis[$i]['poster_path'];
-                            
-                        }
-                    }
-                    ?>
+$consulta = json_decode($response->getBody(), true);
+$pelis = $consulta['cast'];
+if ($pelis) {
+    for ($i = 0; $i < count($pelis); $i++) {
+        $movieId = $pelis[$i]['id'];
+        $nombre_pelicula = $pelis[$i]['original_title'];
+        $titulo_completo = $pelis[$i]['original_title'];
+        $popularidad = $pelis[$i]['popularity'];
+        $movie_poster_path = $pelis[$i]['poster_path'];
+    }
+}
+?>
 
 
 <!DOCTYPE html>
@@ -111,6 +110,7 @@ require_once('vendor/autoload.php');
                 $nombre = $info['name'];
                 $genero = $info['gender'];
                 $fto_actor = $info['profile_path'];
+                $lugar_n = $info['place_of_birth'];
                 $bio = $info['biography'];
                 $fecha_n = $info['birthday'];
                 $fecha_d = $info['deathday'];
@@ -118,15 +118,18 @@ require_once('vendor/autoload.php');
                 echo '<img src="https://image.tmdb.org/t/p/w300_and_h450_face/' . $fto_actor . '" />';
                 echo "<h2><b>Información personal</b></h2>";
                 echo "<h3>Sexo</h3>";
-                if($genero == 1){
+                if ($genero == 1) {
                     echo "Femenino";
-                }else if($genero == 0){
+                } else if ($genero == 2) {
                     echo "Masculino";
-                }else{
+                } else {
                     echo "No definido";
                 }
                 echo "<h3>Fecha nacimiento</h3>";
-
+                $fechaconformato = date("d-m-Y", strtotime($fecha_n));
+                echo "<p>$fechaconformato</p>";
+                echo "<h3>Lugar de nacimiento</h3>";
+                echo $lugar_n;
                 echo "</div>";
                 echo "<div class='info'>";
                 echo "<h2>$nombre</h2>";
@@ -135,7 +138,34 @@ require_once('vendor/autoload.php');
                 ?>
                 <h3>Conocido por:</h3>
                 <div class='peliculas'>
-                    
+                    <?php
+                    // Añadimos los datos a la tabla actuan
+                    $client = new \GuzzleHttp\Client();
+
+                    $response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '/movie_credits?language=es-ES', [
+                        'headers' => [
+                            'Authorization' => 'Bearer ' . $API . '',
+                            'accept' => 'application/json',
+                        ],
+                    ]);
+
+                    $consulta = json_decode($response->getBody(), true);
+                    $pelis = $consulta['cast'];
+                    if ($pelis) {
+                        for ($i = 0; $i < 5; $i++) {
+                            $movieId = $pelis[$i]['id'];
+                            $nombre_pelicula = $pelis[$i]['original_title'];
+                            $titulo_completo = $pelis[$i]['original_title'];
+                            $popularidad = $pelis[$i]['popularity'];
+                            $movie_poster_path = $pelis[$i]['poster_path'];
+                            if(!empty($movie_poster_path)){
+                                echo "<a href='movie2.php?id=" . $movieId . "'>";
+                                echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' width='150'><br>";
+                                echo "</a>";
+                            }
+                        }
+                    }
+                    ?>
                 </div> <!-- Cierra peliculas-->
             </div> <!--Cierra info-->
         </div>

@@ -79,8 +79,7 @@ a{
     flex-wrap: wrap;
     padding: 20px;
 }
-.actor{
-}
+
 .actor-info{
     display: flex;
     flex-direction: row;
@@ -98,23 +97,34 @@ a{
 }
 .info p{
     font-family: 'Codec Pro';
-    font-size: 15px;
+    font-size: 17px;
+    margin-right: 750px;
 }
 .peliculas{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 350px;
     gap: 15px;
     
+}
+.peliculas img{
+    border-radius: 8px;
+    border: 3px solid #e7eee7;
+
+}
+.peliculas img:hover{
+    border: none;
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }
 .poster-titulo{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.poster-titulo p{
-    font-size: .9em;
-}
 
-.poster-titulo img{
+.foto-actor img{
     border-radius: 8px;
+    border: 3px solid #e7eee7;
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }

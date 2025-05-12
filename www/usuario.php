@@ -105,7 +105,7 @@ if (isset($_POST['cerrar'])) {
                     if ($idusuario == $_SESSION['idusuario']) {
                         echo "<button type='submit' class='modifi'><a href='modificar.php' class='link'>Modificar usuario</a></button>";
                     } else {
-                        $sql = "SELECT COUNT(*) FROM siguen WHERE $idusuario=id_usuario AND $idusuario2=id_seguidor";
+                        $sql = "SELECT COUNT(*) FROM siguen WHERE $idusuario=id_usuario AND $idusuario2=id_sigue";
                         $resul = mysqli_query($conn, $sql);
                         if (mysqli_num_rows($resul) > 0) {
                             echo "<button type='submit' class='follow'><a href='siguiendo.php' class='link'>Seguir</a></button>";

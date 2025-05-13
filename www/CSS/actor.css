@@ -84,6 +84,13 @@ a{
     display: flex;
     flex-direction: row;
 }
+
+.actor-info .foto-actor h2{
+    font-family: 'Codec Pro';
+    font-size: 25px;
+    color: #8b4a28;
+}
+
 .foto-actor img{
     border-radius: 8px;
 }
@@ -121,6 +128,25 @@ a{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.actor-info .foto-actor h2{
+    margin-top: 15px;
+    font-family: 'Codec Pro';
+    font-size: 25px;
+    color: #8b4a28;
+}
+
+.actor-info .foto-actor h3{
+        font-family: 'Codec Pro';
+        font-size: 20px;
+        color: #8b4a28;
+}
+
+.actor-info .foto-actor p{
+            font-family: 'Codec Pro';
+        font-size: 20px;
+        color: #171717;
 }
 
 .foto-actor img{

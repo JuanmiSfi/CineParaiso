@@ -90,6 +90,7 @@ if (!$conn) {
                     $title = $movie['title'];
                     // Error encontrado en la pelicula Capitana Marvel que al tener en la descripción unas comillas simples el sistema cierra la inserción y se buguea.
                     $overview = mysqli_real_escape_string($conn, $movie['overview']);
+                    $popularidad = $movie['popularity'];
                     $release_date = $movie['release_date'];
                     $vote_average = $movie['vote_average'];
                     $vote_count = $movie['vote_count'];
@@ -105,7 +106,7 @@ if (!$conn) {
                 $consulta = (mysqli_query($conn, $sql));
                 //Si la consulta devuelve 0 columnas insertamos la pelicula
                 if (mysqli_num_rows($consulta) == 0) {
-                    $sql = "INSERT INTO pelicula (id,titulo,año,descripcion,poster) values($movieId,'$title',$release_date,'$overview','$poster_path')";
+                    $sql = "INSERT INTO pelicula (id,titulo,año,descripcion,popularidad,poster) values($movieId,'$title',$release_date,'$overview',$popularidad,'$poster_path')";
                     $aniadir = (mysqli_query($conn, $sql));
                     if ($aniadir) {
                     } else {
@@ -115,9 +116,14 @@ if (!$conn) {
                 <?php
                 // Si el usuario tiene ya una review hecha de esta pelicula que se imprima
                 if (isset($idusuario)) {
-                    $sql = "SELECT nota,vermastarde from review where id_usuario=$idusuario AND id_pelicula=$movieId";
+                    $sql = "SELECT nota,vermastarde,review from review where id_usuario=$idusuario AND id_pelicula=$movieId";
                     $resul = (mysqli_query($conn, $sql));
                     $row = mysqli_fetch_assoc($resul);
+                    if(isset($row['review'])){
+                    $review = $row['review'];
+                    }else{
+                        $review = ' ';
+                    }
                     $nota = $row['nota'] ?? -1;
                     $vermastarde = $row['vermastarde'] ?? -1;
                 } else {
@@ -199,7 +205,7 @@ if (!$conn) {
                     <div class="formulario2">
                         <h2>Review</h2>
 
-                        <textarea name="review" id="review"></textarea>
+                        <textarea name="review" id="review" ></textarea>
                         <label for="boton" class="boton">
                             <button type='submit' name='subir'>Subir!</button>
                         </label>

@@ -29,30 +29,64 @@ if (!$conn) {
 require_once('vendor/autoload.php');
 ?>
 <?php
-// Añadimos los datos a la tabla actuan
+
 $client = new \GuzzleHttp\Client();
 
-$response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '/movie_credits?language=es-ES', [
+$response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '?language=es-Es', [
     'headers' => [
         'Authorization' => 'Bearer ' . $API . '',
         'accept' => 'application/json',
     ],
 ]);
 
-$consulta = json_decode($response->getBody(), true);
-$pelis = $consulta['cast'];
-if ($pelis) {
-    for ($i = 0; $i < count($pelis); $i++) {
-        $movieId = $pelis[$i]['id'];
-        $nombre_pelicula = $pelis[$i]['original_title'];
-        $titulo_completo = $pelis[$i]['original_title'];
-        $popularidad = $pelis[$i]['popularity'];
-        $movie_poster_path = $pelis[$i]['poster_path'];
+$info = json_decode($response->getBody(), true);
+$idactor = $info['id'];
+$nombre = $info['name'];
+$genero = $info['gender'];
+$fto_actor = $info['profile_path'];
+$lugar_n = $info['place_of_birth'];
+$bio = $info['biography'];
+$fecha_n = $info['birthday'];
+$fecha_d = $info['deathday'];
+
+$sql = "SELECT * FROM actor WHERE id_actor=$idactor";
+$consulta = (mysqli_query($conn, $sql));
+if (mysqli_num_rows($consulta) == 0) {
+    if (isset($info['deathday'])) {
+        $stmt = $conn->prepare("INSERT INTO actor(id_actor, genero, nombre, fto, bio, nacimiento, fallecimiento, lugar_de_nacimiento)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iissssss", $idactor, $genero, $nombre, $fto_actor, $bio, $fecha_n, $fecha_d, $lugar_n);
+        $stmt->execute();
+    } else {
+        $stmt = $conn->prepare("INSERT INTO actor(id_actor, genero, nombre, fto, bio, nacimiento, fallecimiento, lugar_de_nacimiento)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iissssss", $idactor, $genero, $nombre, $fto_actor, $bio, $fecha_n, $fecha_d, $lugar_n);
+        $stmt->execute();
     }
 }
 ?>
 
+<?php
+require_once('vendor/autoload.php');
 
+$client = new \GuzzleHttp\Client();
+
+$response = $client->request('GET', 'https://api.themoviedb.org/3/person/'.$idactor.'/external_ids', [
+  'headers' => [
+    'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlODBmYjY4YzM2ZTExODRlZGRiYmY1MGEwNjQxMDcwZCIsIm5iZiI6MS43NDQxMzczNDU3NTgwMDAxZSs5LCJzdWIiOiI2N2Y1NmM4MWVkZGVjMjhiMDNhZGUwMDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.uRGiMicdSlhinc4hnY9eeWDeavyIbiBU-dT1RM33Ggk',
+    'accept' => 'application/json',
+  ],
+]);
+
+$info = json_decode($response->getBody(), true);
+$imdb_id = $info['imdb_id'];
+$wikidata_id = $info['wikidata_id'];
+$facebook_id = $info['facebook_id'];
+$instagram_id = $info['instagram_id'];
+$tiktok_id =  $info['tiktok_id'];
+$twitter_id = $info['twitter_id'];
+$youtube_id = $info['youtube_id'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -117,19 +151,20 @@ if ($pelis) {
                 echo "<div class='foto-actor'>";
                 echo '<img src="https://image.tmdb.org/t/p/w300_and_h450_face/' . $fto_actor . '" />';
                 echo "<h2><b>Información personal</b></h2>";
+
                 echo "<h3>Sexo</h3>";
                 if ($genero == 1) {
-                    echo "Femenino";
+                    echo "<p>Femenino</p>";
                 } else if ($genero == 2) {
-                    echo "Masculino";
+                    echo "<p>Masculino</p>";
                 } else {
-                    echo "No definido";
+                    echo "<p>No definido</p>";
                 }
                 echo "<h3>Fecha nacimiento</h3>";
                 $fechaconformato = date("d-m-Y", strtotime($fecha_n));
                 echo "<p>$fechaconformato</p>";
                 echo "<h3>Lugar de nacimiento</h3>";
-                echo $lugar_n;
+                echo "<p>$lugar_n</p>";
                 echo "</div>";
                 echo "<div class='info'>";
                 echo "<h2>$nombre</h2>";
@@ -152,13 +187,13 @@ if ($pelis) {
                     $consulta = json_decode($response->getBody(), true);
                     $pelis = $consulta['cast'];
                     if ($pelis) {
-                        for ($i = 0; $i < 5; $i++) {
+                        for ($i = 0; $i < count($pelis); $i++) {
                             $movieId = $pelis[$i]['id'];
                             $nombre_pelicula = $pelis[$i]['original_title'];
                             $titulo_completo = $pelis[$i]['original_title'];
                             $popularidad = $pelis[$i]['popularity'];
                             $movie_poster_path = $pelis[$i]['poster_path'];
-                            if(!empty($movie_poster_path)){
+                            if (!empty($movie_poster_path)) {
                                 echo "<a href='movie2.php?id=" . $movieId . "'>";
                                 echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' width='150'><br>";
                                 echo "</a>";

@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-
+$mensaje=0;
 $idusuario = $_SESSION['idusuario'] ?? 0;
 
 if ($idusuario != 0) {
@@ -42,7 +42,7 @@ if (isset($_POST['iniciar'])) {
             header("Location: usuario.php?id=".$idusuario."");
             exit();
         } else {
-            echo "<div class='error'><p>El usuario o la contraseña es incorrecta</p></div>";
+            $mensaje = 1;
         }
     }
 }
@@ -88,6 +88,11 @@ if (isset($_POST['iniciar'])) {
                         </label>
                     </form>
                 </div>
+                    <?php
+                        if($mensaje == 1){
+                             echo "<div class='error'><p>El usuario o la contraseña es incorrecta</p></div>";
+                        }
+                        ?>
             </div>
         </div>
     </body>

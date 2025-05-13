@@ -36,6 +36,7 @@ a{
 }
 
 .logo img {
+    align-items: center;
     width: 250px;
     filter: drop-shadow(4px 5px 1px black);
     margin-left: 2rem;
@@ -72,6 +73,7 @@ a{
 .usuario img {
     width: 70px;
     height: 70px;
+    border-radius: 50%;
     margin-right: 2rem;
 }
 
@@ -79,6 +81,9 @@ a{
     display: flex;
     flex-direction: row;
     margin-right: 550px;
+}
+.actividad{
+    padding-left: 50px;
 }
 
 .boton button {
@@ -157,12 +162,57 @@ a{
 
 .bio {
     font-style: italic;
-    padding-right: 35%;
 }
 .nav1{
     display: flex;
     flex-direction: row;
 }
+.nav1 .follow{
+    font-family: 'Codec Pro';
+    font-size: 20px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 8px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: rgb(49, 51, 49);
+    cursor: pointer;
+}
+
+.nav1 .unfollow{
+    font-family: 'Codec Pro';
+    font-size: 20px;
+    border-radius: 8px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: rgb(26, 176, 26);
+    cursor: pointer;
+}
+.nav1 .unfollow:hover{
+    background-color: #962508;
+}
+
+.unfollow::before {
+    content: 'Siguiendo';
+    position: absolute;
+    
+}
+.unfollow::after {
+    content: 'Dejar de seguir';
+    position: 'absolute';
+    opacity: 0;
+}
+
+.unfollow:hover::before{
+    opacity: 0;
+}
+
+.unfollow:hover::after{
+    
+    opacity: 1;
+}
+
+
 .nav1 .n_seguidores{
     display: flex;
     flex-direction: column;
@@ -182,6 +232,11 @@ a{
     flex-direction: column;
     align-items: center;
     margin-right: 15px;
+}
+.n_pelis a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .n_pelis p{
     font-family: 'Codec Pro', sans-serif;

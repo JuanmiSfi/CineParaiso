@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
 $dotenv->load();
 
+$mensaje = 0;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 $servername = $_ENV['DB_HOST'];
@@ -39,7 +40,7 @@ if (!$conn) {
                             echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>";
                         }
                     } else {
-                        echo "<div class='error'><p>El nombre de usuario escogido ya existe en el sistema</p></div>";
+                        $mensaje = 1;
                     }
                 }
                 // Cerrar conexión 
@@ -87,6 +88,11 @@ if (!$conn) {
                         </label>
                     </form>
                 </div>
+                <?php
+                if($mensaje == 1){
+                    echo "<div class='error'><p>El nombre de usuario escogido ya existe en el sistema</p></div>";
+                }
+                ?>
             </div>
         </div>
     </body>

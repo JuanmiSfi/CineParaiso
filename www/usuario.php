@@ -5,8 +5,8 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 
-$idusuario = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
-$idusuario2 = $_GET['id'];
+$idusuario2 = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
+
 
 
 error_reporting(E_ALL);
@@ -51,7 +51,7 @@ if (isset($_POST['cerrar'])) {
             </div>
             <div class="usuario"><a href="login.php">
                     <?php
-                    if ($idusuario == $_SESSION['idusuario']) {
+                    if ($idusuario2 == $_SESSION['idusuario']) {
                         echo '
                 <form action="" method="POST">
                         <label for="Boton" class="boton">
@@ -79,7 +79,7 @@ if (isset($_POST['cerrar'])) {
         <div class="contenedor">
             <div class="info">
                 <?php
-                $sql = "SELECT u.*,e.* FROM usuario u, estadistica e WHERE u.id = $idusuario AND e.id_usuario = $idusuario";
+                $sql = "SELECT u.*,e.* FROM usuario u, estadistica e WHERE u.id = $idusuario2 AND e.id_usuario = $idusuario2";
                 $resul = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($resul) > 0) {
                     $row = mysqli_fetch_assoc($resul);
@@ -100,22 +100,34 @@ if (isset($_POST['cerrar'])) {
 
             </div>
             <div class="actividad">
+               </form>
                 <div class=nav1>
                     <?php
-                    if ($idusuario == $_SESSION['idusuario']) {
+                    if ($idusuario2 == $_SESSION['idusuario']) {
                         echo "<button type='submit' class='modifi'><a href='modificar.php' class='link'>Modificar usuario</a></button>";
                     } else {
-                        $sql = "SELECT COUNT(*) FROM siguen WHERE $idusuario=id_usuario AND $idusuario2=id_sigue";
+                        $sql = "SELECT COUNT(*) FROM siguen WHERE id_usuario=$_SESSION[idusuario] AND $idusuario2=id_sigue";
                         $resul = mysqli_query($conn, $sql);
-                        if (mysqli_num_rows($resul) > 0) {
-                            echo "<button type='submit' class='follow'><a href='siguiendo.php' class='link'>Seguir</a></button>";
+                        $sigue=mysqli_fetch_row($resul);
+                        if ($sigue[0] == 0) {
+                            echo '<form action="siguen.php" method="POST">';
+                            echo "<input type='hidden' name='idusuario' value='".$_SESSION['idusuario']."'>";
+                            echo "<input type='hidden' name='idusuario2' value='".$idusuario2."'>";
+                            echo "<button type='submit' name='follow' class='follow'>seguir</button>";
+                            echo '</form>';
                         } else {
-                            echo "<button type='submit' class='follow'><a href='siguiendo.php' class='link'>Siguiendo</a></button>";
+                            echo '<form action="siguen.php" method="POST">';
+                            echo "<input type='hidden' name='idusuario' value='".$_SESSION['idusuario']."'>";
+                            echo "<input type='hidden' name='idusuario2' value='".$idusuario2."'>";
+                            echo "<button type='submit' name='unfollow' class='unfollow'></button>";
+                            echo '</form>';
                         }
                     }
                     echo "<div class='n_pelis'>";
+                    echo '<a href="historial.php" class="WatchList">';
                     echo "<h3>$num_pelis</h3>";
                     echo "<p>Peliculas vistas </p>";
+                    echo '</a>';
                     echo "</div>";
 
                     echo "<div class='n_seguidores'>";
@@ -145,7 +157,7 @@ if (isset($_POST['cerrar'])) {
 
                         <?php
                         //Hacemos una consulta para el poster de las 5 ultimas pelicula
-                        $sql = "SELECT p.id, p.poster, r.nota, r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
+                        $sql = "SELECT p.id, p.poster, r.nota, r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
                         $consult = mysqli_query($conn, $sql);
                         $num_filas = mysqli_num_rows($consult);
                         if ($num_filas >= 5) {
@@ -177,9 +189,12 @@ if (isset($_POST['cerrar'])) {
                             for ($i = 0; $i < $num_filas; $i++) {
                                 echo '<div class="Poster">';
                                 $fila = mysqli_fetch_assoc($consult);
+                                $movieId = $fila['id'];
                                 $nota = $fila['nota'];
                                 $poster = $fila['poster'];
+                                echo "<a href='/movie2.php?id=" . $movieId . "'>";
                                 echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                                echo "</a>";
                                 if (isset($nota)) {
                                     echo "<div class='nota'>";
                                     for ($j = 1; $j <= 5; $j++) {
@@ -197,7 +212,7 @@ if (isset($_POST['cerrar'])) {
                 </div>
                 <div class="opion">
                     <?php
-                    $sql = "SELECT * FROM review WHERE id_usuario = $idusuario AND vermastarde = 0 ORDER BY fecha DESC";
+                    $sql = "SELECT * FROM review WHERE id_usuario = $idusuario2 AND vermastarde = 0 ORDER BY fecha DESC";
                     $resul = mysqli_query($conn, $sql);
                     $num_filas2 = mysqli_num_rows($resul);
 
@@ -205,7 +220,7 @@ if (isset($_POST['cerrar'])) {
                     <p>Ultimas reviews</p>
                     <div class="barra2"></div>
                     <?php
-                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
+                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
                     $consult = mysqli_query($conn, $sql);
                     $numerofilas = mysqli_num_rows($consult);
                     if ($num_filas >= 4) {
@@ -277,7 +292,7 @@ if (isset($_POST['cerrar'])) {
                         }
                     }
                     ?>
-                    <a href="/historial/Reviews.php?id=<?php echo "$idusuario"; ?>" class="WatchList">
+                    <a href="/historial/Reviews.php?id=<?php echo "$idusuario2"; ?>" class="WatchList">
                         <p>Ver mas reviews</p>
                     </a>
                 </div>

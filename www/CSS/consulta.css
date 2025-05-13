@@ -69,8 +69,8 @@ a{
     margin-bottom: 15px;
 }
 .usuarios{
-    padding-left: 20px;
-    margin-left: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
     
 }
 .usuarios p{
@@ -83,7 +83,7 @@ a{
     flex-direction: row;
     align-items: center;
     gap: 30px;
-    margin-left: 40px;
+    
 }
 .foto img{
     border-radius: 50%;
@@ -109,8 +109,8 @@ a{
 }
 .peliculas {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 columnas iguales */
-    gap: 15px; /* Espacio entre elementos */
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 5px; 
     margin-top: 25px;
     margin-left: 90px;
 }

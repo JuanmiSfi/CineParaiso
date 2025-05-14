@@ -102,6 +102,7 @@ if (isset($_POST['cerrar'])) {
             <div class="actividad">
                </form>
                 <div class=nav1>
+                    <div class = 'botones'>
                     <?php
                     if ($idusuario2 == $_SESSION['idusuario']) {
                         echo "<button type='submit' class='modifi'><a href='modificar.php' class='link'>Modificar usuario</a></button>";
@@ -123,8 +124,9 @@ if (isset($_POST['cerrar'])) {
                             echo '</form>';
                         }
                     }
+                    echo "</div>";
                     echo "<div class='n_pelis'>";
-                    echo '<a href="historial.php" class="WatchList">';
+                    echo '<a href="historial.php/id?='.$idusuario2.'" class="WatchList">';
                     echo "<h3>$num_pelis</h3>";
                     echo "<p>Peliculas vistas </p>";
                     echo '</a>';
@@ -143,10 +145,10 @@ if (isset($_POST['cerrar'])) {
                 </div>
                 <div class="barra2"></div>
                 <div class="navegador">
-                    <a href="historial.php" class="WatchList">
+                    <a href="historial.php?id=<?php echo $idusuario2?>" class="WatchList">
                         <p>Peliculas vistas</p>
                     </a>
-                    <a href="watchlist.php" class="WatchList">
+                    <a href="historial.php?id=<?php echo $idusuario2?>" class="WatchList">
                         <p>WatchList</p>
                     </a>
                 </div>

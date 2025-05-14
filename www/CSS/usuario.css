@@ -167,38 +167,43 @@ a{
     display: flex;
     flex-direction: row;
 }
-.nav1 .follow{
+.botones{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+.follow{
+    padding: 10px;
     font-family: 'Codec Pro';
     font-size: 20px;
     text-align: center;
     color: #ffffff;
     border-radius: 8px;
-    padding-top: 15px;
-    padding-bottom: 15px;
     background-color: rgb(49, 51, 49);
     cursor: pointer;
 }
 
-.nav1 .unfollow{
+.unfollow{
     font-family: 'Codec Pro';
     font-size: 20px;
     border-radius: 8px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 10px;
     background-color: rgb(26, 176, 26);
     cursor: pointer;
 }
-.nav1 .unfollow:hover{
+.unfollow:hover{
     background-color: #962508;
 }
 
 .unfollow::before {
-    content: 'Siguiendo';
+    content: 'Follow';
+    text-align: center;
+    margin-left: 12px;
     position: absolute;
     
 }
 .unfollow::after {
-    content: 'Dejar de seguir';
+    content: 'Unfollow';
     position: 'absolute';
     opacity: 0;
 }

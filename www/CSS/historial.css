@@ -157,3 +157,12 @@ body {
     margin-left: 10px;
     filter: none;
 }
+.sin-review{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sin-review p{
+    font-family: 'Codec Pro';
+    font-size: 40px;
+}

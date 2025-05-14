@@ -138,3 +138,12 @@ a{
         height: 70px;
         margin-right: 2rem;
 }
+.sin-review{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sin-review p{
+    font-family: 'Codec Pro';
+    font-size: 40px;
+}

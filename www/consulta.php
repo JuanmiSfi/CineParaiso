@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-
+$error=false;
 $idusuario = $_SESSION['idusuario']?? 0;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
@@ -27,6 +27,8 @@ if (!$conn) {
     die("Conexión fallida: " . mysqli_connect_error());
 }
 require_once('vendor/autoload.php');
+
+try{
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +94,6 @@ require_once('vendor/autoload.php');
             }
             ?>
         </div>
-        <div class='peliculas'>
             <?php
             $client = new \GuzzleHttp\Client();
 
@@ -103,6 +104,9 @@ require_once('vendor/autoload.php');
                 ],
             ]);
             $pelis = json_decode($response->getBody(), true);
+            ?>
+            <div class='peliculas'>
+            <?php
             foreach ($pelis['results'] as $movie) {
                 // Asignamos las propiedades de la película a variables
                 $movie_id = $movie['id'];
@@ -117,6 +121,20 @@ require_once('vendor/autoload.php');
         </div>
     </div>
 </body>
+
+<?php
+} catch (Exception $e) {
+    $error = true;
+}
+    ?>
+    <div class='sin-review'>
+        <?php
+        if ($error == true) {
+            echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
+            echo "<p>¡Vaya! Parece que estamos de mantenimiento</p>";
+        }
+        ?>
+    </div>
 </body>
 
 </html>

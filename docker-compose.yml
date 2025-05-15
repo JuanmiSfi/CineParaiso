@@ -10,8 +10,6 @@ services:
       - 443:443
     networks:
       - app_network
-    depends_on:
-      - db
   db:
     image: mysql:latest
     container_name: mysql
@@ -40,6 +38,17 @@ services:
       - 8001:80
     depends_on:
       - db
+    networks:
+      - app_network
+  postfix:
+    image: boky/postfix
+    container_name: postfix
+    environment:
+      - ALLOWED_SENDER_DOMAINS=cineparaiso.com
+      - RELAYHOST=[smtp.gmail.com]:587 
+      - SMTP_USERNAME=sfijuanmifp@gmail.com
+      - SMTP_PASSWORD=cfox exqz mopg aqfu
+    restart: unless-stopped
     networks:
       - app_network
 volumes:

@@ -10,6 +10,7 @@ $dotenv->load();
 
 
 $idusuario = $_SESSION['idusuario'] ?? 0;
+$id_rol = $_SESSION['id_rol'] ?? 0;
 
 $error=false;
 

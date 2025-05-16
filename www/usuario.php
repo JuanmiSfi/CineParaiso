@@ -4,9 +4,19 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+$id_rol = $_SESSION['id_rol'];
+
+if(!isset($_GET['id']) ){
+    header("Location: login.php");
+    exit();
+}
+
+if($id_rol == 2){
+    header("Location: admin.php");
+    exit();
+}
 
 $idusuario2 = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
-
 
 
 error_reporting(E_ALL);
@@ -126,7 +136,7 @@ if (isset($_POST['cerrar'])) {
                     }
                     echo "</div>";
                     echo "<div class='n_pelis'>";
-                    echo '<a href="historial.php/id?='.$idusuario2.'" class="WatchList">';
+                    echo '<a href="historial.php?id='.$idusuario2.'" class="WatchList">';
                     echo "<h3>$num_pelis</h3>";
                     echo "<p>Peliculas vistas </p>";
                     echo '</a>';

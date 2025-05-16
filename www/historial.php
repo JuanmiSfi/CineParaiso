@@ -6,6 +6,7 @@ $dotenv->load();
 
 
 $idusuario = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
+$noreview = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
     header("Location: consulta.php");

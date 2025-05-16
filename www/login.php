@@ -4,14 +4,14 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$mensaje=0;
+$mensaje = 0;
 $idusuario = $_SESSION['idusuario'] ?? 0;
+$id_rol = $_SESSION['id_rol'] ?? 0;
 
 if ($idusuario != 0) {
-    header("Location: usuario.php?id=".$idusuario."");
+    header("Location: usuario.php?id=" . $idusuario . "");
     exit();
 }
-
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -37,12 +37,25 @@ if (isset($_POST['iniciar'])) {
         $row = mysqli_fetch_assoc($resul);
         $idusuario = $row['id'];
         $passcifrada = $row['contraseña'];
-        if (password_verify($password, $passcifrada)) {
-            $_SESSION['idusuario'] = $idusuario;
-            header("Location: usuario.php?id=".$idusuario."");
-            exit();
-        } else {
-            $mensaje = 1;
+        $id_rol = $row['id_rol'];
+        $verificado = $row['verificado'];
+        if ($verificado == 1) {
+            if (password_verify($password, $passcifrada) && $id_rol == 1) {
+                $_SESSION['idusuario'] = $idusuario;
+                $_SESSION['id_rol'] = $id_rol;
+                header("Location: usuario.php?id=" . $idusuario . "");
+                exit();
+            } else if (password_verify($password, $passcifrada) && $id_rol == 2) {
+                $_SESSION['idusuario'] = $idusuario;
+                $_SESSION['id_rol'] = $id_rol;
+                header("Location: admin.php?id=" . $idusuario . "");
+                exit();
+            } else {
+                $mensaje = 1;
+            }
+        }else{
+            header("Location: /PHP/verificacion.php?usuario=".$usuario."");
+                exit();
         }
     }
 }
@@ -88,11 +101,11 @@ if (isset($_POST['iniciar'])) {
                         </label>
                     </form>
                 </div>
-                    <?php
-                        if($mensaje == 1){
-                             echo "<div class='error'><p>El usuario o la contraseña es incorrecta</p></div>";
-                        }
-                        ?>
+                <?php
+                if ($mensaje == 1) {
+                    echo "<div class='error'><p>El usuario o la contraseña es incorrecta</p></div>";
+                }
+                ?>
             </div>
         </div>
     </body>

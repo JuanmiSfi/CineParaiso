@@ -17,6 +17,8 @@ email varchar(110) ,
 contraseña varchar(100) NOT NULL,
 bio varchar (200) NULL,
 id_rol int DEFAULT 1,
+codigo int,
+verificado boolean default 0,
 fto_perfil varchar(1000) default '/Perfil_usuario/Usuarios.png', 
 FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
 );
@@ -83,7 +85,7 @@ nota tinyint(5),
 fecha timestamp,
 id_usuario int,
 id_pelicula int,
-FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)
 );
 
@@ -91,8 +93,8 @@ Create table siguen(
 id_follow int PRIMARY KEY auto_increment,
 id_usuario int,
 id_sigue int,
-FOREIGN KEY (id_usuario) REFERENCES usuario(id),
-FOREIGN KEY (id_sigue) references usuario(id)
+FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
+FOREIGN KEY (id_sigue) references usuario(id) ON DELETE CASCADE
 );
 
 Create table estadistica(
@@ -101,7 +103,7 @@ n_pelis_vistas int default 0,
 n_seguidores int default 0,
 n_siguiendo int default 0,
 genero_mas_visto varchar(250),
-FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
 insert into rol(id_rol,tipo) values (1,"usuario"),(2,"Admin");

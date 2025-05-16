@@ -152,6 +152,7 @@ body {
     height: auto;
     border-radius: 4px;
     margin-right: 16px;
+    transition:all .5s ease;
 }
 
 .review img:hover{

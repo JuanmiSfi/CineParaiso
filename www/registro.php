@@ -34,6 +34,7 @@ if (isset($_POST['registrar'])) {
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
     if ($password == $password2 && filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        include __DIR__ . "/PHP/email.php";
         // Ciframos la contraseña para mas seguridad
         $PassCifrada = password_hash($password, PASSWORD_DEFAULT);
         // Comprobamos que no exista ya un usuario con el mismo nombre en el sistema
@@ -41,38 +42,10 @@ if (isset($_POST['registrar'])) {
         $resul = mysqli_query($conn, $sql);
         if (mysqli_num_rows($resul) == 0) {
             // Insertar datos en la base de datos
-            $sql = "INSERT INTO usuario (usuario,email,contraseña) values ('$usuario','$correo','$PassCifrada')";
+            $sql = "INSERT INTO usuario (usuario,email,contraseña,codigo) values ('$usuario','$correo','$PassCifrada',$codigo)";
             if (mysqli_query($conn, $sql)) {
-                $mail->isSMTP();
-                $mail->Host = 'postfix';        // Nombre del contenedor de Postfix en docker-compose
-                $mail->Port = 25;               // Puerto SMTP sin cifrado
-                $mail->SMTPAuth = false;        // No usamos autenticación interna, Postfix ya lo hace
-                $mail->SMTPSecure = false;      // No usamos SSL/TLS en local (solo si el relay lo requiere)
-
-                // Emisor del correo
-                $mail->setFrom('sfijuanmifp@gmail.com', 'Tu Sitio Web');
-
-                // Receptor
-                $mail->addAddress($correo, 'Usuario');
-
-                // Contenido del correo
-                $mail->isHTML(true);                                  // Permite HTML en el cuerpo
-                $mail->Subject = 'Bienvenido a CineParaíso';
-                $mail->Body    = 'Gracias por registrarte. ¡Disfruta del cine!';
-
-                // Enviar
                 $mail->send();
-
-
-
-
-
-
-
-
-
-
-                header("Location: login.php");
+                header("Location: /PHP/verificacion.php?usuario=".$usuario."");
                 exit();
             } else {
                 echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>";

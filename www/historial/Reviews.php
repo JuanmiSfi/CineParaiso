@@ -4,7 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-
+$noreview = false;
 $idusuario = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];

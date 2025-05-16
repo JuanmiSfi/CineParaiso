@@ -111,10 +111,11 @@ try{
                 // Asignamos las propiedades de la película a variables
                 $movie_id = $movie['id'];
                 $movie_title = $movie['title'];
+                $titulo_formateado = str_replace(':', ':<br>', $movie_title);
                 $movie_poster_path = $movie['poster_path'];
                 // Mostrar el póster y el nombre de la película
                 echo "<a href='movie2.php?id=" . $movie_id . "'>";
-                echo "<p>$movie_title</p>";
+                echo "<p>$titulo_formateado</p>";
                 echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' alt='" . $movie_title . "' width='150'><br>";
                 echo "</a>";
             } ?>

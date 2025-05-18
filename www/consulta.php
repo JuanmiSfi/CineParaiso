@@ -3,9 +3,9 @@ session_start();
 require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
-$error=false;
-$idusuario = $_SESSION['idusuario']?? 0;
+$pagina = $_GET['pagina'] ?? 1;
+$error = false;
+$idusuario = $_SESSION['idusuario'] ?? 0;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
     header("Location: consulta.php");
@@ -28,114 +28,132 @@ if (!$conn) {
 }
 require_once('vendor/autoload.php');
 
-try{
+try {
 ?>
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cine Paraiso</title>
-    <link rel="stylesheet" href="/CSS/consulta.css" />
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cine Paraiso</title>
+        <link rel="stylesheet" href="/CSS/consulta.css" />
 
-</head>
+    </head>
 
-<body>
-    <header>
-        <div class="container">
-            <div class="logo"><a href="index.php"><img src="/src/Logo.png" alt="logo"></a></div>
-            <div class="buscador">
-                <form action="consulta.php" method="POST">
-                    <input type="text" name="busqueda" placeholder="Buscar en Cine Paraiso"></input>
-                </form>
-            </div>
-            <div class="usuario"><a href="login.php">
-                    <?php
-                    if ($idusuario != 0) {
-                        $sql = "SELECT * FROM usuario WHERE id = '$idusuario'";
-                        $resul = mysqli_query($conn, $sql);
-                        if (mysqli_num_rows($resul) > 0) {
-                            $row = mysqli_fetch_assoc($resul);
-                            $fto = $row['fto_perfil'];
-                            echo "<img src='$fto' alt='' />";
+    <body>
+        <header>
+            <div class="container">
+                <div class="logo"><a href="index.php"><img src="/src/Logo.png" alt="logo"></a></div>
+                <div class="buscador">
+                    <form action="consulta.php" method="POST">
+                        <input type="text" name="busqueda" placeholder="Buscar en Cine Paraiso"></input>
+                    </form>
+                </div>
+                <div class="usuario"><a href="login.php">
+                        <?php
+                        if ($idusuario != 0) {
+                            $sql = "SELECT * FROM usuario WHERE id = '$idusuario'";
+                            $resul = mysqli_query($conn, $sql);
+                            if (mysqli_num_rows($resul) > 0) {
+                                $row = mysqli_fetch_assoc($resul);
+                                $fto = $row['fto_perfil'];
+                                echo "<img src='$fto' alt='' />";
+                            }
+                        } else {
+                            echo "<img src='/Perfil_usuario/Usuarios.png' alt='' />";
                         }
-                    } else {
-                        echo "<img src='/Perfil_usuario/Usuarios.png' alt='' />";
+                        ?>
+                    </a></div>
+            </div>
+            <div class="barra"></div>
+        </header>
+        <div class='contenedor'>
+            <div class='usuarios'>
+                <?php
+                $sql = "SELECT * FROM usuario WHERE usuario like '%$busqueda%'";
+                $resul = mysqli_query($conn, $sql);
+                $numcolumnas = mysqli_num_rows($resul);
+                if (mysqli_num_rows($resul) > 0) {
+                    echo "<p>Se han encontrado usuarios relacionados con esta busqueda:</p>";
+                    echo "<div class='usuario-busqueda'>";
+                    for ($i = 0; $i < $numcolumnas; $i++) {
+                        $row = mysqli_fetch_assoc($resul);
+                        $fto = $row['fto_perfil'];
+                        $usuario = $row['usuario'];
+                        $id_usuario = $row['id'];
+                        echo "<div class='foto'>";
+                        echo "<a href='/usuario.php?id=" . $id_usuario . "'>";
+                        echo "<img src='$fto' alt='' />";
+                        echo "<p>$usuario</p>";
+                        echo "</div>";
+                        echo "</a>";
                     }
-                    ?>
-                </a></div>
-        </div>
-        <div class="barra"></div>
-    </header>
-    <div class='contenedor'>
-        <div class='usuarios'>
-            <?php
-            $sql = "SELECT * FROM usuario WHERE usuario like '%$busqueda%'";
-            $resul = mysqli_query($conn, $sql);
-            $numcolumnas = mysqli_num_rows($resul);
-            if (mysqli_num_rows($resul) > 0) {
-                echo "<p>Se han encontrado usuarios relacionados con esta busqueda:</p>";
-                echo "<div class='usuario-busqueda'>";
-                for ($i = 0; $i < $numcolumnas; $i++) {
-                    $row = mysqli_fetch_assoc($resul);
-                    $fto = $row['fto_perfil'];
-                    $usuario = $row['usuario'];
-                    $id_usuario = $row['id'];
-                    echo "<div class='foto'>";
-                    echo "<a href='/usuario.php?id=" . $id_usuario . "'>";
-                    echo "<img src='$fto' alt='' />";
-                    echo "<p>$usuario</p>";
                     echo "</div>";
-                    echo "</a>";
+                    echo "<div class='barra2'></div>";
                 }
-                echo "</div>";
-                echo "<div class='barra2'></div>";
-            }
-            ?>
-        </div>
+                ?>
+            </div>
             <?php
             $client = new \GuzzleHttp\Client();
 
-            $response = $client->request('GET', 'https://api.themoviedb.org/3/search/movie?query=' . $busqueda . '&include_adult=false&language=es-ES&page=1', [
+            $response = $client->request('GET', 'https://api.themoviedb.org/3/search/movie?query=' . $busqueda . '&include_adult=false&language=es-ES&page=' . $pagina . '', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $API . '',
                     'accept' => 'application/json',
                 ],
             ]);
             $pelis = json_decode($response->getBody(), true);
+
+            usort($pelis['results'], function ($a, $b) {
+                $a_score = $a['vote_count'] * $a['popularity'];
+                $b_score = $b['vote_count'] * $b['popularity'];
+                return $b_score <=> $a_score;
+            });
             ?>
             <div class='peliculas'>
-            <?php
-            foreach ($pelis['results'] as $movie) {
-                // Asignamos las propiedades de la película a variables
-                $movie_id = $movie['id'];
-                $movie_title = $movie['title'];
-                $titulo_formateado = str_replace(':', ':<br>', $movie_title);
-                $movie_poster_path = $movie['poster_path'];
-                // Mostrar el póster y el nombre de la película
-                echo "<a href='movie2.php?id=" . $movie_id . "'>";
-                echo "<p>$titulo_formateado</p>";
-                echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' alt='" . $movie_title . "' width='150'><br>";
-                echo "</a>";
-            } ?>
+                <?php
+                foreach ($pelis['results'] as $movie) {
+                    // Asignamos las propiedades de la película a variables
+                    $total_paginas = $pelis['total_pages'];
+                    $movie_id = $movie['id'];
+                    $movie_title = $movie['title'];
+                    $titulo_formateado = str_replace(':', ':<br>', $movie_title);
+                    $movie_poster_path = $movie['poster_path'];
+                    // Mostrar el póster y el nombre de la película
+                    echo "<a href='movie2.php?id=" . $movie_id . "'>";
+                    echo "<p>$titulo_formateado</p>";
+                    echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' alt='" . $movie_title . "' width='150'><br>";
+                    echo "</a>";
+                } ?>
+            </div>
         </div>
-    </div>
-</body>
+        <div class='paginacion'>
+            <?php
+            for ($i = 1; $i <= $total_paginas; $i++) {
+                if ($i == $pagina) {
+                    echo "<p><strong>$i</strong></p>";
+                } else {
+                    echo "<p><a href='consulta.php?busqueda=$busqueda&pagina=$i'>$i</a></p>";
+                }
+            }
+            ?>
+        </div>
+    </body>
 
 <?php
 } catch (Exception $e) {
     $error = true;
 }
+?>
+<div class='sin-review'>
+    <?php
+    if ($error == true) {
+        echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
+        echo "<p>¡Vaya! Parece que estamos de mantenimiento</p>";
+    }
     ?>
-    <div class='sin-review'>
-        <?php
-        if ($error == true) {
-            echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
-            echo "<p>¡Vaya! Parece que estamos de mantenimiento</p>";
-        }
-        ?>
-    </div>
+</div>
 </body>
 
-</html>
+    </html>

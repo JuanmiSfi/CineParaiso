@@ -118,10 +118,12 @@ a{
 .peliculas img{
     border-radius: 8px;
     border: 3px solid #e7eee7;
+    transition:all .3s ease;
 
 }
 .peliculas img:hover{
     border: none;
+    transform:scale(1.05);
     filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }
 .poster-titulo{

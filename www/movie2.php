@@ -119,9 +119,9 @@ if (!$conn) {
                     $sql = "SELECT nota,vermastarde,review from review where id_usuario=$idusuario AND id_pelicula=$movieId";
                     $resul = (mysqli_query($conn, $sql));
                     $row = mysqli_fetch_assoc($resul);
-                    if(isset($row['review'])){
-                    $review = $row['review'];
-                    }else{
+                    if (isset($row['review'])) {
+                        $review = $row['review'];
+                    } else {
                         $review = ' ';
                     }
                     $nota = $row['nota'] ?? -1;
@@ -205,7 +205,7 @@ if (!$conn) {
                     <div class="formulario2">
                         <h2>Review</h2>
 
-                        <textarea name="review" id="review" ></textarea>
+                        <textarea name="review" id="review"></textarea>
                         <label for="boton" class="boton">
                             <button type='submit' name='subir'>Subir!</button>
                         </label>
@@ -418,27 +418,46 @@ if (!$conn) {
                     $info = json_decode($response->getBody(), true);
                     $actores = $info['cast'];
                     if ($actores) {
-                        for ($i = 0; $i < 4; $i++) {
-                            $id_actor = $actores[$i]['id'];
-                            $nombre = $actores[$i]['name'];
-                            $personaje = $actores[$i]['character'];
-                            $fto_actor = $actores[$i]['profile_path'];
-                            echo "<div class='info-actor'>";
-                            echo "<a href='actor.php?id=".$id_actor."'>";
-                            echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
-                            echo "</a>";
-                            echo "<div class='nombre-personaje'>";
-                            echo "<p>$nombre</p>";
-                            echo "<p>$personaje</p>";
-                            echo "</div>";
-                            echo "</div>";
+                        $num_actores = count($actores);
+                        if ($num_actores >= 4) {
+                            for ($i = 0; $i < 4; $i++) {
+                                $id_actor = $actores[$i]['id'];
+                                $nombre = $actores[$i]['name'];
+                                $personaje = $actores[$i]['character'];
+                                $fto_actor = $actores[$i]['profile_path'];
+                                echo "<div class='info-actor'>";
+                                echo "<a href='actor.php?id=" . $id_actor . "'>";
+                                echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
+                                echo "</a>";
+                                echo "<div class='nombre-personaje'>";
+                                echo "<p>$nombre</p>";
+                                echo "<p>$personaje</p>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                        } else {
+                            for ($i = 0; $i < $num_actores; $i++) {
+                                $id_actor = $actores[$i]['id'];
+                                $nombre = $actores[$i]['name'];
+                                $personaje = $actores[$i]['character'];
+                                $fto_actor = $actores[$i]['profile_path'];
+                                echo "<div class='info-actor'>";
+                                echo "<a href='actor.php?id=" . $id_actor . "'>";
+                                echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
+                                echo "</a>";
+                                echo "<div class='nombre-personaje'>";
+                                echo "<p>$nombre</p>";
+                                echo "<p>$personaje</p>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
                         }
                     } else {
                         echo "<p>No se ha encontrado cast para esta pelicula</p>";
                     }
                     ?>
                 </div>
-                <a href='cast.php?id=<?php echo $movieId;?>'>
+                <a href='cast.php?id=<?php echo $movieId; ?>'>
                     <p>Reparto completo</p>
                 </a>
             </div>

@@ -82,27 +82,40 @@ require_once('vendor/autoload.php');
                 ]);
                 $info = json_decode($response->getBody(), true);
                 $actores = $info['cast'];
-                if ($actores) {
-                    for ($i = 0; $i < 20; $i++) {
-                        $id_actor = $actores[$i]['id'];
-                        $nombre = $actores[$i]['name'];
-                        $personaje = $actores[$i]['character'];
-                        $fto_actor = $actores[$i]['profile_path'];
-                        echo "<div class='info-actor'>";
-                        if(!empty($fto_actor)){
-                        echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
-                        }else{
-                            echo "No tenemos foto para este actor";
+                $num_actores = count($actores);
+                        if ($num_actores >= 20) {
+                            for ($i = 0; $i <= 20; $i++) {
+                                $id_actor = $actores[$i]['id'];
+                                $nombre = $actores[$i]['name'];
+                                $personaje = $actores[$i]['character'];
+                                $fto_actor = $actores[$i]['profile_path'];
+                                echo "<div class='info-actor'>";
+                                echo "<a href='actor.php?id=" . $id_actor . "'>";
+                                echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
+                                echo "</a>";
+                                echo "<div class='nombre-personaje'>";
+                                echo "<p>$nombre</p>";
+                                echo "<p>$personaje</p>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                        } else {
+                            for ($i = 0; $i < $num_actores; $i++) {
+                                $id_actor = $actores[$i]['id'];
+                                $nombre = $actores[$i]['name'];
+                                $personaje = $actores[$i]['character'];
+                                $fto_actor = $actores[$i]['profile_path'];
+                                echo "<div class='info-actor'>";
+                                echo "<a href='actor.php?id=" . $id_actor . "'>";
+                                echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
+                                echo "</a>";
+                                echo "<div class='nombre-personaje'>";
+                                echo "<p>$nombre</p>";
+                                echo "<p>$personaje</p>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
                         }
-                        echo "<div class='nombre-personaje'>";
-                        echo "<h2>$nombre</h2>";
-                        echo "<p>$personaje</p>";
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                } else {
-                    echo "<p>No se ha encontrado cast para esta pelicula</p>";
-                }
                 ?>
             </div>
         </div>

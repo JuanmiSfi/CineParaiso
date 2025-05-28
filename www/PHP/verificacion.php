@@ -63,7 +63,7 @@ if (isset($_POST['verificar'])) {
             <p>Se ha envidado un codigo de verificacion a tu correo, ingreselo abajo para verificar la cuenta</p>
             <form action="" method="POST">
                 <input type="text" name='codigo'>
-                <button type='submit' name='verificar'><span>Verificar</span></button>
+                <button type='submit' name='verificar'><span>Verificar!</span></button>
             </form>
             <?php
             if ($mensaje == 1) {

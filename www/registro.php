@@ -88,7 +88,7 @@ mysqli_close($conn);
                     <form action="" method="POST">
                         <label for="Correo">
                             <h2>Correo:</h2>
-                            <input type="email" name="correo" required>
+                            <input type="text" name="correo" required>
                         </label><br>
                         <label for="Usuario">
                             <h2>Nombre de usuario:</h2>
@@ -113,8 +113,8 @@ mysqli_close($conn);
                     echo "<div class='error'><p>El nombre de usuario escogido ya existe en el sistema</p></div>";
                 } else if ($mensaje == -1) {
                     echo "<div class='error'><p>La contraseña introducida no coincide</p></div>";
-                } else {
-                    echo "<div class='error'><p>El correo introducido no es</p></div>";
+                } else if ($mensaje == -2) {
+                    echo "<div class='error'><p>El correo introducido no es valido</p></div>";
                 }
                 ?>
             </div>

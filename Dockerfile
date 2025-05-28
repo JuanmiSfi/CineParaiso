@@ -10,6 +10,7 @@ COPY ./mysql-conf.d/mysql-conf.cnf /etc/mysql/conf.d/
 
 RUN chmod 644 /etc/mysql/conf.d/mysql-conf.cnf
 
+
 RUN apt-get update && apt-get install -y unzip git zip
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

@@ -167,11 +167,13 @@ a{
     display: flex;
     flex-direction: row;
 }
-.botones{
+
+.followe{
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    align-items: flex-end;
 }
+
 .follow{
     padding: 10px;
     font-family: 'Codec Pro';

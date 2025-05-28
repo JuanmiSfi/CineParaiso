@@ -61,7 +61,7 @@ if (isset($_POST['cerrar'])) {
     </header>
     <div class='menu'>
         <div class='usuarios'>
-            <a href="/PHP/admin/usuario.php">
+            <a href="/PHP/admin/usuarios/usuario.php">
             <div class="bloque">
                 <img src="/Perfil_usuario/Usuarios.png">
             </div>
@@ -69,7 +69,7 @@ if (isset($_POST['cerrar'])) {
             </a>
         </div>
         <div class="reviews">
-            <a href="/PHP/admin/ajuste.php">
+            <a href="/PHP/admin/reviews/review.php">
             <div class="bloque">
                 <img src="/src/ajustes.png">
             </div>

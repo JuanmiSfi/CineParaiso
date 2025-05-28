@@ -48,17 +48,13 @@ body {
     margin-left: 85px;
 }
 
-.contenedor p {
-    font-family: 'Codec Pro';
-    font-size: 30px;
-    text-align: start;
-    color: #8b4a28;
-    margin-bottom: 15px;
 
 
-}
 
 .bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 800px;
     height: 250px;
     background-color: #f39a3f;
@@ -67,76 +63,40 @@ body {
     filter: drop-shadow(8px 8px 0px #8b4a28);
 }
 
-.formulario {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-.formulario h2 {
+.bloque p {
     font-family: 'Codec Pro';
-    font-size: 40px;
+    font-size: 30px;
+    text-align: center;
     color: #8b4a28;
-    text-shadow: 2px 2px 2px #ff9100;
+    padding: 20px;
+    margin-top: 15px;
 }
 
-.formulario input {
+.bloque input[type="text"] {
     padding: 1px 15px;
-    border-radius: 5px;
+    border-radius: 15px;
     border: 2px solid #8b4a28;
     background-color: #f7e5c6;
     text-align: start;
     font-size: 19px;
-    width: 40rem;
+    width: auto;
     height: 40px;
     margin-bottom: 15px;
 }
 
-.formulario button {
-    display: flex;
+.bloque button {
     padding: 1px 15px;
     border-radius: 5px;
     border: 2px solid #000000;
-    background-color: #43b310;
+    background-color: #962508;
+    color: #f7e5c6;
     text-align: center;
     font-size: 19px;
-    margin-bottom: 15px;
-}
-.error {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-right: 15px;
+    transition:all .3s ease;
 }
 
-.error p {
-    font-family: 'Codec Pro';
-    font-size: 22px;
-    color: #97150b;
-    text-align: center;
-}
-.boton span {
+.bloque button:hover{
     cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
-
-.boton span:after {
-    content: '\00bb';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-}
-
-.boton:hover span {
-    padding-right: 25px;
-}
-
-.boton:hover span:after {
-    opacity: 1;
-    right: 0;
+    transform:scale(1.05);
 }

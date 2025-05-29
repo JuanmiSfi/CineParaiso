@@ -148,7 +148,6 @@ if (!$conn) {
                 <?php
                 echo "<h2 id=titulo>$title</h2>";
                 echo "<h2>disponible en:</h2>";
-                //echo "<p>$overview</p>";
 
                 ?>
                 <?php

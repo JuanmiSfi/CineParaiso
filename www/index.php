@@ -16,10 +16,10 @@ $error=false;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$servername = 'db';
-$username = 'admin';
-$password = 'AlumnadoIAW';
-$database = 'CineParaiso';
+$servername = $_ENV['DB_HOST'];
+$username = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASS'];
+$database = $_ENV['DB_NAME'];
 $API = $_ENV['API_KEY'];
 // Crear conexión
 $conn = mysqli_connect($servername, $username, $password, $database);

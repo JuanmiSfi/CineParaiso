@@ -31,6 +31,7 @@ if (!$conn) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineParaiso</title>
     <link rel="stylesheet" href="/PHP/admin/usuarios/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -40,6 +41,9 @@ if (!$conn) {
         </div>
         <div class="barra"></div>
     </header>
+    <div class="volver">
+        <a href="../../../admin.php"><i class="fa-solid fa-share fa-flip-horizontal"></i></a>
+    </div>
     <div class="cont">
         <form method="POST">
             <h1>Lista de usuarios</h1>
@@ -122,7 +126,7 @@ if (!$conn) {
     <div style='text-align:right'>
         <br>
     </div>
-    <div style="text-align:center">
+    <div class='botones' style="text-align:center">
         <?php
         if (isset($_GET['pag'])) {
             if ($_GET['pag'] > 1) {

@@ -230,16 +230,20 @@ if (!$conn) {
                                 }
                             }
                             if (isset($_POST['estado'])) {
-                                if ($_POST['estado'] == 'visto') {
-                                    $sql = "INSERT INTO review (vermastarde,id_pelicula,id_usuario) values(0,$movieId,$idusuario)";
-                                    $existe = mysqli_query($conn, $sql);
-                                    if ($existe) {
+                                if (!empty($idusuario)) {
+                                    if ($_POST['estado'] == 'visto') {
+                                        $sql = "INSERT INTO review (vermastarde,id_pelicula,id_usuario) values(0,$movieId,$idusuario)";
+                                        $existe = mysqli_query($conn, $sql);
+                                        if ($existe) {
+                                        }
+                                    } else {
+                                        $sql = "INSERT INTO review (vermastarde,id_pelicula,id_usuario) values(1,$movieId,$idusuario)";
+                                        $existe = mysqli_query($conn, $sql);
+                                        if ($existe) {
+                                        }
                                     }
                                 } else {
-                                    $sql = "INSERT INTO review (vermastarde,id_pelicula,id_usuario) values(1,$movieId,$idusuario)";
-                                    $existe = mysqli_query($conn, $sql);
-                                    if ($existe) {
-                                    }
+                                    echo "<p>Debes estar registrado para poder hacer una review</p>";
                                 }
                             }
                         } else {

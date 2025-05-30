@@ -409,3 +409,9 @@ a{
 .opion .WatchList p:hover{
     color:#f39a3f;
 }
+
+
+
+@media screen and (max-width: 480px) {
+    
+}

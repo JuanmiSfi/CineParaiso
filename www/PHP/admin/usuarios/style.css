@@ -45,6 +45,25 @@ body {
 	margin-bottom: 15px;
 }
 
+.volver{
+	margin-top: 20px;
+	margin-left: 15px;
+}
+.volver a{
+	padding: 15px;
+	background-color: #f39a3f;
+	border-radius: 50%;
+	border: 2px solid #ffffff;
+	text-decoration: none;
+	color: #333333;
+	transition: all .3s ease;
+}
+
+.volver a:hover{
+	transform: scale(1.05);
+	border: 2px solid #333333;
+}
+
 
 table {
 	border-collapse: collapse;
@@ -67,7 +86,6 @@ td {
 
 .cont a,
 input[type="submit"] {
-
 	text-align: center;
 	display: inline-block;
 	background: #f39a3f;
@@ -78,6 +96,11 @@ input[type="submit"] {
 	border: 2px solid black;
 	cursor: pointer;
 	font-size: 16px;
+	transition: all .3s ease;
+}
+
+.cont a:hover {
+	transform: scale(1.05);
 
 }
 
@@ -140,53 +163,71 @@ select {
 }
 
 .search-container {
-      position: relative;
-      width: 40px;
-      height: 40px;
-      transition: width 0.4s ease;
-      overflow: hidden;
-      border-radius: 20px;
-      background: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
+	position: relative;
+	width: 40px;
+	height: 40px;
+	transition: width 0.4s ease;
+	overflow: hidden;
+	border-radius: 20px;
+	background: white;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
 
-    .search-container:hover,
-    .search-container:focus-within {
-      width: 250px;
-    }
+.search-container:hover,
+.search-container:focus-within {
+	width: 250px;
+}
 
-    .search-input {
-      width: 0;
-      height: 100%;
-      padding: 0;
-      border: none;
-      outline: none;
-      font-size: 16px;
-      background: transparent;
-      opacity: 0;
-      transition: width 0.4s ease, padding 0.4s ease, opacity 0.2s ease;
-    }
+.search-input {
+	width: 0;
+	height: 100%;
+	padding: 0;
+	border: none;
+	outline: none;
+	font-size: 16px;
+	background: transparent;
+	opacity: 0;
+	transition: width 0.4s ease, padding 0.4s ease, opacity 0.2s ease;
+}
 
-    .search-container:hover .search-input,
-    .search-container:focus-within .search-input {
-      width: 100%;
-      padding: 0 40px 0 15px;
-      opacity: 1;
-    }
+.search-container:hover .search-input,
+.search-container:focus-within .search-input {
+	width: 100%;
+	padding: 0 40px 0 15px;
+	opacity: 1;
+}
 
-    .search-icon {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      pointer-events: none;
-    }
+.search-icon {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 20px;
+	pointer-events: none;
+}
 
-.foto_perfil{
+.foto_perfil {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+.botones a {
+	text-align: center;
+	display: inline-block;
+	background: #f39a3f;
+	padding: 6px 10px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: white;
+	border: 2px solid black;
+	cursor: pointer;
+	font-size: 16px;
+	transition: all .3s ease;
+}
+
+.botones a:hover {
+	transform: scale(1.05);
 }

@@ -40,61 +40,72 @@ if (!$conn) {
         </div>
         <div class="barra"></div>
     </header>
-
+    <div class="volver">
+        <a href="../../../admin.php"><i class="fa-solid fa-share fa-flip-horizontal"></i></a>
+    </div>
     <div class='body'>
         <h2>Lista de Reviews</h2>
-        <div class="barra2"></div>
         <div class='poster'>
-            <?php
-            $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha,u.usuario,r.id_usuario FROM review r,pelicula p,usuario u WHERE r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
-            $consult = mysqli_query($conn, $sql);
-            $numerofilas = mysqli_num_rows($consult);
-            if ($numerofilas > 0) {
-                for ($i = 0; $i < $numerofilas; $i++) {
-                    $fila = mysqli_fetch_assoc($consult);
-                    $idusuario = $fila['id_usuario'];
-                    $poster = $fila['poster'];
-                    $titulo = $fila['titulo'];
-                    $usuario = $fila['usuario'];
-                    $movieId = $fila['id'];
-                    $nota = $fila['nota'];
-                    $review = $fila['review'];
-                    $fecha = $fila['fecha'];
-                    if (!empty($review)) {
-                        echo "<div class='review'>";
-                        echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                        echo "<div class='contenido'>";
-                        echo "<h2>$titulo</h2>";
-                        echo "<div class='estrellas'>";
-                        echo "Review por el usuario: ";
-                        echo "$usuario ";
-                        echo "<div class='fecha'>";
-                        if (!empty($fecha)) {
-                            echo "Visto el $fecha";
-                        }
-                        echo "</div>"; // Cierra fecha
-                        echo "</div>"; // Cierra estrllas
-                        echo "<p>$review</p>";
-                        echo "</div>"; // Cierra contenido
-                        echo "</div>"; //Cierra review
-                        echo "
+            <div class="search-container">
+                <input type="text" name="txtbuscar" class="search-input" placeholder="Buscar...">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+            </div>
+            <div class='reviews'>
+                <?php
+                $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.id as id_review,r.review,r.fecha,u.usuario,r.id_usuario FROM review r,pelicula p,usuario u WHERE r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+                $consult = mysqli_query($conn, $sql);
+                $numerofilas = mysqli_num_rows($consult);
+                if ($numerofilas > 0) {
+                    for ($i = 0; $i < $numerofilas; $i++) {
+                        $fila = mysqli_fetch_assoc($consult);
+                        $idreview = $fila['id_review'];
+                        $idusuario = $fila['id_usuario'];
+                        $poster = $fila['poster'];
+                        $titulo = $fila['titulo'];
+                        $usuario = $fila['usuario'];
+                        $movieId = $fila['id'];
+                        $nota = $fila['nota'];
+                        $review = $fila['review'];
+                        $fecha = $fila['fecha'];
+                        if (!empty($review)) {
+                            echo "<div class='review'>";
+                            echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                            echo "<div class='contenido'>";
+                            echo "<h2>$titulo</h2>";
+                            echo "<div class='estrellas'>";
+                            echo "Review por el usuario: ";
+                            echo "$usuario ";
+                            echo "<div class='fecha'>";
+                            if (!empty($fecha)) {
+                                echo "Visto el $fecha";
+                            }
+                            echo "</div>"; // Cierra fecha
+                            echo "</div>"; // Cierra estrllas
+                            echo "<p>$review</p>";
+                            echo "</div>"; // Cierra contenido
+                            echo "</div>"; //Cierra review
+                            echo "<div class='botones'>";
+                            echo "
 			<a href=\"/../historial/Reviews.php?id=$idusuario\">Ver más reviews de $usuario</a> 
-			<a href=\"eliminar.php?\" onClick=\"return confirm('¿Estás seguro de eliminar a la review de $fila[titulo], del usuario $usuario?')\">Eliminar</a>
+			<a href=\"eliminar.php?idreview=$idreview\" onClick=\"return confirm('¿Estás seguro de eliminar a la review de $fila[titulo], del usuario $usuario?')\">Eliminar</a>
 			";
-
-
+                            echo "</div>";
+                        }
                     }
+                } else {
+                    $noreview = true;
                 }
-            } else {
-                $noreview = true;
-            }
-            ?>
+                ?>
+            </div>
         </div>
         <div class='sin-review'>
             <?php
             if ($noreview == true) {
                 echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
-                echo "<p>¡Vaya! Parece que $usuario no ha visto aun ninguna pelicula</p>";
+                echo "<p>¡Vaya! Parece que aun no han realizado ninguna review</p>";
             }
             ?>
         </div>

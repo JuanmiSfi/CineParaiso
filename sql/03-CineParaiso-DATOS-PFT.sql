@@ -50,4 +50,13 @@ BEGIN
     end if;
 END //
 DELIMITER ;
+-- Disparador para despues de borrar una review con el valor vermastarde 0 es decir el usuario ha visto esa pelicula se reste 1 al n_pelis_vistas de la tabla estadistica
+DELIMITER // 
+CREATE TRIGGER Borrar_peli_vista
+BEFORE DELETE on review 
+FOR EACH ROW 
+BEGIN
+	UPDATE estadistica set n_pelis_vistas=n_pelis_vistas-1 WHERE id_usuario = old.id_usuario;
+END //
+DELIMITER ;
 

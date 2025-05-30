@@ -1,7 +1,7 @@
 <?php 
 session_start();
-require_once __DIR__ . '/vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
+require_once __DIR__ . '/../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 error_reporting(E_ALL);
@@ -16,8 +16,8 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 if (!$conn) {
     die("Conexión fallida: " . mysqli_connect_error());
 }
-if (!isset($_SESSION['idusuario'])) {
-    header("Location: login.php"); 
+if (!isset($_SESSION['idusuario']) || $_POST['idusuario']==0) {
+    header("Location: ../login.php"); 
     exit();
 }
 $idusuario = $_POST['idusuario'];
@@ -27,7 +27,7 @@ if(isset($_POST['follow'])){
     $sql="INSERT INTO siguen (id_usuario,id_sigue) values ($idusuario,$idusuario2)";
     $resul = mysqli_query($conn,$sql);
     if($resul>0){
-        header("Location: usuario.php?id=".$idusuario2."");
+        header("Location: ../usuario.php?id=".$idusuario2."");
         exit();
     }
 }
@@ -35,7 +35,7 @@ if(isset($_POST['unfollow'])){
     $sql="DELETE FROM siguen where id_usuario=$idusuario AND id_sigue=$idusuario2";
     $resul = mysqli_query($conn,$sql);
     if($resul>0){
-        header("Location: usuario.php?id=".$idusuario2."");
+        header("Location: ../usuario.php?id=".$idusuario2."");
         exit();
     }
 }

@@ -77,11 +77,10 @@ if (!$conn) {
             echo "<a href='./usuario.php?id=" . $idusuario . "'>";
             echo "<img src='$fto_perfil' alt='' />";
             echo "</a>";
-            echo "<p>Reviews de <a href='usuario.php?id=" . $idusuario . "'>&nbsp;$usuario</a></p>";
+            echo "<p>Reviews de <a href='../usuario.php?id=" . $idusuario . "'>&nbsp;$usuario</a></p>";
             ?>
             <button type="submit" class="WatchList"><a href="/historial.php?id=<?php echo $idusuario; ?>" class="link">Peliculas</a></button>
             <button type="submit" class="WatchList"><a href="/historial/Reviews.php?id=<?php echo $idusuario; ?>" class="link">Reviews</a></button>
-            <button type="submit" class="WatchList"><a href="/historial/Diario.php?id=<?php echo $idusuario; ?>" class="link">Diario</a></button>
         </div>
         <div class="barra2"></div>
         <div class='poster'>

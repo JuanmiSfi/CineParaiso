@@ -4,16 +4,20 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$id_rol = $_SESSION['id_rol'];
+$id_rol = $_SESSION['id_rol']??-1;
 
-if(!isset($_GET['id']) ){
+if (!isset($_GET['id'])) {
     header("Location: login.php");
     exit();
 }
 
-if($id_rol == 2){
+if ($id_rol == 2) {
     header("Location: admin.php");
     exit();
+}
+
+if(empty($_SESSION['idusuario'])){
+    $_SESSION['idusuario']=0;
 }
 
 $idusuario2 = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
@@ -61,13 +65,15 @@ if (isset($_POST['cerrar'])) {
             </div>
             <div class="usuario"><a href="login.php">
                     <?php
-                    if ($idusuario2 == $_SESSION['idusuario']) {
+                    if ($idusuario2 == $_SESSION['idusuario'] && !empty($_SESSION['idusuario'])) {
                         echo '
                 <form action="" method="POST">
                         <label for="Boton" class="boton">
                             <button type="submit" name="cerrar">Cerrar sesión</button>
                         </label>';
                         echo "</form>";
+                    } else if (empty($_SESSION['idusuario'])) {
+                        echo "<img src='/Perfil_usuario/Usuarios.png' alt='' />";
                     } else {
                         $sql = "SELECT * FROM usuario WHERE id = $_SESSION[idusuario]";
                         echo "<a href='/usuario.php?id=" . $_SESSION['idusuario'] . "'>";
@@ -110,208 +116,208 @@ if (isset($_POST['cerrar'])) {
 
             </div>
             <div class="actividad">
-               </form>
+                </form>
                 <div class=nav1>
-                    <div class = 'botones'>
-                    <?php
-                    if ($idusuario2 == $_SESSION['idusuario']) {
-                        echo "<button type='submit' class='modifi'><a href='modificar.php' class='link'><span>Modificar usuario</span></a></button>";
-                    } else {
-                        echo '<div class="followe">';
-                        $sql = "SELECT COUNT(*) FROM siguen WHERE id_usuario=$_SESSION[idusuario] AND $idusuario2=id_sigue";
-                        $resul = mysqli_query($conn, $sql);
-                        $sigue=mysqli_fetch_row($resul);
-                        if ($sigue[0] == 0) {
-                            echo '<form action="siguen.php" method="POST">';
-                            echo "<input type='hidden' name='idusuario' value='".$_SESSION['idusuario']."'>";
-                            echo "<input type='hidden' name='idusuario2' value='".$idusuario2."'>";
-                            echo "<button type='submit' name='follow' class='follow'>seguir</button>";
-                            echo '</form>';
-                        } else {
-                            echo '<form action="siguen.php" method="POST">';
-                            echo "<input type='hidden' name='idusuario' value='".$_SESSION['idusuario']."'>";
-                            echo "<input type='hidden' name='idusuario2' value='".$idusuario2."'>";
-                            echo "<button type='submit' name='unfollow' class='unfollow'></button>";
-                            echo '</form>';
-                        }
-                        echo '</div>';
-                    }
-                    echo "</div>";
-                    echo "<div class='n_pelis'>";
-                    echo '<a href="historial.php?id='.$idusuario2.'" class="WatchList">';
-                    echo "<h3>$num_pelis</h3>";
-                    echo "<p>Peliculas vistas </p>";
-                    echo '</a>';
-                    echo "</div>";
-
-                    echo "<div class='n_seguidores'>";
-                    echo "<h3>$num_seguidores</h3>";
-                    echo "<p>Seguidores</p> ";
-                    echo "</div>";
-
-                    echo "<div class='n_siguiendo'>";
-                    echo "<h3>$num_siguiendo</h3>";
-                    echo "<p>Siguiendo</p> ";
-                    echo "</div>";
-                    ?>
-                </div>
-                <div class="barra2"></div>
-                <div class="navegador">
-                    <a href="historial.php?id=<?php echo $idusuario2?>" class="WatchList">
-                        <p>Peliculas vistas</p>
-                    </a>
-                    <a href="historial.php?id=<?php echo $idusuario2?>" class="WatchList">
-                        <p>WatchList</p>
-                    </a>
-                </div>
-                <div class="barra2"></div>
-                <div class="ultima5">
-                    <p><b>Actividad reciente</b></p>
-                    <div class="bloque">
-
+                    <div class='botones'>
                         <?php
-                        //Hacemos una consulta para el poster de las 5 ultimas pelicula
-                        $sql = "SELECT p.id, p.poster, r.nota, r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
+                        if ($idusuario2 == $_SESSION['idusuario']&& !empty($_SESSION['idusuario'])) {
+                            echo "<button type='submit' class='modifi'><a href='modificar.php' class='link'><span>Modificar usuario</span></a></button>";
+                        } else {
+                            echo '<div class="followe">';
+                            $sql = "SELECT COUNT(*) FROM siguen WHERE id_usuario=$_SESSION[idusuario] AND $idusuario2=id_sigue";
+                            $resul = mysqli_query($conn, $sql);
+                            $sigue = mysqli_fetch_row($resul);
+                            if ($sigue[0] == 0) {
+                                echo '<form action="/PHP/siguen.php" method="POST">';
+                                echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
+                                echo "<input type='hidden' name='idusuario2' value='" . $idusuario2 . "'>";
+                                echo "<button type='submit' name='follow' class='follow'>seguir</button>";
+                                echo '</form>';
+                            } else {
+                                echo '<form action="/PHP/siguen.php" method="POST">';
+                                echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
+                                echo "<input type='hidden' name='idusuario2' value='" . $idusuario2 . "'>";
+                                echo "<button type='submit' name='unfollow' class='unfollow'></button>";
+                                echo '</form>';
+                            }
+                            echo '</div>';
+                        }
+                        echo "</div>";
+                        echo "<div class='n_pelis'>";
+                        echo '<a href="historial.php?id=' . $idusuario2 . '" class="WatchList">';
+                        echo "<h3>$num_pelis</h3>";
+                        echo "<p>Peliculas vistas </p>";
+                        echo '</a>';
+                        echo "</div>";
+
+                        echo "<div class='n_seguidores'>";
+                        echo "<h3>$num_seguidores</h3>";
+                        echo "<p>Seguidores</p> ";
+                        echo "</div>";
+
+                        echo "<div class='n_siguiendo'>";
+                        echo "<h3>$num_siguiendo</h3>";
+                        echo "<p>Siguiendo</p> ";
+                        echo "</div>";
+                        ?>
+                    </div>
+                    <div class="barra2"></div>
+                    <div class="navegador">
+                        <a href="historial.php?id=<?php echo $idusuario2 ?>" class="WatchList">
+                            <p>Peliculas vistas</p>
+                        </a>
+                        <a href="historial.php?id=<?php echo $idusuario2 ?>" class="WatchList">
+                            <p>WatchList</p>
+                        </a>
+                    </div>
+                    <div class="barra2"></div>
+                    <div class="ultima5">
+                        <p><b>Actividad reciente</b></p>
+                        <div class="bloque">
+
+                            <?php
+                            //Hacemos una consulta para el poster de las 5 ultimas pelicula
+                            $sql = "SELECT p.id, p.poster, r.nota, r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
+                            $consult = mysqli_query($conn, $sql);
+                            $num_filas = mysqli_num_rows($consult);
+                            if ($num_filas >= 5) {
+                                for ($i = 0; $i < 5; $i++) {
+                                    echo '<div class="Poster">';
+                                    $fila = mysqli_fetch_assoc($consult);
+                                    $movieId = $fila['id'];
+                                    $nota = $fila['nota'];
+                                    $poster = $fila['poster'];
+                                    $opinion = $fila['review'];
+                                    echo "<a href='/movie2.php?id=" . $movieId . "'>";
+                                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                                    echo "</a>";
+                                    if (isset($nota)) {
+                                        echo "<div class='nota'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            if ($nota >= $j) {
+                                                echo "<i class='fas fa-star' id='estrellas'></i>";
+                                            }
+                                        }
+                                        if (isset($opinion)) {
+                                            echo "<i class='fa-solid fa-align-left' id='rw'></i>";
+                                        }
+                                        echo "</div>";
+                                    }
+                                    echo "</div>";
+                                }
+                            } else {
+                                for ($i = 0; $i < $num_filas; $i++) {
+                                    echo '<div class="Poster">';
+                                    $fila = mysqli_fetch_assoc($consult);
+                                    $movieId = $fila['id'];
+                                    $nota = $fila['nota'];
+                                    $poster = $fila['poster'];
+                                    echo "<a href='/movie2.php?id=" . $movieId . "'>";
+                                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                                    echo "</a>";
+                                    if (isset($nota)) {
+                                        echo "<div class='nota'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            if ($nota >= $j) {
+                                                echo "<i class='fas fa-star' id='estrellas'></i>";
+                                            }
+                                        }
+                                        echo "</div>";
+                                    }
+                                    echo "</div>";
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="opion">
+                        <?php
+                        $sql = "SELECT * FROM review WHERE id_usuario = $idusuario2 AND vermastarde = 0 ORDER BY fecha DESC";
+                        $resul = mysqli_query($conn, $sql);
+                        $num_filas2 = mysqli_num_rows($resul);
+
+                        ?>
+                        <p>Ultimas reviews</p>
+                        <div class="barra2"></div>
+                        <?php
+                        $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
                         $consult = mysqli_query($conn, $sql);
-                        $num_filas = mysqli_num_rows($consult);
-                        if ($num_filas >= 5) {
-                            for ($i = 0; $i < 5; $i++) {
-                                echo '<div class="Poster">';
+                        $numerofilas = mysqli_num_rows($consult);
+                        if ($num_filas >= 4) {
+                            for ($i = 0; $i < 4; $i++) {
                                 $fila = mysqli_fetch_assoc($consult);
+                                $poster = $fila['poster'];
+                                $titulo = $fila['titulo'];
                                 $movieId = $fila['id'];
                                 $nota = $fila['nota'];
-                                $poster = $fila['poster'];
-                                $opinion = $fila['review'];
-                                echo "<a href='/movie2.php?id=" . $movieId . "'>";
-                                echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                                echo "</a>";
-                                if (isset($nota)) {
-                                    echo "<div class='nota'>";
+                                $review = $fila['review'];
+                                $fecha = $fila['fecha'];
+                                if (!empty($review)) {
+                                    echo "<div class='review'>";
+                                    echo "<a href='/movie2.php?id=" . $movieId . "'>";
+                                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                                    echo "</a>";
+                                    echo "<div class='contenido'>";
+                                    echo "<h2>$titulo</h2>";
+                                    echo "<div class='estrellas'>";
                                     for ($j = 1; $j <= 5; $j++) {
                                         if ($nota >= $j) {
                                             echo "<i class='fas fa-star' id='estrellas'></i>";
                                         }
                                     }
-                                    if (isset($opinion)) {
-                                        echo "<i class='fa-solid fa-align-left' id='rw'></i>";
+                                    echo "<div class='fecha'>";
+                                    if (!empty($fecha)) {
+                                        echo "Visto el $fecha";
                                     }
-                                    echo "</div>";
+                                    echo "</div>"; // Cierra fecha
+                                    echo "</div>"; // Cierra estrllas
+                                    echo "<p>$review</p>";
+                                    echo "</div>"; // Cierra contenido
+                                    echo "</div>"; //Cierra review
                                 }
-                                echo "</div>";
                             }
                         } else {
-                            for ($i = 0; $i < $num_filas; $i++) {
-                                echo '<div class="Poster">';
+                            for ($i = 0; $i < $numerofilas; $i++) {
                                 $fila = mysqli_fetch_assoc($consult);
+                                $poster = $fila['poster'];
+                                $titulo = $fila['titulo'];
                                 $movieId = $fila['id'];
                                 $nota = $fila['nota'];
-                                $poster = $fila['poster'];
-                                echo "<a href='/movie2.php?id=" . $movieId . "'>";
-                                echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                                echo "</a>";
-                                if (isset($nota)) {
-                                    echo "<div class='nota'>";
+                                $review = $fila['review'];
+                                $fecha = $fila['fecha'];
+                                if (!empty($review)) {
+                                    echo "<div class='review'>";
+                                    echo "<a href='/movie2.php?id=" . $movieId . "'>";
+                                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                                    echo "</a>";
+                                    echo "<div class='contenido'>";
+                                    echo "<h2>$titulo</h2>";
+                                    echo "<div class='estrellas'>";
                                     for ($j = 1; $j <= 5; $j++) {
                                         if ($nota >= $j) {
                                             echo "<i class='fas fa-star' id='estrellas'></i>";
                                         }
                                     }
-                                    echo "</div>";
+                                    echo "<div class='fecha'>";
+                                    if (!empty($fecha)) {
+                                        $fechaconformato = date("d-m-Y", strtotime($fecha));
+                                        echo "<p>Visto el $fechaconformato</p>";
+                                    }
+                                    echo "</div>"; // Cierra fecha
+                                    echo "</div>"; // Cierra estrllas
+                                    echo "<p>$review</p>";
+                                    echo "</div>"; // Cierra contenido
+                                    echo "</div>"; //Cierra review
                                 }
-                                echo "</div>";
                             }
                         }
                         ?>
+                        <a href="/historial/Reviews.php?id=<?php echo "$idusuario2"; ?>" class="WatchList">
+                            <p>Ver mas reviews</p>
+                        </a>
                     </div>
                 </div>
-                <div class="opion">
-                    <?php
-                    $sql = "SELECT * FROM review WHERE id_usuario = $idusuario2 AND vermastarde = 0 ORDER BY fecha DESC";
-                    $resul = mysqli_query($conn, $sql);
-                    $num_filas2 = mysqli_num_rows($resul);
-
-                    ?>
-                    <p>Ultimas reviews</p>
-                    <div class="barra2"></div>
-                    <?php
-                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
-                    $consult = mysqli_query($conn, $sql);
-                    $numerofilas = mysqli_num_rows($consult);
-                    if ($num_filas >= 4) {
-                        for ($i = 0; $i < 4; $i++) {
-                            $fila = mysqli_fetch_assoc($consult);
-                            $poster = $fila['poster'];
-                            $titulo = $fila['titulo'];
-                            $movieId = $fila['id'];
-                            $nota = $fila['nota'];
-                            $review = $fila['review'];
-                            $fecha = $fila['fecha'];
-                            if (!empty($review)) {
-                                echo "<div class='review'>";
-                                echo "<a href='/movie2.php?id=" . $movieId . "'>";
-                                echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                                echo "</a>";
-                                echo "<div class='contenido'>";
-                                echo "<h2>$titulo</h2>";
-                                echo "<div class='estrellas'>";
-                                for ($j = 1; $j <= 5; $j++) {
-                                    if ($nota >= $j) {
-                                        echo "<i class='fas fa-star' id='estrellas'></i>";
-                                    }
-                                }
-                                echo "<div class='fecha'>";
-                                if (!empty($fecha)) {
-                                    echo "Visto el $fecha";
-                                }
-                                echo "</div>"; // Cierra fecha
-                                echo "</div>"; // Cierra estrllas
-                                echo "<p>$review</p>";
-                                echo "</div>"; // Cierra contenido
-                                echo "</div>"; //Cierra review
-                            }
-                        }
-                    } else {
-                        for ($i = 0; $i < $numerofilas; $i++) {
-                            $fila = mysqli_fetch_assoc($consult);
-                            $poster = $fila['poster'];
-                            $titulo = $fila['titulo'];
-                            $movieId = $fila['id'];
-                            $nota = $fila['nota'];
-                            $review = $fila['review'];
-                            $fecha = $fila['fecha'];
-                            if (!empty($review)) {
-                                echo "<div class='review'>";
-                                echo "<a href='/movie2.php?id=" . $movieId . "'>";
-                                echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                                echo "</a>";
-                                echo "<div class='contenido'>";
-                                echo "<h2>$titulo</h2>";
-                                echo "<div class='estrellas'>";
-                                for ($j = 1; $j <= 5; $j++) {
-                                    if ($nota >= $j) {
-                                        echo "<i class='fas fa-star' id='estrellas'></i>";
-                                    }
-                                }
-                                echo "<div class='fecha'>";
-                                if (!empty($fecha)) {
-                                    $fechaconformato = date("d-m-Y", strtotime($fecha));
-                                    echo "<p>Visto el $fechaconformato</p>";
-                                }
-                                echo "</div>"; // Cierra fecha
-                                echo "</div>"; // Cierra estrllas
-                                echo "<p>$review</p>";
-                                echo "</div>"; // Cierra contenido
-                                echo "</div>"; //Cierra review
-                            }
-                        }
-                    }
-                    ?>
-                    <a href="/historial/Reviews.php?id=<?php echo "$idusuario2"; ?>" class="WatchList">
-                        <p>Ver mas reviews</p>
-                    </a>
-                </div>
             </div>
-        </div>
     </body>
 
 

@@ -200,3 +200,6 @@ a{
     text-align: center;
     font-size: 20px;
 }
+.nombre-personaje p:first-child {
+    font-weight: bold;
+}

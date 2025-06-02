@@ -70,7 +70,7 @@ body {
     margin-right: 2rem;
 }
 
-/* Cuerpo */
+
 .contendor {
     display: flex;
     flex-wrap: wra;
@@ -131,11 +131,10 @@ body {
     margin-left: 10px;
 }
 
-/* Poster de la película */
 .poster img {
-
     width: 250px;
     border-radius: 8px;
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }
 
 .info{

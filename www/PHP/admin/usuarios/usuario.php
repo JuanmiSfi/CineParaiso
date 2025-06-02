@@ -103,7 +103,7 @@ if (!$conn) {
             while ($mostrar = mysqli_fetch_assoc($sqlusu)) {
 
                 echo "<tr>";
-                echo "<td><img src=" . $mostrar['fto_perfil'] . " width='35px'></td>";
+                echo "<td><img src=" . $mostrar['fto_perfil'] . " width='35px' style='border-radius: 50%;'></td>";
                 echo "<td>" . $mostrar['id'] . "</td>";
                 echo "<td>" . $mostrar['nombre'] . "</td>";
                 echo "<td>" . $mostrar['apellidos'] . "</td>";

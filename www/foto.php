@@ -36,7 +36,7 @@ $tmp_name = $foto['tmp_name'];
         {
             //¿Tenemos permisos para subir la imágen?
             $destino = $directorio_destino . '/' .  $img_file;
-            mysqli_query($conn, "UPDATE usuario SET fto_perfil = '$destino' WHERE id = '$idusuario';");
+            mysqli_query($conn, "UPDATE usuario SET fto_perfil = '/$destino' WHERE id = '$idusuario';");
            (move_uploaded_file($tmp_name, $destino));
            header("Location: modificar.php");
            exit();

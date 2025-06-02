@@ -60,6 +60,7 @@ $pagina = $_GET['pag'];
 
 	$queryadd	= mysqli_query($conn, "INSERT INTO usuario(nombre, apellidos, usuario, email, contraseña) VALUES('$nombre','$apellidos','$usuario','$email','$PassCifrada')");
 	
+    
  	if(!$queryadd)
 	{
 		// echo "Error con el registro: ".mysqli_error($conn);
@@ -67,9 +68,23 @@ $pagina = $_GET['pag'];
 		 
 	}else
 	{
-		echo "<script>window.location= 'usuario.php?pag=1' </script>";
+		
 	}
 }
 ?>
 
+
+<?php
+$sql = "SELECT * FROM usuario WHERE usuario like '$usuario'";
+        $resul = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($resul) == 0) {
+            // Insertar datos en la base de datos
+            $sql = "INSERT INTO usuario (usuario,email,contraseña,codigo) values ('$usuario','$email','$PassCifrada',$codigo)";
+            if (mysqli_query($conn, $sql)) {
+                echo "<script>window.location= 'usuario.php?pag=1' </script>";
+            } else {
+                echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>";
+            }
+        }
+?>
 

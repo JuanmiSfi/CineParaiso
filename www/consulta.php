@@ -75,13 +75,19 @@ try {
                 $resul = mysqli_query($conn, $sql);
                 $numcolumnas = mysqli_num_rows($resul);
                 if (mysqli_num_rows($resul) > 0) {
-                    echo "<p>Se han encontrado usuarios relacionados con esta busqueda:</p>";
-                    echo "<div class='usuario-busqueda'>";
                     for ($i = 0; $i < $numcolumnas; $i++) {
                         $row = mysqli_fetch_assoc($resul);
                         $fto = $row['fto_perfil'];
                         $usuario = $row['usuario'];
                         $id_usuario = $row['id'];
+                        if ($usuario == 'admin') {
+                            break;
+                        } else {
+                            if ($i == 0) {
+                                echo "<p>Se han encontrado usuarios relacionados con esta busqueda:</p>";
+                                echo "<div class='usuario-busqueda'>";
+                            }
+                        }
                         echo "<div class='foto'>";
                         echo "<a href='/usuario.php?id=" . $id_usuario . "'>";
                         echo "<img src='$fto' alt='' />";
@@ -90,7 +96,9 @@ try {
                         echo "</a>";
                     }
                     echo "</div>";
+                    if ($usuario != 'admin') {
                     echo "<div class='barra2'></div>";
+                    }
                 }
                 ?>
             </div>

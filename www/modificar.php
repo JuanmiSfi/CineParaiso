@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+$error=-1;
 
 $idusuario = $_SESSION['idusuario'];
 error_reporting(E_ALL);
@@ -35,13 +36,21 @@ if (mysqli_num_rows($result) > 0) {
 ?>
 <?php
 if (isset($_POST['modificar'])) {
+    try{
+        if (strlen($_POST['bio']) > 200) {
+                throw new Exception("La biografía no puede tener más de 200 caracteres.");
+            }
     $sql = "UPDATE usuario SET nombre = '$_POST[nombre]', apellidos = '$_POST[apellidos]', email = '$_POST[email]', bio = '$_POST[bio]' WHERE usuario = '$usuario'";
     if (mysqli_query($conn, $sql)) {
         header("Location: usuario.php?id=" . $idusuario . "");
         exit();
     } else {
+        $error = 2;
         mysqli_close($conn);
     }
+}catch (Exception $e){
+    $error = 1;
+}
 }
 ?>
 <!DOCTYPE html>
@@ -93,6 +102,13 @@ if (isset($_POST['modificar'])) {
                             <p>Biografia:</p>
                         </label>
                         <textarea name="bio" id="bio"><?php echo $bio; ?></textarea><br>
+                        <?php
+                        if($error == 1){
+                            echo "<p style='color:#962508';>No se puede actualizar porque la biografia supera los 200 caracteres permitidos</p>";
+                        }else if($error == 2){
+                            echo "<p>No se puede actualizar el perfil, prueba mas tarde</p>";
+                        }
+                        ?>
                         <input type="submit" name="modificar" value="Modificar" id="boton" /><br>
                     </form>
                 </div>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-require 'vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
+require_once __DIR__ . '/..//../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..//../');
 $dotenv->load();
 
 
@@ -34,7 +34,7 @@ if (!$conn) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cine Paraiso</title>
-    <link rel="stylesheet" href="/CSS/historial.css" />
+    <link rel="stylesheet" href="/PHP/usuario/seguidores.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
@@ -42,13 +42,13 @@ if (!$conn) {
 <body>
     <header>
         <div class="container">
-            <div class="logo"><a href="./index.php"><img src="/src/Logo.png" alt="logo"></a></div>
+            <div class="logo"><a href="/../../index.php"><img src="/src/Logo.png" alt="logo"></a></div>
             <div class="buscador">
-                <form action="consulta.php" method="POST">
+                <form action="/../../consulta.php" method="POST">
                     <input type="text" name="busqueda" placeholder="Buscar en Cine Paraiso"></input>
                 </form>
             </div>
-            <div class="usuario"><a href="./login.php">
+            <div class="usuario"><a href="/../../login.php">
                     <?php
                     if ($_SESSION['idusuario'] != 0) {
                         $sql = "SELECT * FROM usuario WHERE id = '$_SESSION[idusuario]'";
@@ -75,40 +75,29 @@ if (!$conn) {
             $solu = mysqli_fetch_assoc($consult);
             $usuario = $solu['usuario'];
             $fto_perfil = $solu['fto_perfil'];
-            echo "<a href='./usuario.php?id=".$idusuario."'>";
-            echo "<img src='$fto_perfil' alt='' />";
+            echo "<a href='/../../usuario.php?id=".$idusuario."'>";
+            echo "<img src='/../../$fto_perfil' alt='' />";
             echo "</a>";
-            echo "<p>Visto por <a href='usuario.php?id=".$idusuario."'>&nbsp;$usuario</a></p>";
+            echo "<p>Visto por <a href='/../../usuario.php?id=".$idusuario."'>&nbsp;$usuario</a></p>";
             ?>
-            <button type="submit" class="WatchList"><a href="historial.php?id=<?php echo $idusuario;?>" class="link">Peliculas</a></button>
-            <button type="submit" class="WatchList"><a href="/historial/Reviews.php?id=<?php echo $idusuario;?>" class="link">Reviews</a></button>
         </div>
         <div class="barra2"></div>
-        <div class='poster'>
+        <div class='follow'>
             <?php
-            $sql = "SELECT p.poster,p.id,r.nota,r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+            $sql = "SELECT u.usuario,u.fto_perfil,s.id_sigue FROM siguen s, usuario u WHERE $idusuario = s.id_sigue  AND id_usuario = u.id ";
             $consult = mysqli_query($conn, $sql);
             $numerofilas = mysqli_num_rows($consult);
             if($numerofilas>0){
             for ($i = 0; $i < $numerofilas; $i++) {
                 $fila = mysqli_fetch_assoc($consult);
-                $poster = $fila['poster'];
-                $movieId = $fila['id'];
-                $nota = $fila['nota'];
-                $review = $fila['review'];
-                echo "<a href='./movie2.php?id=" . $movieId . "'>";
-                echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                echo "<div class='estrellas'>";
-                for ($j = 1; $j <= 5; $j++) {
-                    if ($nota >= $j) {
-                        echo "<i class='fas fa-star' id='estrellas'></i>";
-                    }
-                }
-                if (!empty($review)) {
-                    echo "<i class='fa-solid fa-align-left' id='rw'></i>";
-                }
+                $idsigue=$fila['id_sigue'];
+                $sigue = $fila['usuario'];
+                $fto = $fila['fto_perfil'];
+                echo "<a href='/../../usuario.php?id=".$idsigue."'>";
+                echo "<div class='info'>";
+                echo "<img src='/../../$fto' alt='' />";
+                echo $sigue;
                 echo "</div>";
-                echo "</a>";
             }   
             }else{
                 $noreview = true;
@@ -119,7 +108,7 @@ if (!$conn) {
             <?php
             if($noreview == true){
                 echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
-                echo "<p>¡Vaya! Parece que $usuario no ha visto aun ninguna pelicula</p>";
+                echo "<p>¡Vaya! Parece que $usuario no sigue a nadie</p>";
             }
             ?>
         </div>

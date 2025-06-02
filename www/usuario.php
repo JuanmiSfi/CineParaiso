@@ -10,8 +10,7 @@ if (!isset($_GET['id'])) {
     header("Location: login.php");
     exit();
 }
-
-if ($id_rol == 2) {
+if ($_GET['id'] ==$_SESSION['idusuario'] && $id_rol == 2) {
     header("Location: admin.php");
     exit();
 }
@@ -151,11 +150,13 @@ if (isset($_POST['cerrar'])) {
                         echo "</div>";
 
                         echo "<div class='n_seguidores'>";
+                        echo '<a href="PHP/usuario/seguidores.php?id=' . $idusuario2 . '" class="WatchList">';
                         echo "<h3>$num_seguidores</h3>";
                         echo "<p>Seguidores</p> ";
                         echo "</div>";
 
                         echo "<div class='n_siguiendo'>";
+                        echo '<a href="PHP/usuario/siguiendo.php?id=' . $idusuario2 . '" class="WatchList">';
                         echo "<h3>$num_siguiendo</h3>";
                         echo "<p>Siguiendo</p> ";
                         echo "</div>";

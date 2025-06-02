@@ -30,7 +30,7 @@ body {
     margin-top: 2rem;
 }
 
-a{
+a {
     text-decoration: none;
     color: #000000;
 }
@@ -81,9 +81,11 @@ a{
     display: flex;
     flex-direction: row;
     margin-right: 550px;
+    gap: 100px;
 }
-.actividad{
-    padding-left: 50px;
+
+.actividad {
+    padding-left: -250px;
 }
 
 .boton button {
@@ -97,35 +99,37 @@ a{
     font-size: 19px;
     margin-right: 15px;
 }
-.modifi{
-        padding-left: 5px;
-        padding-right: 5px;
-        padding-top: -5px;
-        padding-bottom: -5px;
-        border-radius: 5px;
-        border: 2px solid #000000;
-        background-color: #f39a3f;
-        color: #f7e5c6;
-        text-align: center;
-        font-size: 19px;
-        margin-right: 15px; 
+
+.modifi {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: -5px;
+    padding-bottom: -5px;
+    border-radius: 5px;
+    border: 2px solid #000000;
+    background-color: #f39a3f;
+    color: #f7e5c6;
+    text-align: center;
+    font-size: 19px;
+    margin-right: 15px;
 }
 
-.WatchList button{
+.WatchList button {
     background: none;
     border: none;
     display: flex;
     justify-content: flex-end;
 }
 
-.WatchList p{
+.WatchList p {
     font-family: 'Codec Pro';
     font-size: 20px;
     margin-left: 15px;
     color: #000000;
 }
-.WatchList p:hover{
-    color:#f39a3f;
+
+.WatchList p:hover {
+    color: #f39a3f;
 }
 
 .info {
@@ -151,7 +155,8 @@ a{
     align-content: center;
     border-radius: 50%;
 }
-#fto{
+
+#fto {
     width: 270px;
 }
 
@@ -162,19 +167,23 @@ a{
 
 .bio {
     font-style: italic;
+    max-width: 50ch;
+    word-break: break-word;
+    white-space: normal;
 }
-.nav1{
+
+.nav1 {
     display: flex;
     flex-direction: row;
 }
 
-.followe{
+.followe {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
 }
 
-.follow{
+.follow {
     padding: 10px;
     font-family: 'Codec Pro';
     font-size: 20px;
@@ -185,7 +194,7 @@ a{
     cursor: pointer;
 }
 
-.unfollow{
+.unfollow {
     font-family: 'Codec Pro';
     font-size: 20px;
     border-radius: 8px;
@@ -193,7 +202,8 @@ a{
     background-color: rgb(26, 176, 26);
     cursor: pointer;
 }
-.unfollow:hover{
+
+.unfollow:hover {
     background-color: #962508;
 }
 
@@ -202,86 +212,114 @@ a{
     text-align: center;
     margin-left: 12px;
     position: absolute;
-    
+
 }
+
 .unfollow::after {
     content: 'Unfollow';
     position: 'absolute';
     opacity: 0;
 }
 
-.unfollow:hover::before{
+.unfollow:hover::before {
     opacity: 0;
 }
 
-.unfollow:hover::after{
-    
+.unfollow:hover::after {
+
     opacity: 1;
 }
 
 
-.nav1 .n_seguidores{
+.nav1 .n_seguidores {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.n_seguidores p{
+
+.n_seguidores p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Codec Pro', sans-serif;
     font-size: 20px;
 }
-.n_seguidores h3{
+
+.n_seguidores h3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Bukhari Script';
     font-size: 40px;
 }
 
-.nav1 .n_pelis{
+.nav1 .n_pelis {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-right: 15px;
 }
-.n_pelis a{
+
+.n_pelis a {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.n_pelis p{
+
+.n_pelis p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Codec Pro', sans-serif;
     font-size: 20px;
 }
-.n_pelis h3{
+
+.n_pelis h3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Bukhari Script';
     font-size: 40px;
 }
 
-.nav1 .n_siguiendo{
+.nav1 .n_siguiendo {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-left: 15px;
 }
-.n_siguiendo p{
+
+.n_siguiendo p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Codec Pro', sans-serif;
     font-size: 20px;
 }
-.n_siguiendo h3{
+
+.n_siguiendo h3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Bukhari Script';
     font-size: 40px;
 }
 
 .barra2 {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: 3px;
     background-color: #474240;
     margin: 10px auto 15px auto;
 }
-.navegador{
+
+.navegador {
     display: flex;
     margin-bottom: 10px;
 }
+
 .ultima5 {
     font-family: 'Codec Pro', sans-serif;
     font-size: 30px;
@@ -298,7 +336,7 @@ a{
     width: auto;
     height: 250.0px;
     padding-left: 50px;
-    padding-top:20px;
+    padding-top: 20px;
     padding-bottom: 20px;
     gap: 10px;
     background-color: #f39a3f;
@@ -320,7 +358,7 @@ a{
     margin-right: 14px;
 }
 
-.nota i{
+.nota i {
     font-size: 50%;
     color: #1a1918;
 }
@@ -335,7 +373,7 @@ a{
 }
 
 
-.mas{
+.mas {
     font-size: 64px;
     padding-top: -50px;
     margin-right: 150px;
@@ -361,9 +399,9 @@ a{
     margin-right: 16px;
 }
 
-.review img:hover{
+.review img:hover {
     box-shadow: 0 0 0 4px white;
-    filter: drop-shadow(rgba(255, 255, 255, 0.589) 0px 1px 20px );
+    filter: drop-shadow(rgba(255, 255, 255, 0.589) 0px 1px 20px);
 }
 
 .review a {
@@ -371,15 +409,17 @@ a{
     font-size: 1.2em;
     font-weight: bold;
 }
- .review h2{
+
+.review h2 {
     font-family: 'Codec Pro';
     margin-bottom: 5px;
- }
+}
 
-.estrellas{
+.estrellas {
     display: flex;
 }
-.fecha{
+
+.fecha {
     margin-left: 15px;
 }
 
@@ -388,7 +428,7 @@ a{
     flex-direction: column;
 }
 
-.review p{
+.review p {
     font-family: 'Codec Pro';
     color: #000000;
     font-size: 20px;
@@ -397,7 +437,7 @@ a{
     overflow-wrap: break-word;
 }
 
-.opion .WatchList p{
+.opion .WatchList p {
     display: flex;
     justify-content: flex-end;
     font-family: 'Codec Pro';
@@ -406,12 +446,7 @@ a{
     margin-top: 0px;
     color: #1a1a1a;
 }
-.opion .WatchList p:hover{
-    color:#f39a3f;
-}
 
-
-
-@media screen and (max-width: 480px) {
-    
+.opion .WatchList p:hover {
+    color: #f39a3f;
 }

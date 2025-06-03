@@ -46,6 +46,7 @@ try {
                 <div class="buscador">
                     <form action="consulta.php" method="POST">
                         <input type="text" name="busqueda" placeholder="Buscar en Cine Paraiso"></input>
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
                     </form>
                 </div>
                 <div class="usuario"><a href="login.php">
@@ -158,6 +159,55 @@ try {
                     }
                     ?>
                 </div>
+            </div>
+            <div class="opinion">
+                <?php
+                if($idusuario!=0){
+                    echo "<p>Popular entre tus amigos</p>";
+                    $sql="SELECT p.poster,p.id as id_pelicula,u.id as id_usuario,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.fto_perfil FROM review r, siguen s, pelicula p, usuario u WHERE u.id=s.id_sigue AND r.id_usuario = s.id_sigue AND s.id_usuario = $_SESSION[idusuario] AND p.id=r.id_pelicula";
+                    $consult = mysqli_query($conn, $sql);
+                    $numerofilas = mysqli_num_rows($consult);
+                    if (mysqli_num_rows($consult) > 0) {
+                            for ($i = 0; $i < $numerofilas; $i++) {
+                                $fila = mysqli_fetch_assoc($consult);
+                                $poster = $fila['poster'];
+                                $id_usuario = $fila['id_usuario'];
+                                $usuario = $fila['usuario'];
+                                $fto_perfil = $fila['fto_perfil'];
+                                $titulo = $fila['titulo'];
+                                $movieId = $fila['id_pelicula'];
+                                $nota = $fila['nota'];
+                                $review = $fila['review'];
+                                $fecha = $fila['fecha'];
+                                if (!empty($review)) {
+                                    echo "<div class='review'>";
+                                    echo "<a href='/movie2.php?id=" . $movieId . "'>";
+                                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                                    echo "</a>";
+                                    echo "<div class='contenido'>";
+                                    echo "<h2>$titulo</h2>";
+                                    echo "<div class='estrellas'>";
+                                    for ($j = 1; $j <= 5; $j++) {
+                                        if ($nota >= $j) {
+                                            echo "<i class='fas fa-star' id='estrellas'></i>";
+                                        }
+                                    }
+                                    echo "<div class='fecha'>";
+                                    echo "<p id='visto'>Visto por <a href='/usuario.php?id=" . $id_usuario . "' style='text-decoration: none;'>$usuario</a> </p>";
+                                    if (!empty($fecha)) {
+                                        $fechaconformato = date("d-m-Y", strtotime($fecha));
+                                        echo "<p>$fechaconformato</p>";
+                                    }
+                                    echo "</div>"; // Cierra fecha
+                                    echo "</div>"; // Cierra estrllas
+                                    echo "<p>$review</p>";
+                                    echo "</div>"; // Cierra contenido
+                                    echo "</div>"; //Cierra review
+                                }
+                            }
+                        }
+                }
+                ?>
             </div>
         </body>
     <?php

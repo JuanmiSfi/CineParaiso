@@ -75,42 +75,70 @@ if (!$conn) {
             $solu = mysqli_fetch_assoc($consult);
             $usuario = $solu['usuario'];
             $fto_perfil = $solu['fto_perfil'];
-            echo "<a href='/../../usuario.php?id=".$idusuario."'>";
+            echo "<a href='/../../usuario.php?id=" . $idusuario . "'>";
             echo "<img src='/../../$fto_perfil' alt='' />";
             echo "</a>";
-            echo "<p>Visto por <a href='/../../usuario.php?id=".$idusuario."'>&nbsp;$usuario</a></p>";
+            echo "<p>Seguidores de <a href='/../../usuario.php?id=" . $idusuario . "'>&nbsp;$usuario</a></p>";
             ?>
+            <button type="submit" class="Seguidores"><a href="/PHP/usuario/seguidores.php?id=<?php echo $idusuario; ?>" class="link">Seguidores</a></button>
+            <button type="submit" class="Seguidores"><a href="/PHP/usuario/siguiendo.php?id=<?php echo $idusuario; ?>" class="link">siguiendo</a></button>
         </div>
         <div class="barra2"></div>
-        <div class='follow'>
-            <?php
-            $sql = "SELECT u.usuario,u.fto_perfil,s.id_sigue FROM siguen s, usuario u WHERE $idusuario = s.id_sigue  AND id_usuario = u.id ";
-            $consult = mysqli_query($conn, $sql);
-            $numerofilas = mysqli_num_rows($consult);
-            if($numerofilas>0){
-            for ($i = 0; $i < $numerofilas; $i++) {
-                $fila = mysqli_fetch_assoc($consult);
-                $idsigue=$fila['id_sigue'];
-                $sigue = $fila['usuario'];
-                $fto = $fila['fto_perfil'];
-                echo "<a href='/../../usuario.php?id=".$idsigue."'>";
-                echo "<div class='info'>";
-                echo "<img src='/../../$fto' alt='' />";
-                echo $sigue;
-                echo "</div>";
-            }   
-            }else{
-                $noreview = true;
-            }
-            ?>
-        </div>
-        <div class='sin-review'>
-            <?php
-            if($noreview == true){
-                echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
-                echo "<p>¡Vaya! Parece que $usuario no sigue a nadie</p>";
-            }
-            ?>
+        <div class="contenedor-follow">
+            <div class='follow'>
+                <?php
+                $sql = "SELECT u.usuario,u.fto_perfil,s.id_sigue,s.id_usuario FROM siguen s, usuario u WHERE $idusuario = s.id_sigue  AND id_usuario = u.id ";
+                $consult = mysqli_query($conn, $sql);
+                $numerofilas = mysqli_num_rows($consult);
+                if ($numerofilas > 0) {
+                    for ($i = 0; $i < $numerofilas; $i++) {
+                        echo "<div class='followe'>";
+                        $fila = mysqli_fetch_assoc($consult);
+                        $idseguidor = $fila['id_usuario'];
+                        $sigue = $fila['usuario'];
+                        $fto = $fila['fto_perfil'];
+                        echo "<div class='usuarios'>";
+                        echo "<a href='/../../usuario.php?id=" . $idseguidor . "'>";
+                        echo "<img src='/../../$fto' alt='' />";
+                        echo "</div>"; //usuarios
+                        echo "<div class='info'>";
+                        echo "<p>$sigue</p>";
+                        echo "</div>"; //info
+                        echo "<div class='boton'>";
+                        $sql = "SELECT COUNT(*) FROM siguen WHERE id_usuario=$idseguidor AND $_SESSION[idusuario]=id_sigue";
+                        $resul = mysqli_query($conn, $sql);
+                        $sigue = mysqli_fetch_row($resul);
+                        if ($sigue[0] != 0) {
+                            echo '<form action="/PHP/siguen.php" method="POST">';
+                            echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
+                            echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
+                            echo "<input type='hidden' name='DIR' value='seguidores'>";
+                            echo "<button type='submit' name='suprimir' class='suprimir'>Suprimir</button>";
+                            echo '</form>';
+                        }else if($sigue[0] == 0 && $idseguidor!=$_SESSION['idusuario']){
+                            echo '<form action="/PHP/siguen.php" method="POST">';
+                            echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
+                            echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
+                            echo "<input type='hidden' name='DIR' value='seguidores'>";
+                            echo "<button type='submit' name='follow' class='seguir'>seguir</button>";
+                            echo '</form>';
+                        }
+                        echo "</div>"; //boton
+                        echo "</div>"; //followe
+                    }
+                } else {
+                    $noreview = true;
+                }
+                ?>
+                <div class='sin-review'>
+                    <?php
+                    if ($noreview == true) {
+                        echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
+                        echo "<p>¡Vaya! Parece que $usuario no sigue a nadie</p>";
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </body>

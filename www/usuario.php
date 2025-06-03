@@ -130,12 +130,14 @@ if (isset($_POST['cerrar'])) {
                                 echo '<form action="/PHP/siguen.php" method="POST">';
                                 echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
                                 echo "<input type='hidden' name='idusuario2' value='" . $idusuario2 . "'>";
+                                echo "<input type='hidden' name='DIR' value='usuario'>";
                                 echo "<button type='submit' name='follow' class='follow'>seguir</button>";
                                 echo '</form>';
                             } else {
                                 echo '<form action="/PHP/siguen.php" method="POST">';
                                 echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
                                 echo "<input type='hidden' name='idusuario2' value='" . $idusuario2 . "'>";
+                                echo "<input type='hidden' name='DIR' value='usuario'>";
                                 echo "<button type='submit' name='unfollow' class='unfollow'></button>";
                                 echo '</form>';
                             }
@@ -167,7 +169,7 @@ if (isset($_POST['cerrar'])) {
                         <a href="historial.php?id=<?php echo $idusuario2 ?>" class="WatchList">
                             <p>Peliculas vistas</p>
                         </a>
-                        <a href="historial.php?id=<?php echo $idusuario2 ?>" class="WatchList">
+                        <a href="watchlist.php?id=<?php echo $idusuario2 ?>" class="WatchList">
                             <p>WatchList</p>
                         </a>
                     </div>

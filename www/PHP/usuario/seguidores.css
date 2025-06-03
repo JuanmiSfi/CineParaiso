@@ -118,18 +118,18 @@ body {
     margin-right: 10px;
 }
 
-.WatchList {
+.Seguidores {
     padding: 1px 15px;
     border-radius: 5px;
     text-align: center;
     font-size: 19px;
 }
 
-.WatchList a {
+.Seguidores a {
     color: black;
 }
 
-.WatchList a:hover {
+.Seguidores a:hover {
     color: #d46a00;
 }
 
@@ -140,15 +140,75 @@ body {
     border-radius: 50%;
 }
 
+.contenedor-follow {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 .follow {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
+    width: 450px;
+    background-color: #f39a3f;
+    border: 5px solid black;
+    border-radius: 39px;
+    filter: drop-shadow(8px 8px 0px #8b4a28);
 }
 
-.info img {
+.followe {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: auto;
+    height: 85px;
+
+    margin-bottom: 15px;
+}
+
+.usuarios img {
     width: 70px;
-    height: 70px;
-    margin-right: 2rem;
     border-radius: 50%;
+}
+
+.info p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Codec Pro', sans-serif;
+    font-size: 20px;
+}
+
+.unfollow {
+    font-family: 'Codec Pro';
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    color:antiquewhite;
+    background-color: rgb(74, 60, 51);
+    cursor: pointer;
+}
+
+.suprimir {
+    font-family: 'Codec Pro';
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    color:antiquewhite;
+    background-color: rgb(74, 60, 51);
+    cursor: pointer;
+}
+.seguir {
+    font-family: 'Codec Pro';
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    color:antiquewhite;
+    background-color: rgb(74, 60, 51);
+    cursor: pointer;
 }

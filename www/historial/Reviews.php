@@ -102,6 +102,7 @@ if (!$conn) {
                         echo "<a href='/movie2.php?id=" . $movieId . "'>";
                         echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
                         echo "</a>";
+
                         echo "<div class='contenido'>";
                         echo "<h2>$titulo</h2>";
                         echo "<div class='estrellas'>";

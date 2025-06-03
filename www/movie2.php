@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-
+$actualizar =  false;
 $movieId = $_GET['id'];
 $idusuario = $_SESSION['idusuario'] ?? 0;
 error_reporting(E_ALL);
@@ -20,6 +20,9 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 if (!$conn) {
     die("Conexión fallida: " . mysqli_connect_error());
 }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -235,11 +238,13 @@ if (!$conn) {
                                         $sql = "INSERT INTO review (vermastarde,id_pelicula,id_usuario) values(0,$movieId,$idusuario)";
                                         $existe = mysqli_query($conn, $sql);
                                         if ($existe) {
+                                            $actualizar = true;
                                         }
                                     } else {
                                         $sql = "INSERT INTO review (vermastarde,id_pelicula,id_usuario) values(1,$movieId,$idusuario)";
                                         $existe = mysqli_query($conn, $sql);
                                         if ($existe) {
+                                            $actualizar = true;
                                         }
                                     }
                                 } else {
@@ -249,6 +254,7 @@ if (!$conn) {
                         } else {
                             $row = mysqli_fetch_assoc($consulta);
                             $idreview = $row['id'];
+                            $vermastarde = $row['vermastarde'];
                             if (isset($_POST['subir'])) {
                                 // Si no tiene valor puntuacion, es decir no se ha selecionado ninguna estrella se establecerá por defecto null, esto funciona gracias a ? que es como un if pero en comprimido
                                 $nota = isset($_POST['puntuacion']) ? $_POST['puntuacion'] : 'NULL';
@@ -269,11 +275,13 @@ if (!$conn) {
                                     $sql = "UPDATE review set vermastarde = 0 WHERE id=$idreview";
                                     $existe = mysqli_query($conn, $sql);
                                     if ($existe) {
+                                        $actualizar = true;
                                     }
                                 } else {
-                                    $sql = "UPDATE review set vermastarde = 1 WHERE id=$idreview";
+                                    $sql = "UPDATE review set vermastarde = 1 , nota = NULL , review = NULL, fecha = NULL WHERE id=$idreview";
                                     $existe = mysqli_query($conn, $sql);
                                     if ($existe) {
+                                        $actualizar = true;
                                     }
                                 }
                             }

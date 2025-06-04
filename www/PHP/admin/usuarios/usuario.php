@@ -1,11 +1,18 @@
 <?php
+session_start();
 require_once __DIR__ . '/../../../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../../');
 $dotenv->load();
 $pagina = $_GET['pagina'] ?? 1;
 $error = false;
-$idusuario = $_SESSION['idusuario'] ?? 0;
+$idusuario = $_SESSION['idusuario']??0;
+$id_rol = $_SESSION['id_rol'] ?? 0;
 
+
+if ($id_rol == 0 || $id_rol == 1) {
+    header("Location: ../../../index.php");
+    exit();
+}
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -112,7 +119,7 @@ if (!$conn) {
                 echo "<td style='width:24%'>
 			<a href=\"ver.php?usuario=$mostrar[usuario]&pag=$pagina\">Ver</a> 
 			<a href=\"editar.php?usuario=$mostrar[usuario]&pag=$pagina\">Modificar</a> 
-			<a href=\"eliminar.php?usuario=$mostrar[usuario]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar a $mostrar[usuario]?')\">Eliminar</a>
+			<a href=\"eliminar.php?id=$mostrar[id]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar a $mostrar[usuario]?')\">Eliminar</a>
 			</td>";
             }
 

@@ -212,6 +212,10 @@ select {
 	align-items: center;
 }
 
+.reviews{
+	display: flex;
+	flex-direction: column;
+}
 
 .review {
     display: flex;
@@ -221,6 +225,7 @@ select {
     border-radius: 8px;
     padding: 16px;
     width: 800px;
+	margin-bottom: 15px;
 }
 
 .review img {
@@ -274,4 +279,18 @@ select {
 .sin-review p{
     font-family: 'Codec Pro';
     font-size: 40px;
+}
+
+.opion .WatchList p {
+    display: flex;
+    justify-content: flex-end;
+    font-family: 'Codec Pro';
+    font-size: 20px;
+    margin-left: 15px;
+    margin-top: 0px;
+    color: #1a1a1a;
+}
+
+.opion .WatchList p:hover {
+    color: #f39a3f;
 }

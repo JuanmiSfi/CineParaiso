@@ -291,11 +291,11 @@ if (!$conn) {
                 </div>
                 <div class="reviews">
                     <?php
-                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.fto_perfil FROM review r,pelicula p, usuario u WHERE p.id = $movieId AND r.id_pelicula = p.id AND r.id_usuario = $idusuario AND $idusuario = u.id";
+                    $sql = "SELECT  p.id as id_pelicula,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.fto_perfil FROM review r,pelicula p, usuario u WHERE p.id = $movieId AND r.id_pelicula = p.id AND r.id_usuario = $idusuario AND $idusuario = u.id";
                     $consult = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($consult) > 0) {
                         $fila = mysqli_fetch_assoc($consult);
-                        $movieId = $fila['id'];
+                        $movieId = $fila['id_pelicula'];
                         $usuario = $fila['usuario'];
                         $fto = $fila['fto_perfil'];
                         $nota = $fila['nota'];
@@ -332,77 +332,36 @@ if (!$conn) {
                     <h2>Ultimas Reviews</h2>
                     <div class="barra2"></div>
                     <?php
-                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.fto_perfil FROM review r,pelicula p, usuario u WHERE r.id_pelicula = p.id AND r.id_usuario = u.id AND p.id = $movieId  ORDER BY r.id DESC";
+                    $sql = "SELECT  p.id as id_pelicula,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.id  as id_usuario,u.fto_perfil FROM review r,pelicula p, usuario u WHERE r.id_pelicula = p.id AND r.id_usuario = u.id AND p.id = $movieId  ORDER BY r.id DESC";
                     $consult = mysqli_query($conn, $sql);
                     $num_filas = mysqli_num_rows($consult);
                     if ($num_filas >= 3) {
                         for ($i = 0; $i < 3; $i++) {
-                            $fila = mysqli_fetch_assoc($consult);
-                            $movieId = $fila['id'];
-                            $usuario = $fila['usuario'];
-                            $fto = $fila['fto_perfil'];
-                            $nota = $fila['nota'];
-                            $review = $fila['review'];
-                            $fecha = $fila['fecha'];
-                            if (!empty($review)) {
-                                echo "<div class='opinion'>";
-                                echo "<div class=info>";
-                                echo "<img src='$fto' alt='' />";
-                                echo "<div class='user'>";
-                                echo "<h2>$usuario</h2>";
-                                echo "<div class='estrellas'>";
-                                for ($j = 1; $j <= 5; $j++) {
-                                    if ($nota >= $j) {
-                                        echo "<i class='fas fa-star' id='estrellas'></i>";
-                                    }
-                                }
-                                echo "<div class='fecha'>";
-                                if (!empty($fecha)) {
-                                    $fechaconformato = date("d-m-Y", strtotime($fecha));
-                                    echo "Visto el $fechaconformato";
-                                }
-                                echo "</div>"; // cierra user
-                                echo "</div>"; // Cierra fecha
-                                echo "</div>"; // cierra info
-                                echo "</div>"; // Cierra estrllas
-                                echo "<p>$review</p>";
-                                echo "</div>"; // Cierra opinion
-                            }
+                            include __DIR__ . "/PHP/REVIEWS.php";
                         }
                         echo '<a href="todas.php?id=' . $movieId . '" class="todas"><p>Ver todas las Reviews</p></a>';
                     } else {
                         for ($i = 0; $i < $num_filas; $i++) {
-                            $fila = mysqli_fetch_assoc($consult);
-                            $movieId = $fila['id'];
-                            $usuario = $fila['usuario'];
-                            $fto = $fila['fto_perfil'];
-                            $nota = $fila['nota'];
-                            $review = $fila['review'];
-                            $fecha = $fila['fecha'];
-                            if (!empty($review)) {
-                                echo "<div class='opinion'>";
-                                echo "<div class=info>";
-                                echo "<img src='$fto' alt='' />";
-                                echo "<div class='user'>";
-                                echo "<h2>$usuario</h2>";
-                                echo "<div class='estrellas'>";
-                                for ($j = 1; $j <= 5; $j++) {
-                                    if ($nota >= $j) {
-                                        echo "<i class='fas fa-star' id='estrellas'></i>";
-                                    }
-                                }
-                                echo "<div class='fecha'>";
-                                if (!empty($fecha)) {
-                                    $fechaconformato = date("d-m-Y", strtotime($fecha));
-                                    echo "Visto el $fechaconformato";
-                                }
-                                echo "</div>"; // cierra user
-                                echo "</div>"; // Cierra fecha
-                                echo "</div>"; // cierra info
-                                echo "</div>"; // Cierra estrllas
-                                echo "<p>$review</p>";
-                                echo "</div>"; // Cierra opinion
-                            }
+                           include __DIR__ . "/PHP/REVIEWS.php";
+                        }
+                        echo "<a href='todas.php?id=" . $movieId . "' class='todas'><p>Ver todas las Reviews</p></a>";
+                    }
+                    ?>
+
+                    <h2>Reviews de tus amigos</h2>
+                    <div class="barra2"></div>
+                    <?php
+                    $sql = "SELECT p.id as id_pelicula,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.id  as id_usuario,u.fto_perfil FROM review r,pelicula p, usuario u,siguen s WHERE r.id_usuario = u.id AND r.id_pelicula = $movieId AND p.id = $movieId AND r.vermastarde = 0 AND r.id_usuario = s.id_sigue AND s.id_usuario = $_SESSION[idusuario]  ORDER BY r.id DESC";
+                    $consult = mysqli_query($conn, $sql);
+                    $num_filas = mysqli_num_rows($consult);
+                    if ($num_filas >= 3) {
+                        for ($i = 0; $i < 3; $i++) {
+                            include __DIR__ . "/PHP/REVIEWS.php";
+                        }
+                        echo '<a href="todas.php?id=' . $movieId . '" class="todas"><p>Ver todas las Reviews</p></a>';
+                    } else {
+                        for ($i = 0; $i < $num_filas; $i++) {
+                            include __DIR__ . "/PHP/REVIEWS.php";
                         }
                         echo "<a href='todas.php?id=" . $movieId . "' class='todas'><p>Ver todas las Reviews</p></a>";
                     }

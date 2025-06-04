@@ -1,7 +1,7 @@
 <?php
 session_start();
-require 'vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
+require_once __DIR__ . '/../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 
@@ -42,13 +42,13 @@ if (!$conn) {
 <body>
     <header>
         <div class="container">
-            <div class="logo"><a href="./index.php"><img src="/src/Logo.png" alt="logo"></a></div>
+            <div class="logo"><a href="/index.php"><img src="/src/Logo.png" alt="logo"></a></div>
             <div class="buscador">
                 <form action="consulta.php" method="POST">
                     <input type="text" name="busqueda" placeholder="Buscar en Cine Paraiso"></input>
                 </form>
             </div>
-            <div class="usuario"><a href="./login.php">
+            <div class="usuario"><a href="/login.php">
                     <?php
                     if ($_SESSION['idusuario'] != 0) {
                         $sql = "SELECT * FROM usuario WHERE id = '$_SESSION[idusuario]'";
@@ -75,13 +75,13 @@ if (!$conn) {
             $solu = mysqli_fetch_assoc($consult);
             $usuario = $solu['usuario'];
             $fto_perfil = $solu['fto_perfil'];
-            echo "<a href='./usuario.php?id=".$idusuario."'>";
+            echo "<a href='/usuario.php?id=".$idusuario."'>";
             echo "<img src='$fto_perfil' alt='' />";
             echo "</a>";
-            echo "<p>Visto por <a href='usuario.php?id=".$idusuario."'>&nbsp;$usuario</a></p>";
+            echo "<p>Visto por <a href='/usuario.php?id=".$idusuario."'>&nbsp;$usuario</a></p>";
             ?>
-            <button type="submit" class="WatchList"><a href="historial.php?id=<?php echo $idusuario;?>" class="link">Peliculas</a></button>
-            <button type="submit" class="WatchList"><a href="/historial/Reviews.php?id=<?php echo $idusuario;?>" class="link">Reviews</a></button>
+            <button type="submit" class="WatchList"><a href="/PHP/historial.php?id=<?php echo $idusuario;?>" class="link">Peliculas</a></button>
+            <button type="submit" class="WatchList"><a href="/PHP/historial/Reviews.php?id=<?php echo $idusuario;?>" class="link">Reviews</a></button>
         </div>
         <div class="barra2"></div>
         <div class='poster'>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-require __DIR__ . '/../vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+require __DIR__ . '/../../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
 $noreview = false;
@@ -74,13 +74,13 @@ if (!$conn) {
             $solu = mysqli_fetch_assoc($consult);
             $usuario = $solu['usuario'];
             $fto_perfil = $solu['fto_perfil'];
-            echo "<a href='./usuario.php?id=" . $idusuario . "'>";
+            echo "<a href='/usuario.php?id=" . $idusuario . "'>";
             echo "<img src='$fto_perfil' alt='' />";
             echo "</a>";
-            echo "<p>Reviews de <a href='../usuario.php?id=" . $idusuario . "'>&nbsp;$usuario</a></p>";
+            echo "<p>Reviews de <a href='/usuario.php?id=" . $idusuario . "'>&nbsp;$usuario</a></p>";
             ?>
-            <button type="submit" class="WatchList"><a href="/historial.php?id=<?php echo $idusuario; ?>" class="link">Peliculas</a></button>
-            <button type="submit" class="WatchList"><a href="/historial/Reviews.php?id=<?php echo $idusuario; ?>" class="link">Reviews</a></button>
+            <button type="submit" class="WatchList"><a href="/PHP/historial.php?id=<?php echo $idusuario; ?>" class="link">Peliculas</a></button>
+            <button type="submit" class="WatchList"><a href="/PHP/historial/Reviews.php?id=<?php echo $idusuario; ?>" class="link">Reviews</a></button>
         </div>
         <div class="barra2"></div>
         <div class='poster'>

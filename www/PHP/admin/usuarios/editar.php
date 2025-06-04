@@ -14,6 +14,7 @@ while($mostrar = mysqli_fetch_array($querybuscar))
 	$usunom 	= $mostrar['nombre'];
 	$usuape 	= $mostrar['apellidos'];
     $usuario 	= $mostrar['usuario'];
+    $pass = $mostrar['contraseña'];
 	$email 	= $mostrar['email'];
     $BIO 	= $mostrar['bio'];
 }
@@ -25,9 +26,14 @@ while($mostrar = mysqli_fetch_array($querybuscar))
 	$apell = $_POST['apellido'];
 	$user = $_POST['usuario'];
 	$mail = $_POST['email'];
+    if(isset($_POST['password'])){
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    }else{
+        $password = $pass;
+    }
 	$bio = $_POST['bio'];
       
-    $querymodificar = mysqli_query($conn, "UPDATE usuario SET nombre='$nombre',apellidos='$apell',usuario='$user',email='$mail', bio='$bio' WHERE id = '$idusuario'");
+    $querymodificar = mysqli_query($conn, "UPDATE usuario SET nombre='$nombre',apellidos='$apell',usuario='$user',email='$mail', bio='$bio', contraseña = '$password' WHERE id = '$idusuario'");
 	echo "<script>window.location= 'usuario.php?pag=$pagina' </script>";
     
 }
@@ -60,7 +66,11 @@ while($mostrar = mysqli_fetch_array($querybuscar))
             </tr>
 			  <tr> 
                 <td>Email</td>
-                <td><input type="mail" name="email" value="<?php echo $email;?>" required></td>
+                <td><input type="text" name="email" value="<?php echo $email;?>" required></td>
+            </tr>
+            <tr> 
+                <td>Contraseña</td>
+                <td><input type="text" name="password"></td>
             </tr>
 			  <tr> 
                 <td>Bio</td>

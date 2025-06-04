@@ -5,7 +5,13 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../../');
 $dotenv->load();
 
 $noreview = false;
-$idusuario = $_SESSION['idusuario'];
+$idusuario = $_SESSION['idusuario'] ?? 0;
+$id_rol = $_SESSION['id_rol'] ?? 0;
+
+if ($id_rol == 0 || $id_rol == 1) {
+    header("Location: ../../../index.php");
+    exit();
+}
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -54,51 +60,53 @@ if (!$conn) {
                 </svg>
             </div>
             <div class='reviews'>
-                <?php
-                $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.id as id_review,r.review,r.fecha,u.usuario,r.id_usuario FROM review r,pelicula p,usuario u WHERE r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
-                $consult = mysqli_query($conn, $sql);
-                $numerofilas = mysqli_num_rows($consult);
-                if ($numerofilas > 0) {
-                    for ($i = 0; $i < $numerofilas; $i++) {
-                        $fila = mysqli_fetch_assoc($consult);
-                        $idreview = $fila['id_review'];
-                        $idusuario = $fila['id_usuario'];
-                        $poster = $fila['poster'];
-                        $titulo = $fila['titulo'];
-                        $usuario = $fila['usuario'];
-                        $movieId = $fila['id'];
-                        $nota = $fila['nota'];
-                        $review = $fila['review'];
-                        $fecha = $fila['fecha'];
-                        if (!empty($review)) {
-                            echo "<div class='review'>";
-                            echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                            echo "<div class='contenido'>";
-                            echo "<h2>$titulo</h2>";
-                            echo "<div class='estrellas'>";
-                            echo "Review por el usuario: ";
-                            echo "$usuario ";
-                            echo "<div class='fecha'>";
-                            if (!empty($fecha)) {
-                                echo "Visto el $fecha";
+                <div class='opinion'>
+                    <?php
+                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.id as id_review,r.review,r.fecha,u.usuario,r.id_usuario FROM review r,pelicula p,usuario u WHERE r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+                    $consult = mysqli_query($conn, $sql);
+                    $numerofilas = mysqli_num_rows($consult);
+                    if ($numerofilas > 0) {
+                        for ($i = 0; $i < $numerofilas; $i++) {
+                            $fila = mysqli_fetch_assoc($consult);
+                            $idreview = $fila['id_review'];
+                            $idusuario = $fila['id_usuario'];
+                            $poster = $fila['poster'];
+                            $titulo = $fila['titulo'];
+                            $usuario = $fila['usuario'];
+                            $movieId = $fila['id'];
+                            $nota = $fila['nota'];
+                            $review = $fila['review'];
+                            $fecha = $fila['fecha'];
+                            if (!empty($review)) {
+                                echo "<div class='review'>";
+                                echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                                echo "<div class='contenido'>";
+                                echo "<h2>$titulo</h2>";
+                                echo "<div class='estrellas'>";
+                                echo "Review por el usuario: ";
+                                echo "$usuario ";
+                                echo "<div class='fecha'>";
+                                if (!empty($fecha)) {
+                                    echo "Visto el $fecha";
+                                }
+                                echo "</div>"; // Cierra fecha
+                                echo "</div>"; // Cierra estrllas
+                                echo "<p>$review</p>";
+                                echo "</div>"; // Cierra contenido
+                                echo "<div class='botones'>";
+                                echo "
+			                    <a href=\"/../historial/Reviews.php?id=$idusuario\">Ver más reviews de $usuario</a> 
+			                    <a href=\"eliminar.php?idreview=$idreview\" onClick=\"return confirm('¿Estás seguro de eliminar a la review de $fila[titulo], del usuario $usuario?')\">Eliminar</a>
+			                        ";
+                                echo "</div>"; //cierra botones
+                                echo "</div>"; //Cierra review
                             }
-                            echo "</div>"; // Cierra fecha
-                            echo "</div>"; // Cierra estrllas
-                            echo "<p>$review</p>";
-                            echo "</div>"; // Cierra contenido
-                            echo "</div>"; //Cierra review
-                            echo "<div class='botones'>";
-                            echo "
-			<a href=\"/../historial/Reviews.php?id=$idusuario\">Ver más reviews de $usuario</a> 
-			<a href=\"eliminar.php?idreview=$idreview\" onClick=\"return confirm('¿Estás seguro de eliminar a la review de $fila[titulo], del usuario $usuario?')\">Eliminar</a>
-			";
-                            echo "</div>";
                         }
+                    } else {
+                        $noreview = true;
                     }
-                } else {
-                    $noreview = true;
-                }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
         <div class='sin-review'>

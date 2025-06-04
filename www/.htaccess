@@ -1,0 +1,2 @@
+# Redirige errores 404 a tu página personalizada
+ErrorDocument 404 /404.php

@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$mail = new PHPMailer(true); // true activa excepciones para manejo de errores
+$mail = new PHPMailer(true); 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -34,11 +34,11 @@ if (isset($_POST['registrar'])) {
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
     if ($password == $password2 && filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        include __DIR__ . "/PHP/email.php";
+        include __DIR__ . "/PHP/email/email.php";
         // Ciframos la contraseña para mas seguridad
         $PassCifrada = password_hash($password, PASSWORD_DEFAULT);
         // Comprobamos que no exista ya un usuario con el mismo nombre en el sistema
-        $sql = "SELECT * FROM usuario WHERE usuario like '$usuario'";
+        $sql = "SELECT * FROM usuario WHERE usuario like '$usuario' OR email like '$correo'";
         $resul = mysqli_query($conn, $sql);
         if (mysqli_num_rows($resul) == 0) {
             // Insertar datos en la base de datos
@@ -110,7 +110,7 @@ mysqli_close($conn);
                 </div>
                 <?php
                 if ($mensaje == 1) {
-                    echo "<div class='error'><p>El nombre de usuario escogido ya existe en el sistema</p></div>";
+                    echo "<div class='error'><p>El nombre de usuario o el correo escogido ya existe en el sistema</p></div>";
                 } else if ($mensaje == -1) {
                     echo "<div class='error'><p>La contraseña introducida no coincide</p></div>";
                 } else if ($mensaje == -2) {

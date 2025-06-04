@@ -96,6 +96,9 @@ if (isset($_POST['iniciar'])) {
                             <input type='hidden' name='id' value=''>
                             <button type='submit' name='iniciar'><span>Inicia sesión</span></button>
                         </label>
+                        <label for="recuperar">
+                            <a href="PHP/recuperar-password-email.php">Has olividado tu contraseña click aqui</a>
+                        </label><br>
                         <label for="registro" id="registro">
                             <p>¿No tienes cuenta?,<a href="registro.php">registraté</a>
                         </label>

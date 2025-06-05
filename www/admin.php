@@ -8,8 +8,9 @@ $dotenv->load();
 $id_rol = $_SESSION['id_rol'] ?? 0;
 
 if ($id_rol == 0 || $id_rol == 1) {
-    header("Location: index.php");
-    exit();
+    http_response_code(404);
+    include('404.php'); 
+    exit;
 }
 
 

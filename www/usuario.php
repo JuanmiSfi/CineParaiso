@@ -243,10 +243,10 @@ if (isset($_POST['cerrar'])) {
                         <p>Ultimas reviews</p>
                         <div class="barra2"></div>
                         <?php
-                        $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
+                        $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0  ORDER BY r.fecha DESC";
                         $consult = mysqli_query($conn, $sql);
-                        $numerofilas = mysqli_num_rows($consult);
-                        if ($num_filas >= 4) {
+                        $num_filas = mysqli_num_rows($consult);
+                        if ($num_filas > 4) {
                             for ($i = 0; $i < 4; $i++) {
                                 $fila = mysqli_fetch_assoc($consult);
                                 $poster = $fila['poster'];
@@ -280,7 +280,7 @@ if (isset($_POST['cerrar'])) {
                                 }
                             }
                         } else {
-                            for ($i = 0; $i < $numerofilas; $i++) {
+                            for ($i = 0; $i < $num_filas; $i++) {
                                 $fila = mysqli_fetch_assoc($consult);
                                 $poster = $fila['poster'];
                                 $titulo = $fila['titulo'];

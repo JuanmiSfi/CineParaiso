@@ -332,7 +332,6 @@ a {
 .bloque {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     width: auto;
     height: 250.0px;
     padding-left: 50px;
@@ -356,6 +355,11 @@ a {
     border: 3px solid #e7eee7;
     border-radius: 8px;
     margin-right: 14px;
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
+    transition:all .3s ease;
+}
+.Poster img:hover{
+    transform:scale(1.05);
 }
 
 .nota i {
@@ -396,10 +400,12 @@ a {
     width: 100px;
     border-radius: 4px;
     margin-right: 16px;
+    transition:all .3s ease;
 }
 
 .review img:hover {
     box-shadow: 0 0 0 4px white;
+    transform:scale(1.05);
     filter: drop-shadow(rgba(255, 255, 255, 0.589) 0px 1px 20px);
 }
 

@@ -139,6 +139,7 @@ a{
 .peliculas img:hover{
     transform: scale(1.05);
     border: 4px solid #101010;
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }
 
 .contenedor .usuarios img{

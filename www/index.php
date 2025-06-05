@@ -206,7 +206,7 @@ try {
                             }
                         }
                     }
-                    echo '<a href="/historial/Reviews.php?id='.$idusuario.'" class="WatchList">
+                    echo '<a href="/PHP/historial/Reviews.php?id=' . $idusuario . '" class="WatchList">
                         <p>Ver más reviews publicadas por tus amigos</p>
                         </a>';
                 }

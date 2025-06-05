@@ -90,9 +90,9 @@ body {
     align-items: center;
     width: auto;
     background-color: #f39a3f;
-    border: 5px solid black;
+    border: 3px solid black;
     border-radius: 39px;
-    filter: drop-shadow(8px 8px 0px #8b4a28);
+    filter:drop-shadow(7px 7px 0px #fb8b02) drop-shadow(7px 7px 0px#fa6c02)  drop-shadow(7px 7px 0px #8b4a28) ;
 
 }
 

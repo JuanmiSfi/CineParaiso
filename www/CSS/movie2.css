@@ -184,6 +184,7 @@ body {
     margin-top: 7px;
     margin-left: 8px;
     width: 75px;
+    transition:all .5s ease;
 }
 .box1 img:hover{
     filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );

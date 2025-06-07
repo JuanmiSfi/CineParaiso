@@ -4,12 +4,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-
+$pag = $_GET['pag'] ?? 1;
 $idusuario = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
 $noreview = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
-    header("Location: consulta.php");
+    header("Location: /consulta.php");
     exit();
 }
 
@@ -44,7 +44,7 @@ if (!$conn) {
         <div class="container">
             <div class="logo"><a href="/index.php"><img src="/src/Logo.png" alt="logo"></a></div>
             <div class="buscador">
-                <form action="consulta.php" method="POST">
+                <form action="/consulta.php" method="POST">
                     <input type="text" name="busqueda" placeholder="Buscar en Cine Paraiso"></input>
                 </form>
             </div>
@@ -75,52 +75,99 @@ if (!$conn) {
             $solu = mysqli_fetch_assoc($consult);
             $usuario = $solu['usuario'];
             $fto_perfil = $solu['fto_perfil'];
-            echo "<a href='/usuario.php?id=".$idusuario."'>";
+            echo "<a href='/usuario.php?id=" . $idusuario . "'>";
             echo "<img src='$fto_perfil' alt='' />";
             echo "</a>";
-            echo "<p>Visto por <a href='/usuario.php?id=".$idusuario."'>&nbsp;$usuario</a></p>";
+            echo "<p>Visto por <a href='/usuario.php?id=" . $idusuario . "'>&nbsp;$usuario</a></p>";
             ?>
-            <button type="submit" class="WatchList"><a href="/PHP/historial.php?id=<?php echo $idusuario;?>" class="link">Peliculas</a></button>
-            <button type="submit" class="WatchList"><a href="/PHP/historial/Reviews.php?id=<?php echo $idusuario;?>" class="link">Reviews</a></button>
+            <button type="submit" class="WatchList"><a href="/PHP/historial.php?id=<?php echo $idusuario; ?>" class="link">Peliculas</a></button>
+            <button type="submit" class="WatchList"><a href="/PHP/historial/Reviews.php?id=<?php echo $idusuario; ?>" class="link">Reviews</a></button>
         </div>
         <div class="barra2"></div>
         <div class='poster'>
+            
             <?php
-            $sql = "SELECT p.poster,p.id,r.nota,r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+            
+            $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_pelis FROM review WHERE id_usuario = $idusuario AND vermastarde = 0");
+
+            $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_pelis'];
+            $filasmax = 10;
+            $sql = "SELECT p.poster,p.id,r.nota,r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC  LIMIT " . (($pag - 1) * $filasmax)  . "," . $filasmax;
             $consult = mysqli_query($conn, $sql);
             $numerofilas = mysqli_num_rows($consult);
-            if($numerofilas>0){
-            for ($i = 0; $i < $numerofilas; $i++) {
-                $fila = mysqli_fetch_assoc($consult);
-                $poster = $fila['poster'];
-                $movieId = $fila['id'];
-                $nota = $fila['nota'];
-                $review = $fila['review'];
-                echo "<a href='./movie2.php?id=" . $movieId . "'>";
-                echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
-                echo "<div class='estrellas'>";
-                for ($j = 1; $j <= 5; $j++) {
-                    if ($nota >= $j) {
-                        echo "<i class='fas fa-star' id='estrellas'></i>";
+            if ($numerofilas > 0) {
+                for ($i = 0; $i < $numerofilas; $i++) {
+                    $fila = mysqli_fetch_assoc($consult);
+                    $poster = $fila['poster'];
+                    $movieId = $fila['id'];
+                    $nota = $fila['nota'];
+                    $review = $fila['review'];
+                    echo "<a href='/movie2.php?id=" . $movieId . "'>";
+                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                    echo "<div class='estrellas'>";
+                    for ($j = 1; $j <= 5; $j++) {
+                        if ($nota >= $j) {
+                            echo "<i class='fas fa-star' id='estrellas'></i>";
+                        }
                     }
+                    if (!empty($review)) {
+                        echo "<i class='fa-solid fa-align-left' id='rw'></i>";
+                    }
+                    echo "</div>";
+                    echo "</a>";
                 }
-                if (!empty($review)) {
-                    echo "<i class='fa-solid fa-align-left' id='rw'></i>";
-                }
-                echo "</div>";
-                echo "</a>";
-            }   
-            }else{
+            } else {
                 $noreview = true;
             }
             ?>
         </div>
         <div class='sin-review'>
             <?php
-            if($noreview == true){
+            if ($noreview == true) {
                 echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
                 echo "<p>¡Vaya! Parece que $usuario no ha visto aun ninguna pelicula</p>";
             }
+            ?>
+        </div>
+        <div class='botones' style="text-align:center">
+            <?php
+            if (isset($_GET['pag'])) {
+                if ($_GET['pag'] > 1) {
+            ?>
+                    <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=<?php echo $_GET['pag'] - 1; ?>">Anterior</a>
+                <?php
+                } else {
+                ?>
+                    <a href="#" style="pointer-events: none">Anterior</a>
+                <?php
+                }
+                ?>
+
+            <?php
+            } else {
+            ?>
+                <a href="#" style="pointer-events: none">Anterior</a>
+                <?php
+            }
+
+            if (isset($_GET['pag'])) {
+                if ((($pag) * $filasmax) <= $maxusutabla) {
+                ?>
+                    <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=<?php echo $_GET['pag'] + 1; ?>">Siguiente</a>
+                <?php
+                } else {
+                ?>
+                    <a href="#" style="pointer-events: none">Siguiente</a>
+                <?php
+                }
+                ?>
+            <?php
+            } else {
+            ?>
+                <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=2">Siguiente</a>
+            <?php
+            }
+
             ?>
         </div>
     </div>

@@ -4,22 +4,22 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$id_rol = $_SESSION['id_rol']??-1;
+$id_rol = $_SESSION['id_rol'] ?? -1;
 
 if (!isset($_GET['id'])) {
     header("Location: login.php");
     exit();
 }
-if ($_GET['id'] ==$_SESSION['idusuario'] && $id_rol == 2) {
+if ($_GET['id'] == $_SESSION['idusuario'] && $id_rol == 2) {
     header("Location: admin.php");
     exit();
 }
 
-if(empty($_SESSION['idusuario'])){
-    $_SESSION['idusuario']=0;
+if (empty($_SESSION['idusuario'])) {
+    $_SESSION['idusuario'] = 0;
 }
 
-$idusuario2 = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
+$idusuario2 = $_GET['id'] ?? $_SESSION['idusuario'];
 
 
 error_reporting(E_ALL);
@@ -38,7 +38,7 @@ if (!$conn) {
 
 if (isset($_POST['cerrar'])) {
     session_destroy();
-    header("Location: index.php");
+    header("Location: /index.php");
     exit();
 }
 ?>
@@ -98,7 +98,6 @@ if (isset($_POST['cerrar'])) {
                 $resul = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($resul) > 0) {
                     $row = mysqli_fetch_assoc($resul);
-                    $idusuario = $row['id'];
                     $usuario = $row['usuario'];
                     $nombre = $row['nombre'];
                     $fto = $row['fto_perfil'];
@@ -119,7 +118,7 @@ if (isset($_POST['cerrar'])) {
                 <div class=nav1>
                     <div class='botones'>
                         <?php
-                        if ($idusuario2 == $_SESSION['idusuario']&& !empty($_SESSION['idusuario'])) {
+                        if ($idusuario2 == $_SESSION['idusuario'] && !empty($_SESSION['idusuario'])) {
                             echo "<button type='submit' class='modifi'><a href='modificar.php' class='link'><span>Modificar usuario</span></a></button>";
                         } else {
                             echo '<div class="followe">';
@@ -177,7 +176,6 @@ if (isset($_POST['cerrar'])) {
                     <div class="ultima5">
                         <p><b>Actividad reciente</b></p>
                         <div class="bloque">
-
                             <?php
                             //Hacemos una consulta para el poster de las 5 ultimas pelicula
                             $sql = "SELECT p.id, p.poster, r.nota, r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.fecha DESC";
@@ -194,18 +192,20 @@ if (isset($_POST['cerrar'])) {
                                     echo "<a href='/movie2.php?id=" . $movieId . "'>";
                                     echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
                                     echo "</a>";
+                                    echo "<div class='nota'>";
                                     if (isset($nota)) {
-                                        echo "<div class='nota'>";
+
                                         for ($j = 1; $j <= 5; $j++) {
                                             if ($nota >= $j) {
                                                 echo "<i class='fas fa-star' id='estrellas'></i>";
                                             }
                                         }
-                                        if (isset($opinion)) {
-                                            echo "<i class='fa-solid fa-align-left' id='rw'></i>";
-                                        }
-                                        echo "</div>";
                                     }
+                                    if (!empty($opinion)) {
+                                        echo "<i class='fa-solid fa-align-left' id='rw'></i>";
+                                    }
+                                    echo "</div>";
+
                                     echo "</div>";
                                 }
                             } else {
@@ -218,15 +218,19 @@ if (isset($_POST['cerrar'])) {
                                     echo "<a href='/movie2.php?id=" . $movieId . "'>";
                                     echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
                                     echo "</a>";
+                                    echo "<div class='nota'>";
                                     if (isset($nota)) {
-                                        echo "<div class='nota'>";
                                         for ($j = 1; $j <= 5; $j++) {
                                             if ($nota >= $j) {
                                                 echo "<i class='fas fa-star' id='estrellas'></i>";
                                             }
                                         }
-                                        echo "</div>";
+                                        
                                     }
+                                    if (!empty($opinion)) {
+                                        echo "<i class='fa-solid fa-align-left' id='rw'></i>";
+                                    }
+                                    echo "</div>";
                                     echo "</div>";
                                 }
                             }
@@ -243,11 +247,11 @@ if (isset($_POST['cerrar'])) {
                         <p>Ultimas reviews</p>
                         <div class="barra2"></div>
                         <?php
-                        $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0  ORDER BY r.fecha DESC";
+                        $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 AND r.review != ''ORDER BY r.fecha DESC";
                         $consult = mysqli_query($conn, $sql);
                         $num_filas = mysqli_num_rows($consult);
                         if ($num_filas > 4) {
-                            for ($i = 0; $i < 4; $i++) {
+                            for ($i = 0; $i < $num_filas; $i++) {
                                 $fila = mysqli_fetch_assoc($consult);
                                 $poster = $fila['poster'];
                                 $titulo = $fila['titulo'];
@@ -311,6 +315,7 @@ if (isset($_POST['cerrar'])) {
                                     echo "<p>$review</p>";
                                     echo "</div>"; // Cierra contenido
                                     echo "</div>"; //Cierra review
+                                } else {
                                 }
                             }
                         }

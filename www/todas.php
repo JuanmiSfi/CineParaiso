@@ -147,7 +147,7 @@ if (!$conn) {
                 <h2>Reviews de tus amigos</h2>
                 <div class="barra2"></div>
                 <?php
-                $sql = "SELECT  p.id as id_pelicula,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.id  as id_usuario,u.fto_perfil FROM review r,pelicula p, usuario u,siguen s WHERE r.id_usuario = u.id AND r.id_pelicula = $movieId AND p.id = $movieId AND r.vermastarde = 0 AND r.id_usuario = s.id_sigue AND s.id_usuario = $_SESSION[idusuario]  ORDER BY r.id DESC";
+                $sql = "SELECT  p.id as id_pelicula,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.id  as id_usuario,u.fto_perfil FROM review r,pelicula p, usuario u,siguen s WHERE r.id_usuario = u.id AND r.id_pelicula = $movieId AND p.id = $movieId AND r.vermastarde = 0 AND r.id_usuario = s.id_sigue AND s.id_usuario = $_SESSION[idusuario]  ORDER BY r.id DESC ";
                 $consult = mysqli_query($conn, $sql);
                 $num_filas = mysqli_num_rows($consult);
                 for ($i = 0; $i < $num_filas; $i++) {

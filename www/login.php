@@ -106,7 +106,7 @@ if (isset($_POST['iniciar'])) {
                 </div>
                 <?php
                 if ($mensaje == 1) {
-                    echo "<div class='error'><p>El usuario o la contraseña es incorrecta</p></div>";
+                    echo "<div class='error'><p style='margin: bottom 15px;'>El usuario o la contraseña no son correctos</p></div>";
                 }
                 ?>
             </div>

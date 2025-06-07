@@ -89,15 +89,15 @@ if (isset($_POST['modificar'])) {
                         <label for="nombre">
                             <p>Nombre:</p>
                         </label>
-                        <input type="text" name="nombre" value=" <?php echo $nombre; ?> " /><br>
+                        <input type="text" name="nombre" value="<?php echo $nombre; ?> " /><br>
                         <label for="apellidos">
                             <p>apellidos:</p>
                         </label>
-                        <input type="text" name="apellidos" value=" <?php echo $apellidos; ?>" /><br>
+                        <input type="text" name="apellidos" value="<?php echo $apellidos; ?>" /><br>
                         <label for="Correo">
                             <p>Correo electronico:</p>
                         </label>
-                        <input type="text" name="email" value=" <?php echo $email ?>" /><br>
+                        <input type="text" name="email" value="<?php echo $email ?>" /><br>
                         <label for="biografia">
                             <p>Biografia:</p>
                         </label>

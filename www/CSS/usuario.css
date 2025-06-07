@@ -328,6 +328,11 @@ a {
     margin-bottom: 5px;
 
 }
+.reciente {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+}
 
 .bloque {
     display: flex;
@@ -348,6 +353,7 @@ a {
 .ultima5 p {
     margin-bottom: 15px;
 }
+
 
 
 .Poster img {

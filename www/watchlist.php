@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
 $dotenv->load();
 
-$idusuario = $_SESSION['idusuario'];
+$idusuario = $_GET['id']??$_SESSION['idusuario'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
     header("Location: consulta.php");
@@ -83,7 +83,7 @@ if (!$conn) {
         </div>
         <div class='poster'>
             <?php
-            $sql = "SELECT p.poster,p.id FROM review r,pelicula p WHERE r.id_usuario = {$_SESSION["idusuario"]}  AND r.id_pelicula = p.id AND r.vermastarde = 1 ORDER BY r.id DESC";
+            $sql = "SELECT p.poster,p.id FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 1 ORDER BY r.id DESC";
             $consult = mysqli_query($conn, $sql);
             $numerofilas = mysqli_num_rows($consult);
             for ($i = 0; $i < $numerofilas; $i++) {

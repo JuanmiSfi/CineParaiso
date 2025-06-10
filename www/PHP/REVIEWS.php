@@ -10,7 +10,7 @@ $fecha = $fila['fecha'];
 if (!empty($review)) {
     echo "<div class='opinion'>";
     echo "<div class=info>";
-    echo "<a href='usuario.php?id=" . $usuarioId . "'>";
+    echo "<a href='/usuario.php?id=" . $usuarioId . "'>";
     echo "<img src='$fto' alt='' />";
     echo "</a>";
     echo "<div class='user'>";

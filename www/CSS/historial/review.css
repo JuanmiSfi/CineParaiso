@@ -143,7 +143,6 @@ body {
     border-radius: 50%;
 }
 
-
 .review {
     display: flex;
     flex-direction: row;
@@ -152,8 +151,8 @@ body {
     border-radius: 8px;
     padding: 16px;
     margin: 20px auto;
-
     width: 800px;
+    height: 200px;
 }
 
 .review img {
@@ -209,4 +208,45 @@ body {
 .sin-review p {
     font-family: 'Codec Pro';
     font-size: 40px;
+}
+
+.basura i{
+    padding-top: 70px;
+    padding-left: 630px;
+    transition: all .3s ease;
+    font-size: 20px;
+}
+.basura i:hover{
+    font-size: 25px;
+}
+
+
+.boton{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding-left: 470px;
+    padding-right: 470px;
+    margin-bottom: 15px;
+}
+.anterior, .siguiente {
+    position: relative;
+}
+.boton a{
+    font-family: 'Codec Pro';
+    text-align: center;
+	display: inline-block;
+	background: #f39a3f;
+	padding: 6px 10px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: black;
+	border: 2px solid black;
+	cursor: pointer;
+	font-size: 16px;
+	transition: all .3s ease;
+}
+.boton a:hover{
+    transform: scale(1.05);
 }

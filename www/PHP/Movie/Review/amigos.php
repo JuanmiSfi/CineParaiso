@@ -1,7 +1,7 @@
 <?php
 session_start();
-require 'vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+require_once __DIR__ . '/../../../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../../');
 $dotenv->load();
 
 
@@ -71,18 +71,11 @@ if (!$conn) {
     <div class='body'>
         <div class='contenedor'>
             <div class="poster">
-                <a href="movie2.php?id=<?php echo $movieId; ?>">
+                <a href="/movie2.php?id=<?php echo $movieId; ?>">
                     <?php
-                    require_once('vendor/autoload.php');
 
                     use GuzzleHttp\Client;
                     use GuzzleHttp\Exception\RequestException;
-
-                    // Verificamos que se haya pasado un id en la URL
-                    if (!isset($_GET['id']) || empty($_GET['id'])) {
-                        echo "ID de película no proporcionado.";
-                        exit;
-                    }
                     $client = new Client();
                     try {
                         // Realizamos la solicitud a la API para obtener los detalles de la película por ID
@@ -97,7 +90,7 @@ if (!$conn) {
                         // Asignamos las propiedades a variables
                         $poster_path = $movie['poster_path'];
                         $title = $movie['title'];
-                         $anio_lanzamiento = $movie['release_date'];
+                        $anio_lanzamiento = $movie['release_date'];
                         $anio = date("Y", strtotime($anio_lanzamiento));
                         // Error encontrado en la pelicula Capitana Marvel que al tener en la descripción unas comillas simples el sistema cierra la inserción y se buguea.
                         $overview = mysqli_real_escape_string($conn, $movie['overview']);
@@ -109,51 +102,39 @@ if (!$conn) {
                         // Si ocurre un error en la solicitud, captura la excepción y muestra el mensaje de error
                         echo "Se produjo un error en la solicitud: " . $e->getMessage();
                     }
-
-                    // Como en nuestra base de datos no tenemos la pelicula almacenada lo primero que haremos será almacenarla 
-                    $sql = "SELECT * FROM pelicula WHERE id=$movieId";
-                    $consulta = (mysqli_query($conn, $sql));
-                    //Si la consulta devuelve 0 columnas insertamos la pelicula
-                    if (mysqli_num_rows($consulta) == 0) {
-                        $sql = "INSERT INTO pelicula (id,titulo,año,descripcion,poster) values($movieId,'$title',$release_date,'$overview','$poster_path')";
-                        $aniadir = (mysqli_query($conn, $sql));
-                        if ($aniadir) {
-                        } else {
-                        }
-                    }
                     ?>
             </div>
-            <div class='review'>
+            <div class="opinion_amigos">
                 <?php
                 echo "<h2>Reviews de</h2>";
                 echo "<div class='titulo'>";
                 echo "<h2 id='titulo'>$title</h2>";
                 echo "<h2>($anio)</h2>";
                 echo "</div>";
-                
+
                 ?>
                 <div class="barra2"></div>
                 <div class="nav">
-                    <h2 id='nav'><a href="/todas.php?id=<?php echo $movieId?>'"style='color:#f39a3f; text-decoration: underline;' >Reviews recientes</a></h2><br>
-                    <h2><a href="/PHP/Movie/Review/amigos.php?id=<?php echo $movieId?>">Reviews de amigos</a></h2>
+                    <h2><a href="/todas.php?id=<?php echo $movieId ?>">Reviews recientes</a></h2>
+                    <h2 id='nav'><a href="/PHP/Movie/Review/amigos.php?id=<?php echo $movieId ?>" style='color:#f39a3f; text-decoration: underline;'>Reviews de amigos</a></h2>
                 </div>
                 <div class="barra2"></div>
                 <?php
-                $sql = "SELECT  p.id as id_pelicula,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.id  as id_usuario,u.fto_perfil FROM review r,pelicula p, usuario u WHERE r.id_usuario = u.id AND r.id_pelicula = $movieId AND p.id = $movieId AND r.vermastarde = 0 ORDER BY r.id DESC";
+                $sql = "SELECT  p.id as id_pelicula,r.nota,p.titulo,r.review,r.fecha,u.usuario,u.id  as id_usuario,u.fto_perfil FROM review r,pelicula p, usuario u,siguen s WHERE r.id_usuario = u.id AND r.id_pelicula = $movieId AND p.id = $movieId AND r.vermastarde = 0 AND r.id_usuario = s.id_sigue AND s.id_usuario = $_SESSION[idusuario]  ORDER BY r.id DESC ";
                 $consult = mysqli_query($conn, $sql);
                 $num_filas = mysqli_num_rows($consult);
-                if ($num_filas >= 12) {
-                    for ($i = 0; $i < 12; $i++) {
-                        include __DIR__ . "/PHP/REVIEWS.php";
+                if (mysqli_num_rows($consult) > 0) {
+                    for ($i = 0; $i < $num_filas; $i++) {
+                        include __DIR__ . "/../../../PHP/REVIEWS.php";
                     }
                 } else {
-                    for ($i = 0; $i < $num_filas; $i++) {
-                        include __DIR__ . "/PHP/REVIEWS.php";
-                    }
+                    echo "<p>Vaya parece que no hay reviews</p>";
                 }
-
+                
                 ?>
+                
             </div>
+
         </div>
     </div>
 </body>

@@ -60,3 +60,19 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Disparador para despues de borrar una pelicula vista para que disminuya el numero de peliculas vistas
+DELIMITER // 
+CREATE TRIGGER restar_peli_vista
+AFTER UPDATE on review 
+FOR EACH ROW 
+BEGIN
+    if(OLD.vermastarde = 0 AND NEW.vermastarde = 1) then
+	UPDATE estadistica set n_pelis_vistas=n_pelis_vistas-1 WHERE id_usuario = new.id_usuario;
+    end if;
+END //
+DELIMITER ;
+
+
+-- Creamos Indices para las tablas 
+CREATE FULLTEXT INDEX idx_film_fulltext ON pelicula (titulo);
+CREATE INDEX idx_year ON pelicula (año);

@@ -169,3 +169,21 @@ body {
     font-family: 'Codec Pro';
     font-size: 40px;
 }
+.botones i{
+    text-align: center;
+	display: inline-block;
+	background: #f39a3f;
+	padding: 6px 10px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: white;
+	border: 2px solid black;
+	cursor: pointer;
+	font-size: 16px;
+	transition: all .3s ease;
+}
+.botones i:hover{
+    transform: scale(1.05);
+    color: black;
+    border: 2px solid white;
+}

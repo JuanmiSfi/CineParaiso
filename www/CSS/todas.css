@@ -21,6 +21,13 @@
 a{
     text-decoration: none;
 }
+p{
+    font-family: 'Codec Pro';
+    
+}
+h2{
+    font-family: 'Codec Pro';
+}
 
 body {
     background-color: #f7e5c6;
@@ -81,10 +88,40 @@ body {
     max-width: 100%;
     padding: 20px;
 }
-.review{
+
+#titulo{
+    font-family: 'Codec Pro';
+    font-size: 60px;
+    color: #030303;
+    text-shadow: 5px 2px 0 #8b4b28a1;
+    margin-bottom: 15px;
+}
+.nav{
     display: flex;
     flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+.nav p{
+    font-family: 'Codec Pro';
+}
+.nav a{
+    text-decoration: none;
+    color: #030303;
+}
+.nav a:hover{
+    text-decoration: underline;
+}
+
+.review{
+    display: flex;
+    flex-direction: column;
     margin-left: 15px;
+}
+.titulo{
+    display: flex;
+    flex-direction: row;
 }
 
 .barra2 {
@@ -134,9 +171,11 @@ body {
     margin-left: 10px;
 }
 
+.opinion_amigos{
+    margin-left: 15px;
+}
 
-
-.opinion-amigos .barra2{
+.opinion_amigos .barra2{
         width: 99%;
     height: 3px;
     background-color: #474240;

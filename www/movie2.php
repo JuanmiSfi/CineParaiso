@@ -89,16 +89,15 @@ if (!$conn) {
                     // Decodificamos el JSON recibido
                     $movie = json_decode($response->getBody(), true);
                     // Asignamos las propiedades a variables
-                    $poster_path = $movie['poster_path'];
-                    $title = $movie['title'];
-                    // Error encontrado en la pelicula Capitana Marvel que al tener en la descripción unas comillas simples el sistema cierra la inserción y se buguea.
+                    $poster_path = $movie['poster_path'] ?? 0;
+                    $title = mysqli_real_escape_string($conn, $movie['title']);
                     $overview = mysqli_real_escape_string($conn, $movie['overview']);
+                    $idgenero = array_column($movie['genres'], 'id');
                     $popularidad = $movie['popularity'];
-                    $release_date = $movie['release_date'];
-                    $vote_average = $movie['vote_average'];
-                    $vote_count = $movie['vote_count'];
+                    $release_date = $movie['release_date'] ?? '1111-11-11';
+                    $anio = date("Y", strtotime($release_date));
                     // imprimimos el poster
-                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster_path . "' alt='" . $title . "' width='300'>";
+                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster_path . "' alt='" . $title . "' width='300' loading='lazy'>";
                 } catch (RequestException $e) {
                     // Si ocurre un error en la solicitud, captura la excepción y muestra el mensaje de error
                     echo "Se produjo un error en la solicitud: " . $e->getMessage();
@@ -109,10 +108,11 @@ if (!$conn) {
                 $consulta = (mysqli_query($conn, $sql));
                 //Si la consulta devuelve 0 columnas insertamos la pelicula
                 if (mysqli_num_rows($consulta) == 0) {
-                    $sql = "INSERT INTO pelicula (id,titulo,año,descripcion,popularidad,poster) values($movieId,'$title',$release_date,'$overview',$popularidad,'$poster_path')";
-                    $aniadir = (mysqli_query($conn, $sql));
-                    if ($aniadir) {
-                    } else {
+                    $sql = "INSERT INTO pelicula (id,titulo,año,popularidad,poster) values($movieId,'$title','$release_date',$popularidad,'$poster_path')";
+                    mysqli_query($conn, $sql);
+                    foreach ($idgenero as $genero) {
+                        $sql_genero = "INSERT INTO pertenece (id_pelicula, id_genero) VALUES ($movieId, $genero)";
+                        mysqli_query($conn, $sql_genero);
                     }
                 }
                 ?>
@@ -149,7 +149,10 @@ if (!$conn) {
             </div>
             <div class="info">
                 <?php
-                echo "<h2 id=titulo>$title</h2>";
+                echo "<div class='titulo'>";
+                echo "<h2 id='titulo'>$title</h2>";
+                echo "<h2>($anio)</h2>";
+                echo "</div>";
                 echo "<h2>disponible en:</h2>";
 
                 ?>
@@ -184,7 +187,7 @@ if (!$conn) {
                             echo "<div class='box1'>";
                             foreach ($logo as $proveedor) {
                                 $plataforma = $proveedor['logo_path'];
-                                echo '<img src="https://image.tmdb.org/t/p/original' . $plataforma . '" />';
+                                echo '<img src="https://image.tmdb.org/t/p/original' . $plataforma . '"  loading="lazy">';
                             }
                             echo "</div>"; // Cerrar box1
                         } else if (!empty($comprar)) {
@@ -220,13 +223,24 @@ if (!$conn) {
                         if (mysqli_num_rows($consulta) == 0) {
                             if (isset($_POST['subir'])) {
                                 if (!empty($idusuario)) {
-                                    $nota = isset($_POST['puntuacion']) ? $_POST['puntuacion'] : 'NULL';
-                                    $sql = "INSERT INTO review (review,nota,vermastarde,fecha,id_pelicula,id_usuario) values ('$_POST[review]',$nota,0,CURRENT_TIMESTAMP,$movieId,$idusuario)";
-                                    $existe = mysqli_query($conn, $sql);
-                                    if ($existe) {
-                                        echo "<p>Has sido registrado correctamente</p>";
+                                    if (isset($_POST['estado']) != 'visto') {
+                                        $nota = isset($_POST['puntuacion']) ? $_POST['puntuacion'] : 'NULL';
+                                        $sql = "INSERT INTO review (review,nota,vermastarde,fecha,id_pelicula,id_usuario) values ('$_POST[review]',$nota,0,CURRENT_TIMESTAMP,$movieId,$idusuario)";
+                                        $existe = mysqli_query($conn, $sql);
+                                        if ($existe) {
+                                            echo "<p>Has sido registrado correctamente</p>";
+                                        } else {
+                                            echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>";
+                                        }
                                     } else {
-                                        echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>";
+                                        $nota = isset($_POST['puntuacion']) ? $_POST['puntuacion'] : 'NULL';
+                                        $sql = "INSERT INTO review (review,nota,vermastarde,fecha,id_pelicula,id_usuario) values ('$_POST[review]',$nota,0,CURRENT_TIMESTAMP,$movieId,$idusuario)";
+                                        $existe = mysqli_query($conn, $sql);
+                                        if ($existe) {
+                                            echo "<p>Has sido registrado correctamente</p>";
+                                        } else {
+                                            echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>";
+                                        }
                                     }
                                 } else {
                                     echo "<p>Debes estar registrado para poder hacer una review</p>";
@@ -400,13 +414,14 @@ if (!$conn) {
                                 $fto_actor = $actores[$i]['profile_path'];
                                 echo "<div class='info-actor'>";
                                 echo "<a href='actor.php?id=" . $id_actor . "'>";
-                                echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
+                                echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" loading="lazy">';
                                 echo "</a>";
                                 echo "<div class='nombre-personaje'>";
                                 echo "<p>$nombre</p>";
                                 echo "<p>$personaje</p>";
                                 echo "</div>";
                                 echo "</div>";
+                                //mysqli_query($conn, "INSERT INTO Actuan (id_pelicula,id_actor,personaje)values($movieId,$id_actor,'$personaje')");
                             }
                         } else {
                             for ($i = 0; $i < $num_actores; $i++) {
@@ -416,7 +431,7 @@ if (!$conn) {
                                 $fto_actor = $actores[$i]['profile_path'];
                                 echo "<div class='info-actor'>";
                                 echo "<a href='actor.php?id=" . $id_actor . "'>";
-                                echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" />';
+                                echo '<img src="https://image.tmdb.org/t/p/w138_and_h175_face/' . $fto_actor . '" loading="lazy">';
                                 echo "</a>";
                                 echo "<div class='nombre-personaje'>";
                                 echo "<p>$nombre</p>";

@@ -5,12 +5,13 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $id_rol = $_SESSION['id_rol'] ?? -1;
+$idsession = $_SESSION['idusuario'] ?? -1;
 
 if (!isset($_GET['id'])) {
     header("Location: login.php");
     exit();
 }
-if ($_GET['id'] == $_SESSION['idusuario'] && $id_rol == 2) {
+if ($_GET['id'] == $idsession && $id_rol == 2) {
     header("Location: admin.php");
     exit();
 }
@@ -250,8 +251,8 @@ if (isset($_POST['cerrar'])) {
                         $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha FROM review r,pelicula p WHERE r.id_usuario = $idusuario2  AND r.id_pelicula = p.id AND r.vermastarde = 0 AND r.review != ''ORDER BY r.fecha DESC";
                         $consult = mysqli_query($conn, $sql);
                         $num_filas = mysqli_num_rows($consult);
-                        if ($num_filas > 4) {
-                            for ($i = 0; $i < $num_filas; $i++) {
+                        if ($num_filas > 3) {
+                            for ($i = 0; $i < 3; $i++) {
                                 $fila = mysqli_fetch_assoc($consult);
                                 $poster = $fila['poster'];
                                 $titulo = $fila['titulo'];
@@ -320,8 +321,8 @@ if (isset($_POST['cerrar'])) {
                             }
                         }
                         ?>
-                        <a href="/PHP/historial/Reviews.php?id=<?php echo "$idusuario2"; ?>" class="WatchList">
-                            <p>Ver mas reviews</p>
+                        <a href="/PHP/historial/Reviews.php?id=<?php echo "$idusuario2"; ?>&pag=1" class="WatchList">
+                            <p>Ver más reviews</p>
                         </a>
                     </div>
                 </div>

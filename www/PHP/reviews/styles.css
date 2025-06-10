@@ -19,7 +19,7 @@
     box-sizing: border-box;
 }
 
-a{
+a {
     text-decoration: none;
     color: #000000;
 }
@@ -71,84 +71,51 @@ body {
     margin-bottom: 15px;
 }
 
-.contenedor {
+.barra2 {
     display: flex;
-    flex-direction: column;
-    padding: 40px;
+    justify-content: center;
+    align-items: center;
+    width: 58%;
+    height: 3px;
+    background-color: #474240;
+    margin: auto auto 15px auto;
 }
 
-.contenedor p {
-    font-family: 'Codec Pro', sans-serif;
+.navegador {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-left: 60px;
+    margin-bottom: 10px;
+}
+
+.navegador a {
+    color: #d46a00;
+}
+
+.navegador img {
+    width: 70px;
+    height: 70px;
+    margin-right: 2rem;
+    border-radius: 50%;
+}
+
+.navegador p {
+    display: flex;
+    font-family: 'Codec Pro';
+    align-items: center;
     font-size: 30px;
-    text-align: start;
-    color: #8b4a28;
-    margin-bottom: 5px;
-
+    margin-right: 15px;
 }
 
-.bloque {
-    align-items: center;
-    width: auto;
-    background-color: #f39a3f;
-    border: 3px solid black;
-    border-radius: 39px;
-    filter:drop-shadow(7px 7px 0px #fb8b02) drop-shadow(7px 7px 0px#fa6c02)  drop-shadow(7px 7px 0px #8b4a28) ;
-
-}
-
-
-
-.Poster{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    padding-left: 20px;
-    margin-left: 40px;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    gap: 20px;
-}
-.numeros_poster h2{
-    display: flex;
-    align-items: end;
-    font-family: 'Bukhari Script';
-    font-size: 200px;
-    color: #f7e5c6;
-    text-shadow: 5px 5px 0 #8b4a28,
-        10px 5px 0 #8b4b28a1;
-        transition:all .3s ease;
-    
-}
-
-.Poster a {
-    
-    grid-column: auto;
-}
-
-.Poster img {
-
-    justify-content: flex-start;
-    width: 178px;
-    height: 256px;
-    margin-left: 150px;
-    border: 3px solid #e7eee7;
-    border-radius: 14px;
-    transition:all .3s ease;
-}
-.Poster img:hover{
+.navegador button {
+    background: none;
     border: none;
-    transform:scale(1.05);
-    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
+    padding: 0;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
-.numeros-poster{
-    display: flex;
-    flex-direction: row;
-}
-.Posters{
-    margin-left: -150px;
-}
 .usuario img {
     width: 70px;
     height: 70px;
@@ -156,52 +123,10 @@ body {
     border-radius: 50%;
 }
 
-.peliculas {
-
-    flex-direction: column;
-    margin-top: 25px;
-    margin-left: 90px;
-}
-
-p {
-    font-family: 'Codec Pro', sans-serif;
-    font-size: 30px;
-    text-align: start;
-    color: #8b4a28;
-    margin-top: 5px;
-    margin-bottom: 2px;
-    stroke-width: 2px solid black;
-
-
-}
-
-.peliculas img {
-    margin-top: 25px;
-    margin-left: 20px;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 220px;
-    height: 317px;
-    border: 3px solid #e7eee7;
-    border-radius: 14px;
-    transition:all .3s ease;
-}
-.peliculas img:hover{
-    border: none;
-    transform:scale(1.05);
-    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
-}
-
-.opinion{
+.opinion {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.opinion p{
-    margin-top: 15px;
-    font-weight: bold;
 }
 
 .opinion .user {
@@ -215,10 +140,10 @@ p {
     border-radius: 50%;
 }
 
-
 .review {
     display: flex;
     flex-direction: row;
+    background-color: #f7e5c6bb;
     border-bottom: 3px solid black;
     border-left: 3px solid black;
     border-radius: 8px;
@@ -240,9 +165,11 @@ p {
     box-shadow: 0 0 0 4px white;
     filter: drop-shadow(rgba(255, 255, 255, 0.589) 0px 1px 20px);
 }
-#visto:hover{
+
+#visto:hover {
     color: #f39a3f;
 }
+
 .review a {
     text-decoration: none;
     color: #f39a3f;
@@ -275,7 +202,6 @@ p {
 
 .review p {
     font-family: 'Codec Pro';
-    font-weight: normal;
     color: #000000;
     font-size: 20px;
     margin-top: 15px;
@@ -283,14 +209,29 @@ p {
     overflow-wrap: break-word;
 }
 
-#amigos{
-    font-family: 'Codec Pro';
-    color: #000000;
-    font-size: 20px;
-    margin-top: 5px;
+.boton{
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
     margin-bottom: 15px;
 }
-
-#amigos:hover{
-    color: #f39a3f;
+.anterior, .siguiente {
+    position: relative;
+}
+.boton a{
+    font-family: 'Codec Pro';
+    text-align: center;
+	display: inline-block;
+	background: #f39a3f;
+	padding: 6px 10px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: black;
+	border: 2px solid black;
+	cursor: pointer;
+	font-size: 16px;
+	transition: all .3s ease;
+}
+.boton a:hover{
+    transform: scale(1.05);
 }

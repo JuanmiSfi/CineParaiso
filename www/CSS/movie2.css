@@ -161,7 +161,10 @@ body {
     color: #030303;
     text-shadow: 5px 2px 0 #8b4b28a1;
 }
-
+.titulo{
+    display: flex;
+    flex-direction: row;
+}
 .plataformas{
     display: flex;
     flex-direction: row;

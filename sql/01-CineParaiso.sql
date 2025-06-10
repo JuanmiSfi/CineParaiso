@@ -26,7 +26,7 @@ FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
 Create table pelicula(
 id int PRIMARY KEY,
 titulo varchar(150),
-año int,
+año DATE,
 descripcion text,
 popularidad int,
 poster text
@@ -68,9 +68,10 @@ FOREIGN KEY (id_actor) REFERENCES actor(id_actor)
 );
 
 CREATE TABLE Actuan(
-id_cast int PRIMARY KEY,
+id_cast int PRIMARY KEY auto_increment,
 id_pelicula int,
 id_actor int,
+titulo_pelicula varchar(250),
 personaje varchar(250),
 FOREIGN KEY (id_pelicula) REFERENCES pelicula(id),
 FOREIGN KEY (id_actor) REFERENCES actor(id_actor)

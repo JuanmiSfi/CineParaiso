@@ -97,7 +97,7 @@ try {
                     }
                     echo "</div>";
                     if ($usuario != 'admin') {
-                    echo "<div class='barra2'></div>";
+                        echo "<div class='barra2'></div>";
                     }
                 }
                 ?>
@@ -123,7 +123,7 @@ try {
                 <?php
                 foreach ($pelis['results'] as $movie) {
                     // Asignamos las propiedades de la película a variables
-                    $total_paginas = $pelis['total_pages'];
+                    $total_paginas = $pelis['total_pages'] ?? 1;
                     $movie_id = $movie['id'];
                     $movie_title = $movie['title'];
                     $titulo_formateado = str_replace(':', ':<br>', $movie_title);
@@ -131,20 +131,45 @@ try {
                     // Mostrar el póster y el nombre de la película
                     echo "<a href='movie2.php?id=" . $movie_id . "'>";
                     echo "<p>$titulo_formateado</p>";
-                    echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' alt='" . $movie_title . "' width='150'><br>";
+                    echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' alt='" . $movie_title . "' width='150' loading='lazy'><br>";
                     echo "</a>";
                 } ?>
             </div>
         </div>
         <div class='paginacion'>
             <?php
-            for ($i = 1; $i <= $total_paginas; $i++) {
+            if (!isset($total_paginas)) {
+                $total_paginas = 1;
+            }
+            $max_links = 2; // Cantidad de páginas antes y después de la actual a mostrar
+            $start = max(1, $pagina - $max_links);
+            $end = min($total_paginas, $pagina + $max_links);
+            echo "<div class='boton'>";
+            if ($pagina > 1) {
+                echo "<p><a href='consulta.php?busqueda=$busqueda&pagina=" . ($pagina - 1) . "'>‹‹‹ Anterior</a></p>";
+            }
+            echo "</div>";
+
+            if ($start > 1) {
+                echo "<p>...</p>";
+            }
+
+            for ($i = $start; $i <= $end; $i++) {
                 if ($i == $pagina) {
                     echo "<p><strong>$i</strong></p>";
                 } else {
                     echo "<p><a href='consulta.php?busqueda=$busqueda&pagina=$i'>$i</a></p>";
                 }
             }
+
+            if ($end < $total_paginas) {
+                echo "<p>...</p>";
+            }
+            echo "<div class='boton'>";
+            if ($pagina < $total_paginas) {
+                echo "<p><a href='consulta.php?busqueda=$busqueda&pagina=" . ($pagina + 1) . "'>Siguiente ›››</a></p>";
+            }
+            echo "</div>";
             ?>
         </div>
     </body>

@@ -59,7 +59,7 @@ if (!$conn) {
                             echo "<img src='$fto' alt='' />";
                         }
                     } else {
-                        echo "<img src='./Perfil_usuario/Usuarios.png' alt='' />";
+                        echo "<img src='/Perfil_usuario/Usuarios.png' alt='' />";
                     }
                     ?>
                 </a></div>
@@ -89,9 +89,8 @@ if (!$conn) {
             <?php
             
             $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_pelis FROM review WHERE id_usuario = $idusuario AND vermastarde = 0");
-
             $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_pelis'];
-            $filasmax = 10;
+            $filasmax = 14;
             $sql = "SELECT p.poster,p.id,r.nota,r.review FROM review r,pelicula p WHERE r.id_usuario = $idusuario  AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC  LIMIT " . (($pag - 1) * $filasmax)  . "," . $filasmax;
             $consult = mysqli_query($conn, $sql);
             $numerofilas = mysqli_num_rows($consult);
@@ -103,7 +102,7 @@ if (!$conn) {
                     $nota = $fila['nota'];
                     $review = $fila['review'];
                     echo "<a href='/movie2.php?id=" . $movieId . "'>";
-                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
+                    echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300' loading='lazy'>";
                     echo "<div class='estrellas'>";
                     for ($j = 1; $j <= 5; $j++) {
                         if ($nota >= $j) {
@@ -134,11 +133,11 @@ if (!$conn) {
             if (isset($_GET['pag'])) {
                 if ($_GET['pag'] > 1) {
             ?>
-                    <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=<?php echo $_GET['pag'] - 1; ?>">Anterior</a>
+                    <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=<?php echo $_GET['pag'] - 1; ?>"><i class="fa-solid fa-arrow-left"></i></a>
                 <?php
                 } else {
                 ?>
-                    <a href="#" style="pointer-events: none">Anterior</a>
+                    <a href="#" style="pointer-events: none"><i class="fa-solid fa-arrow-left"></i></a>
                 <?php
                 }
                 ?>
@@ -146,25 +145,25 @@ if (!$conn) {
             <?php
             } else {
             ?>
-                <a href="#" style="pointer-events: none">Anterior</a>
+                <a href="#" style="pointer-events: none"><i class="fa-solid fa-arrow-left"></i></a>
                 <?php
             }
 
             if (isset($_GET['pag'])) {
                 if ((($pag) * $filasmax) <= $maxusutabla) {
                 ?>
-                    <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=<?php echo $_GET['pag'] + 1; ?>">Siguiente</a>
+                    <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=<?php echo $_GET['pag'] + 1; ?>"><i class="fa-solid fa-arrow-right"></i></a>
                 <?php
                 } else {
                 ?>
-                    <a href="#" style="pointer-events: none">Siguiente</a>
+                    <a href="#" style="pointer-events: none"><i class="fa-solid fa-arrow-right"></i></a>
                 <?php
                 }
                 ?>
             <?php
             } else {
             ?>
-                <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=2">Siguiente</a>
+                <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=2"><i class="fa-solid fa-arrow-right"></i></a>
             <?php
             }
 

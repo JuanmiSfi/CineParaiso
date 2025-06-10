@@ -29,53 +29,15 @@ if (!$conn) {
 require_once('vendor/autoload.php');
 ?>
 <?php
-
-$client = new \GuzzleHttp\Client();
-
-$response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '?language=es-Es', [
-    'headers' => [
-        'Authorization' => 'Bearer ' . $API . '',
-        'accept' => 'application/json',
-    ],
-]);
-
-$info = json_decode($response->getBody(), true);
-$idactor = $info['id'];
-$nombre = $info['name'];
-$genero = $info['gender'];
-$fto_actor = $info['profile_path'];
-$lugar_n = $info['place_of_birth'];
-$bio = $info['biography'];
-$fecha_n = $info['birthday'];
-$fecha_d = $info['deathday'];
-
-$sql = "SELECT * FROM actor WHERE id_actor=$idactor";
-$consulta = (mysqli_query($conn, $sql));
-if (mysqli_num_rows($consulta) == 0) {
-    if (isset($info['deathday'])) {
-        $stmt = $conn->prepare("INSERT INTO actor(id_actor, genero, nombre, fto, bio, nacimiento, fallecimiento, lugar_de_nacimiento)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iissssss", $idactor, $genero, $nombre, $fto_actor, $bio, $fecha_n, $fecha_d, $lugar_n);
-        $stmt->execute();
-    } else {
-        $stmt = $conn->prepare("INSERT INTO actor(id_actor, genero, nombre, fto, bio, nacimiento, fallecimiento, lugar_de_nacimiento)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iissssss", $idactor, $genero, $nombre, $fto_actor, $bio, $fecha_n, $fecha_d, $lugar_n);
-        $stmt->execute();
-    }
-}
-?>
-
-<?php
 require_once('vendor/autoload.php');
 
 $client = new \GuzzleHttp\Client();
 
-$response = $client->request('GET', 'https://api.themoviedb.org/3/person/'.$idactor.'/external_ids', [
-  'headers' => [
-    'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlODBmYjY4YzM2ZTExODRlZGRiYmY1MGEwNjQxMDcwZCIsIm5iZiI6MS43NDQxMzczNDU3NTgwMDAxZSs5LCJzdWIiOiI2N2Y1NmM4MWVkZGVjMjhiMDNhZGUwMDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.uRGiMicdSlhinc4hnY9eeWDeavyIbiBU-dT1RM33Ggk',
-    'accept' => 'application/json',
-  ],
+$response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '/external_ids', [
+    'headers' => [
+        'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlODBmYjY4YzM2ZTExODRlZGRiYmY1MGEwNjQxMDcwZCIsIm5iZiI6MS43NDQxMzczNDU3NTgwMDAxZSs5LCJzdWIiOiI2N2Y1NmM4MWVkZGVjMjhiMDNhZGUwMDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.uRGiMicdSlhinc4hnY9eeWDeavyIbiBU-dT1RM33Ggk',
+        'accept' => 'application/json',
+    ],
 ]);
 
 $info = json_decode($response->getBody(), true);
@@ -86,6 +48,13 @@ $instagram_id = $info['instagram_id'];
 $tiktok_id =  $info['tiktok_id'];
 $twitter_id = $info['twitter_id'];
 $youtube_id = $info['youtube_id'];
+
+$RSS = mysqli_query($conn, "SELECT * FROM redessociales WHERE id_actor = $actorId");
+if (mysqli_num_rows($RSS) <= 0) {
+    $stmt = $conn->prepare("INSERT into redessociales (id_actor, wikidata, facebook, instagram, tiktok, twitter, youtube)values (?,?,?,?,?,?,?)");
+    $stmt->bind_param("issssss", $actorId, $wikidata_id , $facebook_id, $instagram_id, $tiktok_id, $twitter_id, $youtube_id);
+    $stmt->execute();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,15 +110,25 @@ $youtube_id = $info['youtube_id'];
 
                 $info = json_decode($response->getBody(), true);
                 $idactor = $info['id'];
-                $nombre = $info['name'];
+                $nombre = mysqli_real_escape_string($conn, $info['name']);
                 $genero = $info['gender'];
                 $fto_actor = $info['profile_path'];
                 $lugar_n = $info['place_of_birth'];
                 $bio = $info['biography'];
                 $fecha_n = $info['birthday'];
                 $fecha_d = $info['deathday'];
+
+                $sql = mysqli_query($conn, "SELECT * FROM actor WHERE id_actor=$actorId");
+                if (mysqli_num_rows($sql) <= 0) {
+
+                    $stmt = $conn->prepare("INSERT into actor (id_actor, genero, nombre, fto, bio, nacimiento, fallecimiento, lugar_de_nacimiento)values (?,?,?,?,?,?,?,?)");
+                    $stmt->bind_param("iissssss", $idactor, $genero, $nombre, $fto_actor, $bio, $fecha_n, $fecha_d, $lugar_n);
+                    $stmt->execute();
+                }
+
+
                 echo "<div class='foto-actor'>";
-                echo '<img src="https://image.tmdb.org/t/p/w300_and_h450_face/' . $fto_actor . '" />';
+                echo '<img src="https://image.tmdb.org/t/p/w300_and_h450_face/' . $fto_actor . '" loading="lazy">';
                 echo "<h2><b>Información personal</b></h2>";
 
                 echo "<h3>Sexo</h3>";
@@ -163,6 +142,11 @@ $youtube_id = $info['youtube_id'];
                 echo "<h3>Fecha nacimiento</h3>";
                 $fechaconformato = date("d-m-Y", strtotime($fecha_n));
                 echo "<p>$fechaconformato</p>";
+                if (isset($fecha_d)) {
+                    echo "<h3>Fecha de fallecimiento</h3>";
+                    $fechamuerte = date("d-m-Y", strtotime($fecha_d));
+                    echo "<p>$fechamuerte</p>";
+                }
                 echo "<h3>Lugar de nacimiento</h3>";
                 echo "<p>$lugar_n</p>";
                 echo "</div>";
@@ -189,14 +173,26 @@ $youtube_id = $info['youtube_id'];
                     if ($pelis) {
                         for ($i = 0; $i < count($pelis); $i++) {
                             $movieId = $pelis[$i]['id'];
-                            $nombre_pelicula = $pelis[$i]['original_title'];
-                            $titulo_completo = $pelis[$i]['original_title'];
+                            $nombre_pelicula = mysqli_real_escape_string($conn, $pelis[$i]['title']);
                             $popularidad = $pelis[$i]['popularity'];
-                            $movie_poster_path = $pelis[$i]['poster_path'];
-                            if (!empty($movie_poster_path)) {
+                            $personaje = mysqli_real_escape_string($conn, $pelis[$i]['character']);
+                            $movie_poster = $pelis[$i]['poster_path'];
+                            $anio = $pelis[$i]['release_date'];
+                            if (empty($anio)) {
+                                $anio = '1111-11-11';
+                            }
+                            if (!empty($movie_poster)) {
                                 echo "<a href='movie2.php?id=" . $movieId . "'>";
-                                echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster_path . "' width='150'><br>";
+                                echo "<img src='https://image.tmdb.org/t/p/w500" . $movie_poster . "' width='150' loading='lazy'><br>";
                                 echo "</a>";
+                            }
+                            $peli = mysqli_query($conn, "SELECT * FROM pelicula WHERE id=$movieId");
+                            $actor = mysqli_query($conn, "SELECT * FROM Actuan WHERE id_actor=$actorId AND personaje = '$personaje' AND id_pelicula = $movieId");
+                            if (mysqli_num_rows($peli) <= 0) {
+                                mysqli_query($conn, "INSERT into pelicula(id,titulo,poster,año) values ($movieId,'$nombre_pelicula','$movie_poster','$anio')");
+                            }
+                            if (mysqli_num_rows($actor) <= 0) {
+                                mysqli_query($conn, "INSERT into Actuan(id_pelicula,id_actor,titulo_pelicula,personaje) values ($movieId,$actorId,'$nombre_pelicula','$personaje')");
                             }
                         }
                     }

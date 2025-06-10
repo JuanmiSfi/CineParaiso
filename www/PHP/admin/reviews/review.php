@@ -54,13 +54,6 @@ if (!$conn) {
     <div class='body'>
         <h2>Lista de Reviews</h2>
         <div class='poster'>
-            <div class="search-container">
-                <input type="text" name="txtbuscar" class="search-input" placeholder="Buscar...">
-                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-            </div>
             <div class='reviews'>
                 <div class='opinion'>
                     <?php
@@ -86,7 +79,7 @@ if (!$conn) {
                                 echo "<h2>$titulo</h2>";
                                 echo "<div class='estrellas'>";
                                 echo "Review por el usuario: ";
-                                echo "$usuario ";
+                                echo "<b>$usuario</b>";
                                 echo "<div class='fecha'>";
                                 if (!empty($fecha)) {
                                     echo "Visto el $fecha";

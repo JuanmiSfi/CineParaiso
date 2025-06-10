@@ -4,8 +4,13 @@ require __DIR__ . '/../../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
+
+$pag = $_GET['pag'] ?? 1;
+
 $noreview = false;
 $idusuario = $_GET['id'] ? $_GET['id'] : $_SESSION['idusuario'];
+
+$idusuario2 = $_SESSION['idusuario'] ?? 0;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
     header("Location: consulta.php");
@@ -49,14 +54,12 @@ if (!$conn) {
             </div>
             <div class="usuario"><a href="/login.php">
                     <?php
-                    if ($idusuario != 0) {
-                        $sql = "SELECT * FROM usuario WHERE id = '$idusuario'";
+                    if ($idusuario2 != 0) {
+                        $sql = "SELECT usuario ,fto_perfil FROM usuario WHERE id = $idusuario2";
                         $resul = mysqli_query($conn, $sql);
-                        if (mysqli_num_rows($resul) > 0) {
-                            $row = mysqli_fetch_assoc($resul);
-                            $fto = $row['fto_perfil'];
-                            echo "<img src='$fto' alt='' />";
-                        }
+                        $row = mysqli_fetch_assoc($resul);
+                        $fto = $row['fto_perfil'];
+                        echo "<img src='$fto' alt='' />";
                     } else {
                         echo "<img src='/Perfil_usuario/Usuarios.png' alt='' />";
                     }
@@ -85,12 +88,16 @@ if (!$conn) {
         <div class="barra2"></div>
         <div class='poster'>
             <?php
-            $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha,u.usuario FROM review r,pelicula p,usuario u WHERE r.id_usuario = $idusuario AND r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+            $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_rew FROM review r,pelicula p,usuario u WHERE r.id_usuario = $idusuario AND r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0");
+            $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_rew'];
+            $filasmax = 5;
+            $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.review,r.fecha,u.usuario, r.id as idreview FROM review r,pelicula p,usuario u WHERE r.id_usuario = $idusuario AND r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC LIMIT " . (($pag - 1) * $filasmax)  . "," . $filasmax;
             $consult = mysqli_query($conn, $sql);
             $numerofilas = mysqli_num_rows($consult);
             if ($numerofilas > 0) {
                 for ($i = 0; $i < $numerofilas; $i++) {
                     $fila = mysqli_fetch_assoc($consult);
+                    $idreview = $fila['idreview'];
                     $poster = $fila['poster'];
                     $titulo = $fila['titulo'];
                     $movieId = $fila['id'];
@@ -118,6 +125,9 @@ if (!$conn) {
                         echo "</div>"; // Cierra fecha
                         echo "</div>"; // Cierra estrllas
                         echo "<p>$review</p>";
+                        echo "<div class='basura'>";
+                        echo '<a href="/PHP/historial/eliminar.php?id='.$idusuario.'&idreview='.$idreview.'&pag='.$_GET['pag'].'"><i class="fa-solid fa-trash"></i></a>';
+                        echo "</div>";
                         echo "</div>"; // Cierra contenido
                         echo "</div>"; //Cierra review
                     }
@@ -126,7 +136,44 @@ if (!$conn) {
                 $noreview = true;
             }
             ?>
+            <div class="boton">
+                <?php
+                $filasmax = 5;
+
+                // Calcular total de reviews
+                $resultadoMaximo = mysqli_query($conn, "SELECT COUNT(*) as num_rew FROM review WHERE id_usuario = $_SESSION[idusuario] AND vermastarde = 0");
+                $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_rew'];
+
+                // Calcular total de páginas
+                $totalPaginas = ceil($maxusutabla / $filasmax);
+
+                echo "<div class='anterior'>";
+                if (isset($_GET['pag'])) {
+                    if ($_GET['pag'] > 1) {
+                        echo "<a href='/PHP/historial/Reviews.php?id=$idusuario&pag=" . ($_GET['pag'] - 1) . "' class='todas' ><p>Anterior</p></a>";
+                    } else {
+                        echo "";
+                    }
+                }
+
+                echo "</div>";
+                echo "<div class='siguiente'>";
+                if (isset($pag)) {
+                    if ($pag < $totalPaginas) {
+                        echo "<a href='/PHP/historial/Reviews.php?id=$idusuario&pag=" . ($pag + 1) . "' class='todas' ><p>Siguiente</p></a>";
+                    } else {
+                        echo "";
+                    }
+                } else {
+                    echo "<a href='#' class='todas' ><p>Siguiente</p></a>";
+                }
+
+                echo "</div>";
+
+                ?>
+            </div>
         </div>
+
         <div class='sin-review'>
             <?php
             if ($noreview == true) {

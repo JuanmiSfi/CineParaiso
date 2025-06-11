@@ -170,6 +170,7 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: 15px;
+    
 }
 
 
@@ -190,6 +191,8 @@ body {
     transition:all .5s ease;
 }
 .box1 img:hover{
+    cursor: pointer;
+    transform: scale(1.05);
     filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }
 
@@ -259,6 +262,7 @@ body {
     font-size: 19px;
     margin-right: 15px; 
     margin-bottom: 15px;
+    cursor: pointer;
 }
 .clasificacion{
     display: flex;

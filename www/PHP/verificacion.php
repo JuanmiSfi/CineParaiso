@@ -67,8 +67,8 @@ if (isset($_POST['verificar'])) {
             </form>
             <?php
             if ($mensaje == 1) {
-                echo "Codigo correcto puedes iniciar sesión";
-                echo "<a href='../login.php'>Click Aqui para ir a el login</a>";
+                echo "<p>Codigo correcto puedes iniciar sesión</p>";
+                echo "<p id='link'><a href='../login.php'>Click Aqui para ir a el login</p></a>";
             } else if ($mensaje == 2) {
                 echo "Codigo incorrecto";
             }

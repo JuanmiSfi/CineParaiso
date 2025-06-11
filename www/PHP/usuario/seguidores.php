@@ -109,20 +109,33 @@ if (!$conn) {
                         $resul = mysqli_query($conn, $sql);
                         $sigue = mysqli_fetch_row($resul);
                         //echo $idseguidor;
-                        if ($sigue[0] != 0) {
+                        if ($sigue[0] != 0 && $_GET['id'] == $_SESSION['idusuario']) {
                             echo '<form action="/PHP/siguen.php" method="POST">';
                             echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
                             echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
+                            echo "<input type='hidden' name='usuariobase' value='" . $_GET['id'] . "'>";
                             echo "<input type='hidden' name='DIR' value='seguidores'>";
                             echo "<button type='submit' name='suprimir' class='suprimir'>Suprimir</button>";
                             echo '</form>';
-                        } else if ($sigue[0] == 0 && $idseguidor!=$_SESSION['idusuario']) {
+                        } else if ($sigue[0] == 0 && $idseguidor != $_SESSION['idusuario']) {
+                            $sql = mysqli_query($conn, "SELECT * from siguen WHERE id_usuario=$_SESSION[idusuario] AND id_sigue = $idseguidor");
+                            if (mysqli_num_rows($sql) > 0) {
                                 echo '<form action="/PHP/siguen.php" method="POST">';
                                 echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
                                 echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
+                                echo "<input type='hidden' name='usuariobase' value='" . $_GET['id'] . "'>";
+                                echo "<input type='hidden' name='DIR' value='seguidores'>";
+                                echo "<button type='submit' name='unfollow' class='seguir'>siguiendo</button>";
+                                echo '</form>';
+                            } else {
+                                echo '<form action="/PHP/siguen.php" method="POST">';
+                                echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
+                                echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
+                                echo "<input type='hidden' name='usuariobase' value='" . $_GET['id'] . "'>";
                                 echo "<input type='hidden' name='DIR' value='seguidores'>";
                                 echo "<button type='submit' name='follow' class='seguir'>seguir</button>";
                                 echo '</form>';
+                            }
                         }
                         echo "</div>"; //boton
                         echo "</div>"; //followe

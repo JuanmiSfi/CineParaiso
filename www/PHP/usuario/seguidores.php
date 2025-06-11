@@ -108,6 +108,7 @@ if (!$conn) {
                         $sql = "SELECT COUNT(*) FROM siguen WHERE id_usuario=$idseguidor AND $_SESSION[idusuario]=id_sigue";
                         $resul = mysqli_query($conn, $sql);
                         $sigue = mysqli_fetch_row($resul);
+                        //echo $idseguidor;
                         if ($sigue[0] != 0) {
                             echo '<form action="/PHP/siguen.php" method="POST">';
                             echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
@@ -115,13 +116,13 @@ if (!$conn) {
                             echo "<input type='hidden' name='DIR' value='seguidores'>";
                             echo "<button type='submit' name='suprimir' class='suprimir'>Suprimir</button>";
                             echo '</form>';
-                        }else if($sigue[0] == 0 && $idseguidor!=$_SESSION['idusuario']){
-                            echo '<form action="/PHP/siguen.php" method="POST">';
-                            echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
-                            echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
-                            echo "<input type='hidden' name='DIR' value='seguidores'>";
-                            echo "<button type='submit' name='follow' class='seguir'>seguir</button>";
-                            echo '</form>';
+                        } else if ($sigue[0] == 0 && $idseguidor!=$_SESSION['idusuario']) {
+                                echo '<form action="/PHP/siguen.php" method="POST">';
+                                echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
+                                echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
+                                echo "<input type='hidden' name='DIR' value='seguidores'>";
+                                echo "<button type='submit' name='follow' class='seguir'>seguir</button>";
+                                echo '</form>';
                         }
                         echo "</div>"; //boton
                         echo "</div>"; //followe
@@ -134,11 +135,15 @@ if (!$conn) {
                     <?php
                     if ($noreview == true) {
                         echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
-                        echo "<p>¡Vaya! Parece que $usuario no sigue a nadie</p>";
                     }
                     ?>
                 </div>
             </div>
+            <?php
+            if ($noreview == true) {
+                echo "<p style='font-size:25px; margin-bottom:15px'>¡Vaya! Parece que <b>$usuario</b> aun no tiene seguidores</p>";
+            }
+            ?>
         </div>
     </div>
 </body>

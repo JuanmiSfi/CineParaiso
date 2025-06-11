@@ -44,8 +44,8 @@ services:
     environment:
       - ALLOWED_SENDER_DOMAINS=cineparaiso.com
       - RELAYHOST=[smtp.gmail.com]:587 
-      - SMTP_USERNAME=sfijuanmifp@gmail.com
-      - SMTP_PASSWORD=cfox exqz mopg aqfu
+      - SMTP_USERNAME=cineparaiso.correocontacto@gmail.com
+      - SMTP_PASSWORD=hrpg zywr vlnz ayiu
     restart: unless-stopped
     networks:
       - app_network

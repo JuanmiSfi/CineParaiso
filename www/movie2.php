@@ -212,7 +212,6 @@ if (!$conn) {
                                 ];
 
                                 $urlDestino = $urlsStreaming[$nombreProveedor] ?? '';
-
                                 echo '<a href="' . $urlDestino . '" target="_blank" rel="noopener noreferrer">';
                                 echo '<img src="https://image.tmdb.org/t/p/original' . $plataforma . '" loading="lazy">';
                                 echo '</a>';

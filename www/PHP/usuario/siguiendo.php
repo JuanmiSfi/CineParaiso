@@ -127,11 +127,15 @@ if (!$conn) {
                     <?php
                     if ($noreview == true) {
                         echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
-                        echo "<p>¡Vaya! Parece que $usuario no sigue a nadie</p>";
                     }
                     ?>
                 </div>
             </div>
+            <?php
+            if ($noreview == true) {
+                echo "<p style='font-size:25px; margin-bottom:15px'>¡Vaya! Parece que <b>$usuario</b> no sigue a nadies</p>";
+            }
+            ?>
         </div>
     </div>
 </body>

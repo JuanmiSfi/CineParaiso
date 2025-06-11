@@ -145,7 +145,7 @@ if (isset($_POST['cerrar'])) {
                         }
                         echo "</div>";
                         echo "<div class='n_pelis'>";
-                        echo '<a href="/PHP/historial.php?id=' . $idusuario2 . '" class="WatchList">';
+                        echo '<a href="/PHP/historial.php?id=' . $idusuario2 . '&pag=1" class="WatchList">';
                         echo "<h3>$num_pelis</h3>";
                         echo "<p>Peliculas vistas </p>";
                         echo '</a>';
@@ -166,10 +166,10 @@ if (isset($_POST['cerrar'])) {
                     </div>
                     <div class="barra2"></div>
                     <div class="navegador">
-                        <a href="/PHP/historial.php?id=<?php echo $idusuario2 ?>" class="WatchList">
+                        <a href="/PHP/historial.php?id=<?php echo $idusuario2 ?>&pag=1" class="WatchList">
                             <p>Peliculas vistas</p>
                         </a>
-                        <a href="watchlist.php?id=<?php echo $idusuario2 ?>" class="WatchList">
+                        <a href="watchlist.php?id=<?php echo $idusuario2 ?>&pag=1" class="WatchList">
                             <p>WatchList</p>
                         </a>
                     </div>

@@ -30,6 +30,8 @@ body {
 }
 
 .body {
+    display: flex;
+    flex-direction: column;
     margin-left: 25px;
     margin-right: 100px;
 }
@@ -142,8 +144,14 @@ body {
 
 .contenedor-follow {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     margin-top: 20px;
+}
+
+.contenedor-follow p{
+    margin-top: 15px;
 }
 
 .follow {
@@ -210,5 +218,14 @@ body {
     padding: 10px;
     color:antiquewhite;
     background-color: rgb(74, 60, 51);
+    cursor: pointer;
+}
+
+#invisible{
+font-family: 'Codec Pro';
+    font-size: 20px;
+    padding: 10px;
+    color:#f39a3f;
+    background-color: #f39a3f;
     cursor: pointer;
 }

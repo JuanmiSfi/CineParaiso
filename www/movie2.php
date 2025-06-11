@@ -151,7 +151,6 @@ if (!$conn) {
                 <?php
                 echo "<div class='titulo'>";
                 echo "<h2 id='titulo'>$title</h2>";
-                echo "<h2>($anio)</h2>";
                 echo "</div>";
                 echo "<h2>disponible en:</h2>";
 
@@ -187,7 +186,36 @@ if (!$conn) {
                             echo "<div class='box1'>";
                             foreach ($logo as $proveedor) {
                                 $plataforma = $proveedor['logo_path'];
-                                echo '<img src="https://image.tmdb.org/t/p/original' . $plataforma . '"  loading="lazy">';
+                                $nombreProveedor = strtolower($proveedor['provider_name']);
+
+                                $urlsStreaming = [
+                                    'netflix'               => 'https://www.netflix.com/',
+                                    'netflix standard with ads' => 'https://www.netflix.com/',
+                                    'amazon prime video'    => 'https://www.primevideo.com/',
+                                    'max originals amazon channel' => 'https://www.primevideo.com/',
+                                    'disney plus'           => 'https://www.disneyplus.com/',
+                                    'hbo max'               => 'https://www.max.com/',
+                                    'apple tv+'              => 'https://tv.apple.com/',
+                                    'movistar plus+'             => 'https://ver.movistarplus.es/',
+                                    'movistar plus+ ficción total'             => 'https://ver.movistarplus.es/',
+                                    'skyshowtime' => 'https://www.skyshowtime.com/es',
+                                    'filmin'                => 'https://www.filmin.es/',
+                                    'max' => 'https://www.max.com/es',
+                                    'tivify' => 'https://www.tivify.es/',
+                                    'rakuten tv'            => 'https://rakuten.tv/es',
+                                    'atresplayer premium'   => 'https://www.atresplayer.com/premium/',
+                                    'paramount plus'        => 'https://www.paramountplus.com/',
+                                    'starzplay'             => 'https://www.starzplay.es/',
+                                    'discovery plus'        => 'https://www.discoveryplus.es/',
+                                    'crunchyroll'           => 'https://www.crunchyroll.com/es',
+                                    'mubi'                  => 'https://mubi.com/es',
+                                ];
+
+                                $urlDestino = $urlsStreaming[$nombreProveedor] ?? '';
+
+                                echo '<a href="' . $urlDestino . '" target="_blank" rel="noopener noreferrer">';
+                                echo '<img src="https://image.tmdb.org/t/p/original' . $plataforma . '" loading="lazy">';
+                                echo '</a>';
                             }
                             echo "</div>"; // Cerrar box1
                         } else if (!empty($comprar)) {
@@ -199,7 +227,7 @@ if (!$conn) {
                             echo "</ul>";
                             echo "</div>"; // Cerrar box2
                         } else {
-                            echo "<p id='solocine'>Actualmente en el cine</p>";
+                            echo "<p id='solocine'>No se encuentra disponible en Streaming</p>";
                         }
 
                         echo "</div>"; // Cerrar plataformas
@@ -421,7 +449,7 @@ if (!$conn) {
                                 echo "<p>$personaje</p>";
                                 echo "</div>";
                                 echo "</div>";
-                                //mysqli_query($conn, "INSERT INTO Actuan (id_pelicula,id_actor,personaje)values($movieId,$id_actor,'$personaje')");
+                                
                             }
                         } else {
                             for ($i = 0; $i < $num_actores; $i++) {

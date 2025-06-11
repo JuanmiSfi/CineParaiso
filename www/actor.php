@@ -26,35 +26,12 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 if (!$conn) {
     die("Conexión fallida: " . mysqli_connect_error());
 }
-require_once('vendor/autoload.php');
+
 ?>
 <?php
-require_once('vendor/autoload.php');
+
 
 $client = new \GuzzleHttp\Client();
-
-$response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '/external_ids', [
-    'headers' => [
-        'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlODBmYjY4YzM2ZTExODRlZGRiYmY1MGEwNjQxMDcwZCIsIm5iZiI6MS43NDQxMzczNDU3NTgwMDAxZSs5LCJzdWIiOiI2N2Y1NmM4MWVkZGVjMjhiMDNhZGUwMDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.uRGiMicdSlhinc4hnY9eeWDeavyIbiBU-dT1RM33Ggk',
-        'accept' => 'application/json',
-    ],
-]);
-
-$info = json_decode($response->getBody(), true);
-$imdb_id = $info['imdb_id'];
-$wikidata_id = $info['wikidata_id'];
-$facebook_id = $info['facebook_id'];
-$instagram_id = $info['instagram_id'];
-$tiktok_id =  $info['tiktok_id'];
-$twitter_id = $info['twitter_id'];
-$youtube_id = $info['youtube_id'];
-
-$RSS = mysqli_query($conn, "SELECT * FROM redessociales WHERE id_actor = $actorId");
-if (mysqli_num_rows($RSS) <= 0) {
-    $stmt = $conn->prepare("INSERT into redessociales (id_actor, wikidata, facebook, instagram, tiktok, twitter, youtube)values (?,?,?,?,?,?,?)");
-    $stmt->bind_param("issssss", $actorId, $wikidata_id , $facebook_id, $instagram_id, $tiktok_id, $twitter_id, $youtube_id);
-    $stmt->execute();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +41,7 @@ if (mysqli_num_rows($RSS) <= 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cine Paraiso</title>
     <link rel="stylesheet" href="/CSS/actor.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -126,11 +104,52 @@ if (mysqli_num_rows($RSS) <= 0) {
                     $stmt->execute();
                 }
 
+                //Consultamos las redes sociales
+
+                $response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '/external_ids', [
+                    'headers' => [
+                        'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlODBmYjY4YzM2ZTExODRlZGRiYmY1MGEwNjQxMDcwZCIsIm5iZiI6MS43NDQxMzczNDU3NTgwMDAxZSs5LCJzdWIiOiI2N2Y1NmM4MWVkZGVjMjhiMDNhZGUwMDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.uRGiMicdSlhinc4hnY9eeWDeavyIbiBU-dT1RM33Ggk',
+                        'accept' => 'application/json',
+                    ],
+                ]);
+
+                $info = json_decode($response->getBody(), true);
+                $imdb_id = $info['imdb_id'];
+                $wikidata_id = $info['wikidata_id'];
+                $facebook_id = $info['facebook_id'];
+                $instagram_id = $info['instagram_id'];
+                $tiktok_id =  $info['tiktok_id'];
+                $twitter_id = $info['twitter_id'];
+                $youtube_id = $info['youtube_id'];
+
+                // Si no existe el actor en la base de datos se le introducen las Redes sociales 
+                $RSS = mysqli_query($conn, "SELECT * FROM redessociales WHERE id_actor = $actorId");
+                if (mysqli_num_rows($RSS) <= 0) {
+                    $stmt = $conn->prepare("INSERT into redessociales (id_actor, wikidata, facebook, instagram, tiktok, twitter, youtube)values (?,?,?,?,?,?,?)");
+                    $stmt->bind_param("issssss", $actorId, $wikidata_id, $facebook_id, $instagram_id, $tiktok_id, $twitter_id, $youtube_id);
+                    $stmt->execute();
+                }
 
                 echo "<div class='foto-actor'>";
                 echo '<img src="https://image.tmdb.org/t/p/w300_and_h450_face/' . $fto_actor . '" loading="lazy">';
                 echo "<h2><b>Información personal</b></h2>";
-
+                echo "<div class='Redes'>";
+                if (!empty($instagram_id)) {
+                    echo "<a href='https://www.instagram.com/$instagram_id' target='_blank'><i class='fa-brands fa-instagram'></i></a>";
+                }
+                if (!empty($facebook_id)) {
+                    echo "<a href='https://www.facebook.com/$facebook_id' target='_blank'><i class='fa-brands fa-square-facebook'></i></a>";
+                }
+                if (!empty($tiktok_id)) {
+                    echo "<a href='https://www.tiktok.com/@$tiktok_id' target='_blank'><i class='fa-brands fa-tiktok'></i></a>";
+                }
+                if (!empty($twitter_id)) {
+                    echo "<a href='https://twitter.com/$twitter_id' target='_blank'><i class='fa-brands fa-x-twitter'></i></a>";
+                }
+                if (!empty($youtube_id)) {
+                    echo "<a href='https://www.youtube.com/$youtube_id' target='_blank'><i class='fa-brands fa-youtube'></i></a>";
+                }
+                echo "</div>";
                 echo "<h3>Sexo</h3>";
                 if ($genero == 1) {
                     echo "<p>Femenino</p>";

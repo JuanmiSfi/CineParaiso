@@ -156,3 +156,9 @@ a{
     border: 3px solid #e7eee7;
     filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
 }
+.Redes {
+    display: flex;
+    flex-direction: row;
+    font-size: 35px;
+    gap: 10px;
+}

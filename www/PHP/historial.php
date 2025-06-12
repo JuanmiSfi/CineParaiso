@@ -150,7 +150,7 @@ if (!$conn) {
             }
 
             if (isset($_GET['pag'])) {
-                if ((($pag) * $filasmax) <= $maxusutabla) {
+                if ((($pag) * $filasmax) < $maxusutabla) {
                 ?>
                     <a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=<?php echo $_GET['pag'] + 1; ?>"><i class="fa-solid fa-arrow-right"></i></a>
                 <?php

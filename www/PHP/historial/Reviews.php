@@ -125,9 +125,11 @@ if (!$conn) {
                         echo "</div>"; // Cierra fecha
                         echo "</div>"; // Cierra estrllas
                         echo "<p>$review</p>";
-                        echo "<div class='basura'>";
-                        echo '<a href="/PHP/historial/eliminar.php?id='.$idusuario.'&idreview='.$idreview.'&pag='.$_GET['pag'].'"><i class="fa-solid fa-trash"></i></a>';
-                        echo "</div>";
+                        if ($idusuario == $idusuario2) {
+                            echo "<div class='basura'>";
+                            echo '<a href="/PHP/historial/eliminar.php?id=' . $idusuario . '&idreview=' . $idreview . '&pag=' . $_GET['pag'] . '"><i class="fa-solid fa-trash"></i></a>';
+                            echo "</div>";
+                        }
                         echo "</div>"; // Cierra contenido
                         echo "</div>"; //Cierra review
                     }
@@ -141,7 +143,7 @@ if (!$conn) {
                 $filasmax = 5;
 
                 // Calcular total de reviews
-                $resultadoMaximo = mysqli_query($conn, "SELECT COUNT(*) as num_rew FROM review WHERE id_usuario = $_SESSION[idusuario] AND vermastarde = 0");
+                $resultadoMaximo = mysqli_query($conn, "SELECT COUNT(*) as num_rew FROM review WHERE id_usuario = $idusuario AND vermastarde = 0");
                 $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_rew'];
 
                 // Calcular total de páginas
@@ -158,11 +160,9 @@ if (!$conn) {
 
                 echo "</div>";
                 echo "<div class='siguiente'>";
-                if (isset($pag)) {
-                    if ($pag < $totalPaginas) {
+                if (isset($_GET['pag'])) {
+                    if ($_GET['pag'] < $totalPaginas) {
                         echo "<a href='/PHP/historial/Reviews.php?id=$idusuario&pag=" . ($pag + 1) . "' class='todas' ><p>Siguiente</p></a>";
-                    } else {
-                        echo "";
                     }
                 } else {
                     echo "<a href='#' class='todas' ><p>Siguiente</p></a>";
@@ -177,7 +177,7 @@ if (!$conn) {
         <div class='sin-review'>
             <?php
             if ($noreview == true) {
-                echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
+                echo '<img src="/Perfil_usuario/POPita.png">';
                 echo "<p>¡Vaya! Parece que $usuario no ha visto aun ninguna pelicula</p>";
             }
             ?>

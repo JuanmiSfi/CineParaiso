@@ -138,7 +138,6 @@ if (!$conn) {
                 // Calcular total de páginas
                 $totalPaginas = ceil($maxusutabla / $filasmax);
 
-                // Limitar $pag entre 1 y total de páginas
                 echo "<div class='anterior'>";
                 if (isset($_GET['pag'])) {
                     if ($_GET['pag'] > 1) {
@@ -165,6 +164,7 @@ if (!$conn) {
             </div>
         </div>
     </div>
+    
 </body>
 
 </html>

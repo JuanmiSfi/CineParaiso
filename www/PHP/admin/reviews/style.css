@@ -294,3 +294,30 @@ select {
 .opion .WatchList p:hover {
     color: #f39a3f;
 }
+
+.boton{
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.anterior, .siguiente {
+    position: relative;
+}
+.boton a{
+    font-family: 'Codec Pro';
+    text-align: center;
+	display: inline-block;
+	background: #f39a3f;
+	padding: 6px 10px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: black;
+	border: 2px solid black;
+	cursor: pointer;
+	font-size: 16px;
+	transition: all .3s ease;
+}
+.boton a:hover{
+    transform: scale(1.05);
+}

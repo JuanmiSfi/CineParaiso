@@ -37,6 +37,7 @@ try {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cine Paraiso</title>
         <link rel="stylesheet" href="./CSS/styles.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
 
     <body>
@@ -46,7 +47,6 @@ try {
                 <div class="buscador">
                     <form action="consulta.php" method="POST">
                         <input type="text" name="busqueda" placeholder="Buscar en Cine Paraiso"></input>
-                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
                     </form>
                 </div>
                 <div class="usuario"><a href="login.php">
@@ -273,11 +273,13 @@ try {
     <div class='sin-review'>
         <?php
         if ($error == true) {
-            echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
+            echo '<img src="/Perfil_usuario/POPita.png">';
             echo "<p>¡Vaya! Parece que estamos de mantenimiento</p>";
         }
         ?>
     </div>
+    <!--Añadimos El footer con un include-->
+    <?php include 'PHP/footer.php';?>
     </body>
 
     </html>

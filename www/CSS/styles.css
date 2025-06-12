@@ -19,7 +19,7 @@
     box-sizing: border-box;
 }
 
-a{
+a {
     text-decoration: none;
     color: #000000;
 }
@@ -92,13 +92,13 @@ body {
     background-color: #f39a3f;
     border: 3px solid black;
     border-radius: 39px;
-    filter:drop-shadow(7px 7px 0px #fb8b02) drop-shadow(7px 7px 0px#fa6c02)  drop-shadow(7px 7px 0px #8b4a28) ;
+    filter: drop-shadow(7px 7px 0px #fb8b02) drop-shadow(7px 7px 0px#fa6c02) drop-shadow(7px 7px 0px #8b4a28);
 
 }
 
 
 
-.Poster{
+.Poster {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -109,7 +109,8 @@ body {
     padding-bottom: 25px;
     gap: 20px;
 }
-.numeros_poster h2{
+
+.numeros_poster h2 {
     display: flex;
     align-items: end;
     font-family: 'Bukhari Script';
@@ -117,12 +118,12 @@ body {
     color: #f7e5c6;
     text-shadow: 5px 5px 0 #8b4a28,
         10px 5px 0 #8b4b28a1;
-        transition:all .3s ease;
-    
+    transition: all .3s ease;
+
 }
 
 .Poster a {
-    
+
     grid-column: auto;
 }
 
@@ -134,21 +135,24 @@ body {
     margin-left: 150px;
     border: 3px solid #e7eee7;
     border-radius: 14px;
-    transition:all .3s ease;
-}
-.Poster img:hover{
-    border: none;
-    transform:scale(1.05);
-    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
+    transition: all .3s ease;
 }
 
-.numeros-poster{
+.Poster img:hover {
+    border: none;
+    transform: scale(1.05);
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px);
+}
+
+.numeros-poster {
     display: flex;
     flex-direction: row;
 }
-.Posters{
+
+.Posters {
     margin-left: -150px;
 }
+
 .usuario img {
     width: 70px;
     height: 70px;
@@ -185,21 +189,22 @@ p {
     height: 317px;
     border: 3px solid #e7eee7;
     border-radius: 14px;
-    transition:all .3s ease;
-}
-.peliculas img:hover{
-    border: none;
-    transform:scale(1.05);
-    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px );
+    transition: all .3s ease;
 }
 
-.opinion{
+.peliculas img:hover {
+    border: none;
+    transform: scale(1.05);
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0px 5px);
+}
+
+.opinion {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.opinion p{
+.opinion p {
     margin-top: 15px;
     font-weight: bold;
 }
@@ -240,9 +245,11 @@ p {
     box-shadow: 0 0 0 4px white;
     filter: drop-shadow(rgba(255, 255, 255, 0.589) 0px 1px 20px);
 }
-#visto:hover{
+
+#visto:hover {
     color: #f39a3f;
 }
+
 .review a {
     text-decoration: none;
     color: #f39a3f;
@@ -283,7 +290,7 @@ p {
     overflow-wrap: break-word;
 }
 
-#amigos{
+#amigos {
     font-family: 'Codec Pro';
     color: #000000;
     font-size: 20px;
@@ -291,6 +298,7 @@ p {
     margin-bottom: 15px;
 }
 
-#amigos:hover{
+#amigos:hover {
     color: #f39a3f;
 }
+

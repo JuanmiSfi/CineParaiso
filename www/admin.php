@@ -74,7 +74,7 @@ if (isset($_POST['cerrar'])) {
             </a>
         </div>
         <div class="reviews">
-            <a href="/PHP/admin/reviews/review.php">
+            <a href="/PHP/admin/reviews/review.php?pag=1">
             <div class="bloque">
                 <img src="/src/ajustes.png">
             </div>
@@ -82,9 +82,9 @@ if (isset($_POST['cerrar'])) {
             </a>
         </div>
         <div class="admin">
-            <a href="/PHP/admin/ajuste.php">
+            <a href="https://panel.hostalia.com/cp/#/tuweb/">
             <div class="bloque">
-                <img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png" alt="">
+                <img src="/Perfil_usuario/POPita.png" alt="">
             </div>
             <h2>Consola de administración</h2>
             </a>

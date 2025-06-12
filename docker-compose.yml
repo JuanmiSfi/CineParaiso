@@ -39,6 +39,7 @@ services:
       - db
     networks:
       - app_network
+    restart: unless-stopped
   postfix:
     image: boky/postfix
     container_name: postfix
@@ -47,7 +48,6 @@ services:
       - RELAYHOST=[smtp.gmail.com]:587 
       - SMTP_USERNAME=cineparaiso.correocontacto@gmail.com
       - SMTP_PASSWORD=hrpg zywr vlnz ayiu
-    restart: unless-stopped
     networks:
       - app_network
     restart: unless-stopped

@@ -81,7 +81,7 @@ if (!$conn) {
             echo "<p>Visto por <a href='/usuario.php?id=" . $idusuario . "'>&nbsp;$usuario</a></p>";
             ?>
             <button type="submit" class="WatchList"><a href="/PHP/historial.php?id=<?php echo $idusuario; ?>" class="link">Peliculas</a></button>
-            <button type="submit" class="WatchList"><a href="/PHP/historial/Reviews.php?id=<?php echo $idusuario; ?>" class="link">Reviews</a></button>
+            <button type="submit" class="WatchList"><a href="/PHP/historial/Reviews.php?id=<?php echo $idusuario; ?>&pag=1" class="link">Reviews</a></button>
         </div>
         <div class="barra2"></div>
         <div class='poster'>
@@ -123,7 +123,7 @@ if (!$conn) {
         <div class='sin-review'>
             <?php
             if ($noreview == true) {
-                echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
+                echo '<img src="/Perfil_usuario/POPita.png">';
                 echo "<p>¡Vaya! Parece que $usuario no ha visto aun ninguna pelicula</p>";
             }
             ?>
@@ -170,6 +170,7 @@ if (!$conn) {
             ?>
         </div>
     </div>
+    
 </body>
 
 </html>

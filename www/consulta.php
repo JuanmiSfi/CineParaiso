@@ -182,11 +182,12 @@ try {
 <div class='sin-review'>
     <?php
     if ($error == true) {
-        echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
+        echo '<img src="/Perfil_usuario/POPita.png">';
         echo "<p>¡Vaya! Parece que estamos de mantenimiento</p>";
     }
     ?>
 </div>
+
 </body>
 
     </html>

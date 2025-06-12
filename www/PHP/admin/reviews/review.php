@@ -7,12 +7,12 @@ $dotenv->load();
 $noreview = false;
 $idusuario = $_SESSION['idusuario'] ?? 0;
 $id_rol = $_SESSION['id_rol'] ?? 0;
+$pag = $_GET['pag'] ?? 1;
 
 if ($id_rol == 0 || $id_rol == 1) {
     http_response_code(404);
-    include(__DIR__ . '/404.php'); 
+    include(__DIR__ . '/404.php');
     exit;
-    
 }
 
 error_reporting(E_ALL);
@@ -57,7 +57,12 @@ if (!$conn) {
             <div class='reviews'>
                 <div class='opinion'>
                     <?php
-                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.id as id_review,r.review,r.fecha,u.usuario,r.id_usuario FROM review r,pelicula p,usuario u WHERE r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC";
+                    // Calcular total de reviews
+                    $resultadoMaximo = mysqli_query($conn, "SELECT COUNT(*) as num_rew FROM review WHERE vermastarde = 0");
+                    $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_rew'];
+                    $filasmax = 5;
+
+                    $sql = "SELECT p.poster,p.id,r.nota,p.titulo,r.id as id_review,r.review,r.fecha,u.usuario,r.id_usuario FROM review r,pelicula p,usuario u WHERE r.id_usuario = u.id AND r.id_pelicula = p.id AND r.vermastarde = 0 ORDER BY r.id DESC LIMIT " . (($pag - 1) * $filasmax)  . "," . $filasmax;;
                     $consult = mysqli_query($conn, $sql);
                     $numerofilas = mysqli_num_rows($consult);
                     if ($numerofilas > 0) {
@@ -101,16 +106,51 @@ if (!$conn) {
                         $noreview = true;
                     }
                     ?>
+                    <div class='boton' style="text-align:center">
+            <?php
+            if (isset($_GET['pag'])) {
+                if ($_GET['pag'] > 1) {
+            ?>
+                    <a href="/PHP/admin/reviews/review.php?pag=<?php echo $_GET['pag'] - 1; ?>"><i class="fa-solid fa-arrow-left"></i></a>
+                <?php
+                } else {
+                ?>
+                    <a href="#" style="pointer-events: none"><i class="fa-solid fa-arrow-left"></i></a>
+                <?php
+                }
+                ?>
+
+            <?php
+            } else {
+            ?>
+                <a href="#" style="pointer-events: none"><i class="fa-solid fa-arrow-left"></i></a>
+                <?php
+            }
+
+            if (isset($_GET['pag'])) {
+                if ((($pag) * $filasmax) <= $maxusutabla) {
+                ?>
+                    <a href="/PHP/admin/reviews/review.php?pag=<?php echo $_GET['pag'] + 1; ?>"><i class="fa-solid fa-arrow-right"></i></a>
+                <?php
+                } else {
+                ?>
+                    <a href="#" style="pointer-events: none"><i class="fa-solid fa-arrow-right"></i></a>
+                <?php
+                }
+                ?>
+            <?php
+            } else {
+            ?>
+                <a href="/PHP/admin/reviews/review.php?pag=2"><i class="fa-solid fa-arrow-right"></i></a>
+            <?php
+            }
+
+            ?>
+        </div>
                 </div>
             </div>
         </div>
         <div class='sin-review'>
-            <?php
-            if ($noreview == true) {
-                echo '<img src="/Perfil_usuario/ChatGPT_Image_29_mar_2025__21_36_56-removebg-preview.png">';
-                echo "<p>¡Vaya! Parece que aun no han realizado ninguna review</p>";
-            }
-            ?>
         </div>
     </div>
 </body>

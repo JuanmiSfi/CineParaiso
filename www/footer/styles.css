@@ -1,0 +1,164 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('/fonts/CodecPro.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('/fonts/BukhariScript.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+body {
+    background-color: #f7e5c6;
+    background-image: url("/src/linias.png");
+    background-attachment: fixed;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+}
+
+.logo img {
+    width: 250px;
+    filter: drop-shadow(4px 5px 1px black);
+    margin-left: 2rem;
+
+}
+
+.buscador input[type="text"] {
+    padding: 1px 15px;
+    border-radius: 51px;
+    border: 2px solid #8b4a28;
+    background-color: #f7e5c6;
+    text-align: start;
+    font-size: 19px;
+    width: 60rem;
+    height: 40px;
+
+}
+
+::placeholder {
+    color: #8b4a28;
+    opacity: 1;
+    font-size: 22.3px;
+    font-weight: bold;
+}
+
+.barra {
+    width: 100%;
+    height: 3px;
+    background-color: #8b4a28;
+}
+.barra2 {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 93%;
+    height: 3px;
+    background-color: #474240;
+    margin: auto auto 15px auto;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+}
+
+.contenido {
+    background-color: antiquewhite;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border: 5px solid #1c1c1c;
+}
+.usuario img {
+    width: 70px;
+    height: 70px;
+    margin-right: 2rem;
+    border-radius: 50%;
+}
+
+
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.hero h1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3rem;
+    color: #141616;
+    margin-bottom: 0.5rem;
+}
+
+.hero p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.25rem;
+    color: #111;
+}
+
+.content h2 {
+    font-family: 'Codec Pro';
+    font-size: 1.75rem;
+    color: #111;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+}
+.content p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    color: #111;
+    margin-bottom: 1rem;
+}
+.content a{
+    font-weight: bold;
+}
+
+.content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.boton button{
+    display: flex;
+    padding: 1px 15px;
+    border-radius: 5px;
+    width: auto;
+    border: 2px solid #000000;
+    background-color: #f39a3f;
+    color: #ffffff;
+    text-align: center;
+    font-size: 19px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+.boton button:hover{
+    transform: scale(1.05);
+}

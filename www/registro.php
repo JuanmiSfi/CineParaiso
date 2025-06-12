@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include "PHP/funciones.php";
 use PHPMailer\PHPMailer\PHPMailer;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -31,9 +31,11 @@ if (!$conn) {
 if (isset($_POST['registrar'])) {
     $correo = $_POST['correo'];
     $usuario = $_POST['usuario'];
-    $password = $_POST['password'];
-    $password2 = $_POST['password2'];
-    if ($password == $password2 && filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+    $password = validarContraseña(filter_input(INPUT_POST,'password'));
+    $password2 = validarContraseña(filter_input(INPUT_POST,'password2'));
+    if(!$password){
+        $mensaje = -3;
+    }else if($password == $password2 && filter_var($correo, FILTER_VALIDATE_EMAIL)) {
         include __DIR__ . "/PHP/email/email.php";
         // Ciframos la contraseña para mas seguridad
         $PassCifrada = password_hash($password, PASSWORD_DEFAULT);
@@ -115,6 +117,8 @@ mysqli_close($conn);
                     echo "<div class='error'><p>La contraseña introducida no coincide</p></div>";
                 } else if ($mensaje == -2) {
                     echo "<div class='error'><p>El correo introducido no es valido</p></div>";
+                }else if($mensaje == -3){
+                    echo "<div class='error'><p>La contraseña no cumple con los requerimientos minimos, recuerda que debe tener 8 caracteres y empezar con mayusculas</p></div>";
                 }
                 ?>
             </div>

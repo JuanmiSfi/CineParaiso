@@ -112,9 +112,18 @@ if (!$conn) {
                             echo '<form action="/PHP/siguen.php" method="POST">';
                             echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
                             echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
-                            echo "<input type='hidden' name='DIR' value='seguidores'>";
+                            echo "<input type='hidden' name='usuariobase' value='" . $_GET['id'] . "'>";
+                            echo "<input type='hidden' name='DIR' value='siguiendo'>";
                             echo "<button type='submit' name='unfollow' class='unfollow'>Dejar de Seguir</button>";
                             echo '</form>';
+                        }elseif($sigue[0] == 0 && $idseguidor != $_SESSION['idusuario']) {
+                            echo '<form action="/PHP/siguen.php" method="POST">';
+                                echo "<input type='hidden' name='idusuario' value='" . $_SESSION['idusuario'] . "'>";
+                                echo "<input type='hidden' name='idusuario2' value='" . $idseguidor . "'>";
+                                echo "<input type='hidden' name='usuariobase' value='" . $_GET['id'] . "'>";
+                                echo "<input type='hidden' name='DIR' value='siguiendo'>";
+                                echo "<button type='submit' name='follow' class='seguir'>seguir</button>";
+                                echo '</form>';
                         }
                         echo "</div>"; //boton
                         echo "</div>"; //followe

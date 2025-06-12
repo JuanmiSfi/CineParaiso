@@ -82,7 +82,7 @@ if (!$conn) {
             echo "</a>";
             echo "<p>Reviews de <a href='/usuario.php?id=" . $idusuario . "'>&nbsp;$usuario</a></p>";
             ?>
-            <button type="submit" class="WatchList"><a href="/PHP/historial.php?id=<?php echo $idusuario; ?>" class="link">Peliculas</a></button>
+            <button type="submit" class="WatchList"><a href="/PHP/historial.php?id=<?php echo $idusuario; ?>&pag=1" class="link">Peliculas</a></button>
             <button type="submit" class="WatchList"><a href="/PHP/historial/Reviews.php?id=<?php echo $idusuario; ?>" class="link">Reviews</a></button>
         </div>
         <div class="barra2"></div>

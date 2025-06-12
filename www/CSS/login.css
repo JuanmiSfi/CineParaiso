@@ -55,7 +55,8 @@ body {
 
 .bloque {
     width: 800px;
-    height: 350px;
+    min-height: 350px;
+    height: auto;
     background-color: #f39a3f;
     border: 3px solid black;
     border-radius: 39px;

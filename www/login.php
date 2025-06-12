@@ -57,6 +57,8 @@ if (isset($_POST['iniciar'])) {
             header("Location: /PHP/verificacion.php?usuario=".$usuario."");
                 exit();
         }
+    }else{
+        $mensaje = 3;
     }
 }
 ?>
@@ -107,6 +109,8 @@ if (isset($_POST['iniciar'])) {
                 <?php
                 if ($mensaje == 1) {
                     echo "<div class='error'><p style='margin: bottom 15px;'>El usuario o la contraseña no son correctos</p></div>";
+                }else if($mensaje == 3){
+                    echo "<p style='margin: bottom 15px; text-align: center; color:black;'>No se encuentra el usuario proporcionado, puedes regristrate desde <a href='registro.php'>aquí</a></p>";
                 }
                 ?>
             </div>

@@ -5,10 +5,10 @@ services:
     volumes:
       - "./www:/var/www/html"
     ports:
-      - 80:80
-      - 443:443
+      - 8080:80
     networks:
       - app_network
+    restart: unless-stopped
   db:
     image: mysql:latest
     container_name: mysql
@@ -23,6 +23,7 @@ services:
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_spanish2_ci
     networks:
       - app_network
+    restart: unless-stopped
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
@@ -49,6 +50,7 @@ services:
     restart: unless-stopped
     networks:
       - app_network
+    restart: unless-stopped
 volumes:
   mysql_data:
 

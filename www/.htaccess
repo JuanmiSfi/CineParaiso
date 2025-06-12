@@ -1,2 +1,4 @@
 # Redirige errores 404 a tu página personalizada
 ErrorDocument 404 /404.php
+SetEnvIf X-Forwarded-Proto https HTTPS=on
+

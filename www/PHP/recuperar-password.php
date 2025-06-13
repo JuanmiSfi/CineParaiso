@@ -105,7 +105,7 @@ if (!isset($_SESSION['idusuario'])) {
                 <?php
                 if (isset($_SESSION['idusuario'])) {
                     echo '
-                    <p>Por favor Introduzca la Contraseña antigüa<br></p>
+                    <p>Por favor Introduzca la Contraseña antigua<br></p>
                     <input type="password" name="pass1">
                     <p>Introduzca la nueva contraseña<br></p>
                     <input type="password" name="pass2">
@@ -130,6 +130,8 @@ if (!isset($_SESSION['idusuario'])) {
             } else if ($mensaje == -3) {
                 echo "<p>Las contraseñas no cumple los requisitos minimos<br></p>
                 <p style='margin-bottom: 15px; color:red; font-size:20px;'> Debe empezar por mayúsculas, tener una longitud mínima de 8 caracteres y números</p>";
+            } else if( $mensaje == 3){
+                echo "<p style='margin-bottom: 15px; color:red; font-size:20px;'>La contraseña no coincide con la anterior</p>";
             }
             ?>
         </div>

@@ -100,9 +100,9 @@ FOREIGN KEY (id_sigue) references usuario(id) ON DELETE CASCADE
 
 Create table estadistica(
 id_usuario int PRIMARY KEY,
-n_pelis_vistas int default 0,
-n_seguidores int default 0,
-n_siguiendo int default 0,
+n_pelis_vistas int UNSIGNED default 0 ,
+n_seguidores int UNSIGNED default 0,
+n_siguiendo int UNSIGNED default 0,
 genero_mas_visto varchar(250),
 FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
 );

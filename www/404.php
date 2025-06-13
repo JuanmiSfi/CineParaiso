@@ -44,7 +44,7 @@
     <img src="/src/Logo.png" alt="">
   </a>
   <p><strong>Vaya, no podemos encontrar la página que has solicitado.</strong><br><i>"¡No toques eso! ¡Podría ser una pista... o algo tóxico… o las dos cosas!" </i></p>
-  <p>Porfavor si el problema persiste <a href="//letterboxd.com/contact/">contacta</a> con nosotros.</p>
+  <p>Porfavor si el problema persiste <a href="/footer/contacto.php">contacta</a> con nosotros.</p>
 </body>
 
 </html>

@@ -216,6 +216,7 @@ if (isset($_POST['cerrar'])) {
                                     $movieId = $fila['id'];
                                     $nota = $fila['nota'];
                                     $poster = $fila['poster'];
+                                    $opinion = $fila['review'];
                                     echo "<a href='/movie2.php?id=" . $movieId . "'>";
                                     echo "<img src='https://image.tmdb.org/t/p/w500" . $poster . "' width='300'>";
                                     echo "</a>";

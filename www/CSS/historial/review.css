@@ -211,7 +211,7 @@ body {
 }
 
 .basura i{
-    padding-top: 70px;
+    padding-top: auto;
     padding-left: 630px;
     transition: all .3s ease;
     font-size: 20px;

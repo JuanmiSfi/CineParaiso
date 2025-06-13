@@ -245,7 +245,7 @@ if (!$conn) {
 
                         <?php
                         // Para que no se repitan las review y tener control de ellas por si es una inserción o una actualización comprobaremos si en nuestra base de datos ya hay datos de ese usuario con esa pelicula
-                        $sql = "SELECT * FROM review WHERE id_usuario='$idusuario' AND id_pelicula = '$movieId'";
+                        $sql = "SELECT * FROM review WHERE id_usuario='$idusuario' AND id_pelicula = '$movieId' And id_usuario !=1";
                         $consulta = (mysqli_query($conn, $sql));
                         if (mysqli_num_rows($consulta) == 0) {
                             if (isset($_POST['subir'])) {

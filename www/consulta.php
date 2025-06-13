@@ -71,10 +71,10 @@ try {
         <div class='contenedor'>
             <div class='usuarios'>
                 <?php
-                $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_user FROM usuario WHERE usuario like '%$busqueda%'");
-            $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_user'];
-            $filasmax = 13;
-                $sql = "SELECT * FROM usuario WHERE usuario like '%$busqueda%'LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax;
+                $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_user FROM usuario WHERE usuario like '%$busqueda%' AND id !=$idusuario");
+                $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_user'];
+                $filasmax = 13;
+                $sql = "SELECT * FROM usuario WHERE usuario like '%$busqueda%' AND id !=$idusuario LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax;
                 $resul = mysqli_query($conn, $sql);
                 $numcolumnas = mysqli_num_rows($resul);
                 if (mysqli_num_rows($resul) > 0) {
@@ -192,4 +192,4 @@ try {
 </div>
 </body>
 
-</html>
+    </html>

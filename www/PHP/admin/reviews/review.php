@@ -95,7 +95,7 @@ if (!$conn) {
                                 echo "</div>"; // Cierra contenido
                                 echo "<div class='botones'>";
                                 echo "
-			                    <a href=\"/../historial/Reviews.php?id=$idusuario\">Ver más reviews de $usuario</a> 
+			                    <a href=\"/../PHP/historial/Reviews.php?id=$idusuario\">Ver más reviews de $usuario</a> 
 			                    <a href=\"eliminar.php?idreview=$idreview\" onClick=\"return confirm('¿Estás seguro de eliminar a la review de $fila[titulo], del usuario $usuario?')\">Eliminar</a>
 			                        ";
                                 echo "</div>"; //cierra botones

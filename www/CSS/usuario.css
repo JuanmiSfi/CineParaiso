@@ -208,7 +208,7 @@ a {
 }
 
 .unfollow::before {
-    content: 'Follow';
+    content: 'Siguiendo';
     text-align: center;
     margin-left: 12px;
     position: absolute;
@@ -216,7 +216,7 @@ a {
 }
 
 .unfollow::after {
-    content: 'Unfollow';
+    content: 'Dejar de Seguir';
     position: 'absolute';
     opacity: 0;
 }

@@ -58,21 +58,6 @@ INSERT INTO review (id, review, vermastarde, nota, fecha, id_usuario, id_pelicul
 (14, 'La mejor pelicula de terror del año.', 0, 1, '2025-06-13 20:40:45', 4, 933260);
 
 
-INSERT INTO estadistica (id_usuario, n_pelis_vistas, n_seguidores, n_siguiendo, genero_mas_visto) VALUES
-(2, 7, 2, 2, NULL),
-(3, 0, 0, 0, NULL),
-(4, 2, 1, 1, NULL),
-(5, 0, 0, 0, NULL),
-(6, 0, 0, 0, NULL),
-(7, 0, 0, 0, NULL),
-(8, 0, 0, 0, NULL),
-(9, 2, 1, 1, NULL),
-(10, 0, 0, 0, NULL),
-(11, 0, 0, 0, NULL),
-(12, 0, 0, 0, NULL),
-(13, 0, 0, 0, NULL),
-(14, 0, 0, 0, NULL);
-
 INSERT INTO genero (id_genero, nombre) VALUES
 (28, 'Acción'),
 (12, 'Aventura'),

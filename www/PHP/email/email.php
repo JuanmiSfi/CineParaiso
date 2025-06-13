@@ -45,7 +45,7 @@ $mail->Body    = '
               <div style="text-align: center; margin: 30px 0;">
                 <h1 style="font-size: 32px; background-color: #8b4a28; color: white; padding: 15px; border-radius: 8px; display: inline-block;">'.$codigo.'</h1>
               </div>
-              <p>En la ventana de verificación, si has cerrado esa ventana puedes hacer click aqui para redirigirte a ella <a href="localhost/PHP/verificacion.php?usuario='.$usuario.'">Pagina de vericifación</a></p>
+              <p>En la ventana de verificación, si has cerrado esa ventana puedes hacer click aqui para redirigirte a ella <a href="localhost:8080/PHP/verificacion.php?usuario='.$usuario.'">Pagina de vericifación</a></p>
               <p>Si no has solicitado este cambio, puedes ignorar este correo.</p>
               <p style="margin-top: 40px;">Disfruta viendo películas,<br><strong>CineParaiso</strong></p>
               <p style="font-size: 12px; color: #888;">Este mensaje fue enviado automáticamente. Por favor, no respondas a este correo.</p>

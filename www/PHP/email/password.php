@@ -43,7 +43,7 @@ $mail->Body = '
               <h2>Hola, has solicitado restablecer tu contraseña.</h2>
               <p>Puedes restablecer la contraseña de tu cuenta de <strong>CineParaiso</strong> usando el siguiente código:</p>
               <div style="text-align: center; margin: 30px 0;">
-                <h1 style="font-size: 32px; background-color: #8b4a28; color: white; padding: 15px; border-radius: 8px; display: inline-block;"><a href="localhost/PHP/recuperar-password.php?codigo='.$codigo.'"  style="text-decoration: none; color: white;">Recuperar Contraseña</a></h1>
+                <h1 style="font-size: 32px; background-color: #8b4a28; color: white; padding: 15px; border-radius: 8px; display: inline-block;"><a href="localhost:8080/PHP/recuperar-password.php?codigo='.$codigo.'"  style="text-decoration: none; color: white;">Recuperar Contraseña</a></h1>
               </div>
               <p>Si no has solicitado este cambio, puedes ignorar este correo.</p>
               <p style="margin-top: 40px;">Disfruta viendo películas,<br><strong>CineParaiso</strong></p>

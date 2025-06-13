@@ -52,7 +52,7 @@ if (isset($_POST['enviar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar contraseña</title>
-    <link rel="stylesheet" href="/CSS/verifi.css" />
+    <link rel="stylesheet" href="/CSS/recu.css" />
 </head>
 
 <body>

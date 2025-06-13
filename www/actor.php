@@ -108,7 +108,7 @@ $client = new \GuzzleHttp\Client();
 
                 $response = $client->request('GET', 'https://api.themoviedb.org/3/person/' . $actorId . '/external_ids', [
                     'headers' => [
-                        'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlODBmYjY4YzM2ZTExODRlZGRiYmY1MGEwNjQxMDcwZCIsIm5iZiI6MS43NDQxMzczNDU3NTgwMDAxZSs5LCJzdWIiOiI2N2Y1NmM4MWVkZGVjMjhiMDNhZGUwMDEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.uRGiMicdSlhinc4hnY9eeWDeavyIbiBU-dT1RM33Ggk',
+                        'Authorization' => 'Bearer ' . $API . '',
                         'accept' => 'application/json',
                     ],
                 ]);
@@ -159,8 +159,11 @@ $client = new \GuzzleHttp\Client();
                     echo "<p>No definido</p>";
                 }
                 echo "<h3>Fecha nacimiento</h3>";
-                $fechaconformato = date("d-m-Y", strtotime($fecha_n));
-                echo "<p>$fechaconformato</p>";
+                if (!empty($fecha_n)) {
+                    $fechaconformato = date("d-m-Y", strtotime($fecha_n));
+                } else {
+                    $fechaconformato = $fecha_n;
+                }
                 if (isset($fecha_d)) {
                     echo "<h3>Fecha de fallecimiento</h3>";
                     $fechamuerte = date("d-m-Y", strtotime($fecha_d));
@@ -223,7 +226,6 @@ $client = new \GuzzleHttp\Client();
     </div>
     </div>
     </div>
-</body>
 </body>
 
 </html>

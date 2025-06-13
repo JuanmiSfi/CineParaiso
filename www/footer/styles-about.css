@@ -228,9 +228,3 @@ button {
 button:hover {
     transform: scale(1.05);
 }
-
-.footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}

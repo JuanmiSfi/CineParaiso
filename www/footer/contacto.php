@@ -5,7 +5,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 $pag = $_GET['pag'] ?? 1;
-$idusuario = $_SESSION['idusuario'];
+$idusuario = $_SESSION['idusuario'] ?? 0;
 $noreview = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['busqueda'] = $_POST['busqueda'];
@@ -48,7 +48,7 @@ if (!$conn) {
             </div>
             <div class="usuario"><a href="/login.php">
                     <?php
-                    if ($_SESSION['idusuario'] != 0) {
+                    if ($idusuario != 0) {
                         $sql = "SELECT * FROM usuario WHERE id = '$_SESSION[idusuario]'";
                         $resul = mysqli_query($conn, $sql);
                         if (mysqli_num_rows($resul) > 0) {
@@ -71,17 +71,30 @@ if (!$conn) {
                 <h1>Contactanos</h1>
                 <p>Escribenos tu petición y nosotros nos pondremos en coctacto contigo</p>
             </div>
-
             <div class="content">
-                <h2>Indica cual es tu correo electronico</h2>
-                <p>
-                   
-                </p>
+                <form action="" method="POST">
+                <div class="form-row">
+                    <input type="text" name="first_name" placeholder="Nombre" required>
+                    <input type="text" name="last_name" placeholder="Apellido" required>
+                </div>
 
-                <h2>¿Por qué usar Cineparaiso?</h2>
+                <div class="form-row">
+                    <input type="email" name="email" placeholder="Correo electronico" required>
+                </div>
 
-                <p><strong></strong></p>
-                <a href="/registro.php" class="boton"><button class="boton">enviar!</button></a>
+                <div class="select">
+                    <select name="pets" id="pet-select">
+                        <option value=""><p>Por favor escoja una opción</p></option>
+                        <option value="Eliminar cuenta">Eliminar Cuenta</option>
+                        <option value="Recuperar cuenta">Recuperar Cuenta</option>
+                        <option value="Otra consulta">Otra consulta</option>
+                    </select>
+                </div>
+
+                <textarea name="message" rows="5" placeholder="Mensaje" required></textarea>
+
+                <button type="submit" class="boton">Submit</button>
+                </form>
             </div>
         </div>
     </div>

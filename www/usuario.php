@@ -226,7 +226,6 @@ if (isset($_POST['cerrar'])) {
                                                 echo "<i class='fas fa-star' id='estrellas'></i>";
                                             }
                                         }
-                                        
                                     }
                                     if (!empty($opinion)) {
                                         echo "<i class='fa-solid fa-align-left' id='rw'></i>";
@@ -328,8 +327,6 @@ if (isset($_POST['cerrar'])) {
                 </div>
             </div>
     </body>
-
-
 </body>
 
 </html>

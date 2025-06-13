@@ -187,7 +187,6 @@ try {
     }
     ?>
 </div>
-
 </body>
 
     </html>

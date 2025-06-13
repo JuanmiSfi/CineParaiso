@@ -66,7 +66,7 @@ while($mostrar = mysqli_fetch_array($querybuscar))
             </tr>
 			  <tr> 
                 <td>Email</td>
-                <td><input type="text" name="email" value="<?php echo $email;?>" required></td>
+                <td><input type="text" name="email" value="<?php echo $email;?>"></td>
             </tr>
             <tr> 
                 <td>Contraseña</td>

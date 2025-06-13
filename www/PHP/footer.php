@@ -46,10 +46,7 @@
 <footer class="footer">
   <div class="footer-nav">
     <a href="/footer/about.php">Sobre nosotros</a>
-    <a href="#">News</a>
-    <a href="#">Help</a>
-    <a href="#">Terms</a>
-    <a href="/footer/contacto.php">Contact</a>
+    <a href="/footer/contacto.php">Contacto</a>
   </div>
   <div class="Datos">
     © CineParaiso. Hecho por fans del cine para fans del cine. Información de las peliculas por <a href="https://www.themoviedb.org">TMDB</a>.

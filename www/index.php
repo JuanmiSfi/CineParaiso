@@ -255,6 +255,8 @@ try {
                                 }
                             }
                         }
+                    }else{
+                        echo "<p style='color:black; font-size:15px;'>Aun no hay reviews de tus amigos</p>";
                     }
                     echo '<a href="/PHP/reviews/amigos.php?id=' . $idusuario . '" class="WatchList">
                         <p id="amigos">Ver más reviews publicadas por tus amigos</p>

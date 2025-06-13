@@ -110,6 +110,7 @@ if (isset($_POST['modificar'])) {
                         }
                         ?>
                         <input type="submit" name="modificar" value="Modificar" id="boton" /><br>
+                        <p><a href="PHP/recuperar-password.php">Cambiar contraseña</a></p>
                     </form>
                 </div>
                 <p><a href="usuario.php?id=<?php echo $idusuario ?>">click para salir sin hacer cambios.</a></p>

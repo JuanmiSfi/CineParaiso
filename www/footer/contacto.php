@@ -7,11 +7,6 @@ $dotenv->load();
 $pag = $_GET['pag'] ?? 1;
 $idusuario = $_SESSION['idusuario'] ?? 0;
 $noreview = false;
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $_SESSION['busqueda'] = $_POST['busqueda'];
-    header("Location: /consulta.php");
-    exit();
-}
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

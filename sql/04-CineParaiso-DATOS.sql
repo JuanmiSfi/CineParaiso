@@ -2,7 +2,7 @@ use CineParaiso;
 
 -- Insertamos datos en la tabla usuario
 INSERT INTO usuario (nombre, apellidos, usuario,email, contraseña, bio, id_rol,verificado, fto_perfil) VALUES
-(NULL,NULL,'admin','admin@email.com','$2y$10$KzFZNOYGOJfImuWEwqPaq./ztn4/uz4gdXOSUnY9t4zEmQBLI/6Ru',NULL, 2,1, '/Perfil_usuario/Usuarios.png'),
+(NULL,NULL,'admin','admin@email.com','$2y$10$xGFuUQSGGuXFWhR.nEaBE.kF6MmUPzPW3pdnp3gZzU8K1mDeTsvZ2',NULL, 2,1, '/Perfil_usuario/Usuarios.png'),
 ('      Juanmi', '   ', 'juanmi', '   juanmi@email.com', '$2y$10$T8UOowALpN2gldIBpCKJBOqiAx2.NVoTL4PQecJe1rbCgPtTE2hBq', 'Sinosuke es un niño muy bribón con la fuerza de un ciclón ', 1,1, '/Perfil_usuario/newpelo.png'),
 (NULL, NULL, 'alberto', 'alberto@email.com', '$2y$10$3kaGx8rItbK.hwS1hxbxXu27KFmOFK.2TIXGLfxoe6Lvqv/o2VL2S', NULL, 1,1, '/Perfil_usuario/Usuarios.png'),
 (NULL, NULL, 'Carlos', '', '$2y$10$d9xcyHydV1yZ2VvVNlVSkeEyK8/K2LUXyr2yW6X.QwKfJMNm1/YSG', NULL, 1,1, '/Perfil_usuario/patrick-bateman-played-by-christian-bale-2000-film-adaptation-american-psycho-movie.png'),
